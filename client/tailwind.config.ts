@@ -13,7 +13,8 @@ export default {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        "monster": ["Monsterrat", "sans-serif"]
+        "monster": ["Monsterrat", "sans-serif"],
+        "opensans": ["Open Sans", "sans-serif"]
       }
     },
   },
