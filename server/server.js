@@ -4,16 +4,26 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
+const authRouter = require('./routes/authRoutes')
 
+/* Middlewares */
 app.use(cors())
-app.use(bodyParser.json())
 app.use(cookieparser())
+app.use(bodyParser.json())
 
 
 
 
 
 
+
+
+
+
+
+/* Routes */
+
+app.use('/auth', authRouter)
 
 
 

@@ -1,10 +1,48 @@
+import { BaseSyntheticEvent } from "react"
 import AuthFormLabel from "../authFormLabel"
 import AuthFormInput from "../authFormInput"
 import Link from "next/link"
 
+interface ErrorType {
+  message: string
+}
+
 export default function CreateAccountForm() {
+
+  async function createAccount(e: BaseSyntheticEvent) {
+    e.preventDefault()
+
+    const formData = e.target as HTMLFormElement
+    console.log(formData)
+    const fd = new FormData(formData)
+    console.log(fd.get("name"))
+    try {
+
+      const response = await fetch('http://localhost:8080/auth/createAccount', {
+        method: "POST",
+        body: JSON.stringify(fd),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      if (!response.ok) {
+        const resData = await response.json()
+        const error = new Error(resData)
+        throw error
+      }
+
+      const resData = await response.json()
+      console.log(resData)
+
+    } catch (err: unknown) {
+      const requestError = err as ErrorType
+      console.log(requestError.message)
+    }
+  }
+
   return (
-    <form className="flex flex-col gap-6 justify-start w-full items-start">
+    <form onSubmit={(e) => createAccount(e)} method="POST" className="flex flex-col gap-6 justify-start w-full items-start">
 
       <div className="flex flex-col w-full gap-2">
         <AuthFormLabel htmlFor="name">Full Name</AuthFormLabel>
@@ -29,7 +67,7 @@ export default function CreateAccountForm() {
 
       <div className="flex justify-start items-center w-full">
         <p className="text-[20px] text-[#636363] font-opensans mr-3">Already have an account?</p>
-        <Link href={'?auth=login'} className="text-[20px] text-[#636363] font-opensans font-semibold hover:underline hover:cursor-pointer">Log In</Link>
+        <Link href={'?auth=login'} className="text-[20px] text-[#636363] font-opensans font-semibold hover:underline hover:cursor-pointer">Log In!</Link>
       </div>
 
     </form>
