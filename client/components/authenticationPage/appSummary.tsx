@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function AppSummary() {
   return (
-    <div className="flex flex-col justify-start items-start w-1/2 h-screen bg-[#2B293D]">
+    <div className="flex flex-col justify-start items-start w-1/2 h-screen">
       <div className="flex w-full justify-start items-start p-4">
         <p className="font-logo text-[42px] text-[#FFE047]">Eventify</p>
       </div>
