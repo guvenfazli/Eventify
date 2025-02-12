@@ -40,7 +40,7 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={(e) => loginAccount} method="POST" className="flex flex-col gap-6 justify-start w-full items-start">
+    <form onSubmit={(e) => loginAccount(e)} method="POST" className="flex flex-col gap-6 justify-start w-full items-start">
 
       <div className="flex flex-col w-full gap-2">
         <AuthFormLabel htmlFor="email">E-mail Address</AuthFormLabel>
