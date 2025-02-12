@@ -6,6 +6,13 @@ const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
 const authRouter = require('./routes/authRoutes')
 
+/* Swagger API */
+const swaggerUI = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json')
+
+app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+
+
 /* Models */
 const User = require('./models/User')
 

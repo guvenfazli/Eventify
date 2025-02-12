@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Eventify API Documentation",
+    "version": "1.0.0",
+    "description": "API documentation for FullStack Application Eventify"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/auth/createAccount": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Creates an Account.",
+        "description": "Creates a new account for the application.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "test@test.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "testpassword12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success message from Backend.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "Account created successfully!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": "1"
+            },
+            "name": {
+              "type": "string",
+              "example": "John Marshall"
+            },
+            "content": {
+              "type": "string",
+              "example": "This is the content of the post."
+            },
+            "surname": {
+              "type": "string",
+              "example": "Doe"
+            },
+            "password": {
+              "type": "string",
+              "example": "test12345password"
+            },
+            "isAdmin": {
+              "type": "boolean",
+              "example": "false"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2025-02-12 03:28:07"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2025-02-12 03:28:07"
+            }
+          }
+        }
+      }
+    }
+  }
+}
