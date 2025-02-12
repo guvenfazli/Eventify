@@ -28,7 +28,7 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "example": "John"
+                    "example": "John Marshall Doe" 
                   },
                   "email": {
                     "type": "string",
