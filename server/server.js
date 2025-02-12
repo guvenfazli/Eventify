@@ -1,10 +1,26 @@
 const express = require('express')
+const { Sequelize } = require('sequelize')
+const session = require('express-session')
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
 const authRouter = require('./routes/authRoutes')
+const dotenv = require('dotenv')
+dotenv.config({ path: './.env' });
+
+var SequelizeStore = require("connect-session-sequelize")(session.Store);
+
+app.use(
+  session({
+    secret: "test Secret",
+    store: new SequelizeStore({
+      db: sequelize,
+    }),
+    resave: false,
+  })
+);
 
 /* Swagger API */
 const swaggerUI = require('swagger-ui-express')
