@@ -15,7 +15,7 @@ exports.createAccount = async (req, res, next) => {
     if (!errors.isEmpty()) {
       throwError(errors.array()[0].msg, 410)
     }
-    
+
     const foundUser = await User.findOne({ where: { email: email } })
 
     if (foundUser) {
@@ -41,8 +41,14 @@ exports.createAccount = async (req, res, next) => {
 
 exports.loginAccount = async (req, res, next) => {
   const { email, password } = req.body
+  const errors = validationResult(req)
+
 
   try {
+    if (!errors.isEmpty()) {
+      throwError(errors.array()[0].msg, 410)
+    }
+
     const foundUser = await User.findOne({ where: { email: email } })
 
     if (!foundUser) {
