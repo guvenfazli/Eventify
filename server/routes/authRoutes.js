@@ -3,8 +3,6 @@ const router = express.Router()
 const controller = require('../controllers/authController')
 const { body } = require('express-validator')
 
-router.get('/test', controller.test)
-
 router.post('/createAccount', [
   body('name')
     .notEmpty()

@@ -68,8 +68,3 @@ exports.loginAccount = async (req, res, next) => {
     next(err)
   }
 }
-
-exports.test = (req, res, next) => {
-  console.log(req.session)
-  console.log(req.session.cookie)
-}
