@@ -43,7 +43,6 @@ exports.loginAccount = async (req, res, next) => {
   const { email, password } = req.body
   const errors = validationResult(req)
 
-
   try {
     if (!errors.isEmpty()) {
       throwError(errors.array()[0].msg, 410)
