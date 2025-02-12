@@ -20,7 +20,7 @@ export default function CreateAccountForm() {
       </div>
 
       <div className="flex justify-center items-center w-full">
-        <button className="bg-[#2B293D] w-full py-2 text-white text-[24px] font-opensans font-bold rounded-md">
+        <button className="bg-[#2B293D] w-full py-2 text-white text-[24px] font-opensans font-bold rounded-md hover:bg-[#4A4763] duration-75">
           Create Account
         </button>
       </div>
