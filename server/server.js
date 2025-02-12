@@ -21,6 +21,7 @@ app.use(bodyParser.json())
 
 
 
+
 /* Routes */
 
 app.use('/auth', authRouter)

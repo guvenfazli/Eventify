@@ -12,17 +12,15 @@ export default function CreateAccountForm() {
   async function createAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
 
-    const formData = e.target as HTMLFormElement
-    console.log(formData)
-    const fd = new FormData(formData)
-    console.log(fd.get("name"))
+    const formData = new FormData(e.target)
+    const fd = Object.fromEntries(formData.entries())
     try {
 
       const response = await fetch('http://localhost:8080/auth/createAccount', {
         method: "POST",
         body: JSON.stringify(fd),
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         }
       })
 
@@ -45,18 +43,18 @@ export default function CreateAccountForm() {
     <form onSubmit={(e) => createAccount(e)} method="POST" className="flex flex-col gap-6 justify-start w-full items-start">
 
       <div className="flex flex-col w-full gap-2">
-        <AuthFormLabel htmlFor="name">Full Name</AuthFormLabel>
-        <AuthFormInput name="name" placeHolder="Enter Your Full Name" type="text" />
+        <AuthFormLabel htmlFor={"name"}>Full Name</AuthFormLabel>
+        <AuthFormInput name={"name"} placeHolder={"Enter Your Full Name"} type={"text"} />
       </div>
 
       <div className="flex flex-col w-full gap-2">
-        <AuthFormLabel htmlFor="email">E-mail Address</AuthFormLabel>
-        <AuthFormInput name="email" placeHolder="Enter Your E-Mail" type="email" />
+        <AuthFormLabel htmlFor={"email"}>E-mail Address</AuthFormLabel>
+        <AuthFormInput name={"email"} placeHolder={"Enter Your E-Mail"} type={"email"} />
       </div>
 
       <div className="flex flex-col w-full gap-2">
-        <AuthFormLabel htmlFor="password">Password</AuthFormLabel>
-        <AuthFormInput name="password" placeHolder="Password" type="password" />
+        <AuthFormLabel htmlFor={"password"}>Password</AuthFormLabel>
+        <AuthFormInput name={"password"} placeHolder={"Password"} type={"password"} />
       </div>
 
       <div className="flex justify-center items-center w-full">
