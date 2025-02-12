@@ -24,6 +24,11 @@ export default function CreateAccountForm() {
           Create Account
         </button>
       </div>
+
+      <div className="flex justify-start items-center w-full">
+        <p className="text-[20px] text-[#636363] font-opensans mr-3">Already have an account?</p>
+        <p className="text-[20px] text-[#636363] font-opensans font-semibold hover:underline hover:cursor-pointer">Log In</p>
+      </div>
     </form>
   )
 }
