@@ -34,7 +34,25 @@ exports.createAccount = async (req, res, next) => {
 
 }
 
-exports.loginAccount = (req, res, next) => {
+exports.loginAccount = async (req, res, next) => {
   const { email, password } = req.body
-  console.log(req.body)
+  
+  try {
+    const foundUser = await User.findOne({ where: { email: email } })
+
+    if (!foundUser) {
+      throwError(410, 'User does not exist!')
+    }
+
+    const passwordMatch = await bcrypt.compare(password, foundUser.password)
+
+    if (!passwordMatch) {
+      throwError(410, 'Incorrect name or password!')
+    }
+
+    res.status(200).json({ message: `Welcome back ${foundUser.name}!` })
+    return;
+  } catch (err) {
+    next(err)
+  }
 }
