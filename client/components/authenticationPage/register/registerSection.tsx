@@ -1,3 +1,4 @@
+import CreateAccountForm from "./createAccountForm"
 export default function RegisterSection() {
   return (
     <div className="flex justify-center items-start w-1/2 border border-red-600 h-screen">
@@ -6,7 +7,9 @@ export default function RegisterSection() {
           <p>Create Account</p>
         </div>
 
-        
+        <div className="flex w-full items-center justify-startfont-monster">
+          <CreateAccountForm />
+        </div>
       </div>
     </div>
   )
