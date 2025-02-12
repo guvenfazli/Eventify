@@ -8,19 +8,10 @@ const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
 const authRouter = require('./routes/authRoutes')
 const dotenv = require('dotenv')
+const { extendDefaultFields } = require('./models/Session')
 dotenv.config({ path: './.env' });
 
 var SequelizeStore = require("connect-session-sequelize")(session.Store);
-
-app.use(
-  session({
-    secret: "test Secret",
-    store: new SequelizeStore({
-      db: sequelize,
-    }),
-    resave: false,
-  })
-);
 
 /* Swagger API */
 const swaggerUI = require('swagger-ui-express')
@@ -34,19 +25,18 @@ const User = require('./models/User')
 
 /* Middlewares */
 app.use(cors())
-app.use(cookieparser())
 app.use(bodyParser.json())
-
-
-
-
-
-
-
-
-
-
-
+app.use( // Session store for Sequelize with Dialect MySQL.
+  session({
+    secret: `${process.env.DB_SESSION_SECRET}`,
+    store: new SequelizeStore({
+      db: sequelize,
+      extendDefaultFields: extendDefaultFields
+    }),
+    resave: false,
+  })
+);
+app.use(cookieparser())
 
 /* Routes */
 

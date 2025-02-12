@@ -60,6 +60,8 @@ exports.loginAccount = async (req, res, next) => {
       throwError(410, 'Incorrect name or password!')
     }
 
+    req.session.session = { userId: foundUser.id, name: foundUser.name }
+
     res.status(200).json({ message: `Welcome back ${foundUser.name}!` })
     return;
   } catch (err) {
