@@ -6,3 +6,8 @@ exports.createAccount = (req, res, next) => {
   const lastName = splitted.length - 1
 
 }
+
+exports.loginAccount = (req, res, next) => {
+  const { email, password } = req.body
+  console.log(req.body)
+}
