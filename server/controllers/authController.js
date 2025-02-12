@@ -1,16 +1,21 @@
 const { throwError } = require('../utils/throwError') // (statusCode, errorMsg)
 const bcrypt = require('bcryptjs')
-
+const { validationResult } = require('express-validator')
 /* Models */
 const User = require('../models/User')
 
 exports.createAccount = async (req, res, next) => {
   const { name, email, password } = req.body
+  const errors = validationResult(req)
   const splitted = name.split(' ')
   const surname = splitted[splitted.length - 1]
   const fullName = name.replace(surname, '')
 
   try {
+    if (!errors.isEmpty()) {
+      throwError(errors.array()[0].msg, 410)
+    }
+    
     const foundUser = await User.findOne({ where: { email: email } })
 
     if (foundUser) {
@@ -36,7 +41,7 @@ exports.createAccount = async (req, res, next) => {
 
 exports.loginAccount = async (req, res, next) => {
   const { email, password } = req.body
-  
+
   try {
     const foundUser = await User.findOne({ where: { email: email } })
 
