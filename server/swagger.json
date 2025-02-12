@@ -28,7 +28,7 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "example": "John Marshall Doe" 
+                    "example": "John Marshall Doe"
                   },
                   "email": {
                     "type": "string",
@@ -54,6 +54,53 @@
                     "message": {
                       "type": "string",
                       "example": "Account created successfully!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/loginAccount": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Account Logging In.",
+        "description": "Loggs in with an existing account.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@test.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "testpassword12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success message from Backend.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Login successfull!"
                     }
                   }
                 }
