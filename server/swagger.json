@@ -51,7 +51,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": "Account created successfully!"
+                    "message": {
+                      "type": "string",
+                      "example": "Account created successfully!"
+                    }
                   }
                 }
               }
@@ -59,44 +62,44 @@
           }
         }
       }
-    },
-    "components": {
-      "schemas": {
-        "User": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "example": "1"
-            },
-            "name": {
-              "type": "string",
-              "example": "John Marshall"
-            },
-            "content": {
-              "type": "string",
-              "example": "This is the content of the post."
-            },
-            "surname": {
-              "type": "string",
-              "example": "Doe"
-            },
-            "password": {
-              "type": "string",
-              "example": "test12345password"
-            },
-            "isAdmin": {
-              "type": "boolean",
-              "example": "false"
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2025-02-12 03:28:07"
-            },
-            "updatedAt": {
-              "type": "string",
-              "example": "2025-02-12 03:28:07"
-            }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Marshall"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is the content of the post."
+          },
+          "surname": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "password": {
+            "type": "string",
+            "example": "test12345password"
+          },
+          "isAdmin": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2025-02-12 03:28:07"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2025-02-12 03:28:07"
           }
         }
       }
