@@ -1,9 +1,10 @@
 import Image from "next/image"
-
+import ticketIcon from "../../assets/authPage/ticket.png"
 export default function AppSummary() {
   return (
     <div className="flex flex-col justify-start items-start w-1/2 h-screen">
       <div className="flex w-full justify-start items-start p-4">
+        <Image src={ticketIcon} width={70} height={60} alt="ticketIcon" className=" mr-1" />
         <p className="font-logo text-[42px] text-[#FFE047]">Eventify</p>
       </div>
 

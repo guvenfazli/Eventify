@@ -31,7 +31,7 @@ export default function CreateAccountForm() {
         <p className="text-[20px] text-[#636363] font-opensans mr-3">Already have an account?</p>
         <Link href={'?auth=login'} className="text-[20px] text-[#636363] font-opensans font-semibold hover:underline hover:cursor-pointer">Log In</Link>
       </div>
-      
+
     </form>
   )
 }
