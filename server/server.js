@@ -6,6 +6,9 @@ const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
 const authRouter = require('./routes/authRoutes')
 
+/* Models */
+const User = require('./models/User')
+
 /* Middlewares */
 app.use(cors())
 app.use(cookieparser())
