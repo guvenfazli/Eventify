@@ -24,7 +24,11 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 const User = require('./models/User')
 
 /* Middlewares */
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000'
+}))
+app.use(cookieparser())
 app.use(bodyParser.json())
 app.use( // Session store for Sequelize with Dialect MySQL.
   session({
@@ -36,7 +40,6 @@ app.use( // Session store for Sequelize with Dialect MySQL.
     resave: false,
   })
 );
-app.use(cookieparser())
 
 /* Routes */
 
