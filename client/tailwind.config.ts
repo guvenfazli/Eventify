@@ -14,7 +14,8 @@ export default {
       },
       fontFamily: {
         "monster": ["Monsterrat", "sans-serif"],
-        "opensans": ["Open Sans", "sans-serif"]
+        "opensans": ["Open Sans", "sans-serif"],
+        "logo": ["Lalezar", "sans-serif"]
       }
     },
   },
