@@ -2,12 +2,15 @@ import { BaseSyntheticEvent } from "react"
 import AuthFormLabel from "../authFormLabel"
 import AuthFormInput from "../authFormInput"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 interface ErrorType {
   message: string
 }
 
 export default function CreateAccountForm() {
+
+  const router = useRouter()
 
   async function createAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
@@ -31,7 +34,8 @@ export default function CreateAccountForm() {
       }
 
       const resData = await response.json()
-      console.log(resData)
+
+      router.push('/homePage')
 
     } catch (err: unknown) {
       const requestError = err as ErrorType
