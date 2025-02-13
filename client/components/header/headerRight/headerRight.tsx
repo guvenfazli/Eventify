@@ -11,7 +11,7 @@ export default function HeaderRight() {
   return (
     <nav className="flex justify-around items-center text-[20px] gap-5 text-white">
       <Link href={'/createEvent'} className="font-medium">Create Event</Link>
-      <TooltipProvider>
+      <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger>
             <Link href={'/tickets'}>
@@ -24,7 +24,7 @@ export default function HeaderRight() {
         </Tooltip>
       </TooltipProvider>
 
-      <TooltipProvider>
+      <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger>
             <Link href={'/interested'}>
