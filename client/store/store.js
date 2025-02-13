@@ -13,7 +13,7 @@ const persistConfig = {
 }
 
 const rootReducer = persistReducer(persistConfig, combineReducers({
-  userInfo: authSlice
+  userInfo: authSlice.reducer
 }))
 
 export const store = configureStore({
