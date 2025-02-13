@@ -22,7 +22,6 @@ export default async function Page() {
       </div>
     )
 
-
   } catch (err) {
     <div className="flex flex-col items-start justify-start">
       <GreetSection />
