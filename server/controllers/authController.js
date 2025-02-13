@@ -60,7 +60,7 @@ exports.loginAccount = async (req, res, next) => {
       throwError(410, 'Incorrect name or password!')
     }
 
-    req.session.userInfo = { userId: foundUser.id, name: foundUser.name }
+    req.session.userInfo = { userId: foundUser.id, name: foundUser.name, isAdmin: foundUser.isAdmin }
 
     res.status(200).json({ message: `Welcome back ${foundUser.name}!` })
     return;
@@ -70,6 +70,7 @@ exports.loginAccount = async (req, res, next) => {
 }
 
 exports.logOut = async (req, res, next) => {
+  console.log(req.session.userInfo)
   await req.session.destroy(() => {
     res.clearCookie('connect.sid')
     res.json({ message: 'Logged out!' })
