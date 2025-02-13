@@ -1,7 +1,7 @@
 import AuthFormLabel from "../authFormLabel"
 import AuthFormInput from "../authFormInput"
 import Link from "next/link"
-import { BaseSyntheticEvent } from "react"
+import { BaseSyntheticEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 
 
@@ -12,6 +12,7 @@ interface ErrorType {
 export default function LoginForm() {
 
   const router = useRouter()
+  const [isLogging, setIsLogging] = useState<boolean>(false)
 
   async function loginAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
@@ -19,7 +20,7 @@ export default function LoginForm() {
     const formData = new FormData(e.target)
     const fd = Object.fromEntries(formData.entries())
     try {
-
+      setIsLogging(true)
       const response = await fetch('http://localhost:8080/auth/loginAccount', {
         method: "POST",
         body: JSON.stringify(fd),
@@ -37,10 +38,13 @@ export default function LoginForm() {
 
       const resData = await response.json()
       router.push('/homePage')
+      setIsLogging(false)
 
     } catch (err: unknown) {
       const requestError = err as ErrorType
       console.log(requestError.message)
+      setIsLogging(false)
+
     }
   }
 
@@ -58,8 +62,8 @@ export default function LoginForm() {
       </div>
 
       <div className="flex justify-center items-center w-full">
-        <button className="bg-[#2B293D] w-full py-2 text-white text-[24px] font-opensans font-bold rounded-md hover:bg-[#4A4763] duration-75">
-          Login
+        <button disabled={isLogging} className="bg-[#2B293D] w-full py-2 text-white text-[24px] font-opensans font-bold rounded-md hover:bg-[#4A4763] duration-75 disabled:bg-[#2B293D]/80">
+          {isLogging ? 'Logging In...' : 'Login'}
         </button>
       </div>
 
