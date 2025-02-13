@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent } from "react"
+import { BaseSyntheticEvent, useState } from "react"
 import AuthFormLabel from "../authFormLabel"
 import AuthFormInput from "../authFormInput"
 import Link from "next/link"
@@ -11,14 +11,14 @@ interface ErrorType {
 export default function CreateAccountForm() {
 
   const router = useRouter()
-
+  const [isRegister, setIsRegister] = useState<boolean>(false)
   async function createAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
 
     const formData = new FormData(e.target)
     const fd = Object.fromEntries(formData.entries())
     try {
-
+      setIsRegister(true)
       const response = await fetch('http://localhost:8080/auth/createAccount', {
         method: "POST",
         body: JSON.stringify(fd),
@@ -36,10 +36,12 @@ export default function CreateAccountForm() {
       const resData = await response.json()
 
       router.push('/homePage')
+      setIsRegister(false)
 
     } catch (err: unknown) {
       const requestError = err as ErrorType
       console.log(requestError.message)
+      setIsRegister(false)
     }
   }
 
@@ -62,8 +64,8 @@ export default function CreateAccountForm() {
       </div>
 
       <div className="flex justify-center items-center w-full">
-        <button className="bg-[#2B293D] w-full py-2 text-white text-[24px] font-opensans font-bold rounded-md hover:bg-[#4A4763] duration-75">
-          Create Account
+        <button disabled={isRegister} className="bg-[#2B293D] w-full py-2 text-white text-[24px] font-opensans font-bold rounded-md hover:bg-[#4A4763] duration-75 disabled:bg-[#2B293D]/80">
+          {isRegister ? 'Creating Account...' : 'Create Account'}
         </button>
       </div>
 
