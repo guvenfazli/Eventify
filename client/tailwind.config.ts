@@ -15,7 +15,7 @@ export default {
   		},
   		fontFamily: {
   			'monster': [
-  				'Monsterrat',
+  				'Montserrat',
   				'sans-serif'
   			],
   			'opensans': [
