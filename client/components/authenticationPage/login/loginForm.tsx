@@ -5,8 +5,7 @@ import { BaseSyntheticEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux"
 import { authActions } from "@/store/slices/authSlice"
-
-
+import { useToast } from "@/hooks/use-toast"
 interface ErrorType {
   message: string
 }
@@ -16,6 +15,7 @@ export default function LoginForm() {
   const router = useRouter()
   const [isLogging, setIsLogging] = useState<boolean>(false)
   const dispatch = useDispatch()
+  const { toast } = useToast()
 
   async function loginAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
@@ -35,19 +35,28 @@ export default function LoginForm() {
 
       if (!response.ok) {
         const resData = await response.json()
-        const error = new Error(resData)
+        const error = new Error(resData.message)
         throw error
       }
 
       const resData = await response.json()
       dispatch(authActions.logIn(resData.loggedAccount))
+      toast({
+        title: "Success!",
+        description: resData.message,
+        className: "bg-[#FFE047] text-black"
+      })
       router.push('/homePage')
       setIsLogging(false)
 
     } catch (err: unknown) {
       const requestError = err as ErrorType
-      console.log(requestError.message)
       setIsLogging(false)
+      toast({
+        title: "Error!",
+        description: requestError.message,
+        className: "bg-red-700 text-white"
+      })
 
     }
   }
