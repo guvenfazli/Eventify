@@ -3,6 +3,9 @@ import AuthFormLabel from "../authFormLabel"
 import AuthFormInput from "../authFormInput"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useToast } from "@/hooks/use-toast"
+import { useDispatch } from "react-redux"
+import { authActions } from "@/store/slices/authSlice"
 
 interface ErrorType {
   message: string
@@ -12,6 +15,9 @@ export default function CreateAccountForm() {
 
   const router = useRouter()
   const [isRegister, setIsRegister] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  const { toast } = useToast()
+
   async function createAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
 
@@ -29,18 +35,27 @@ export default function CreateAccountForm() {
 
       if (!response.ok) {
         const resData = await response.json()
-        const error = new Error(resData)
+        const error = new Error(resData.message)
         throw error
       }
 
       const resData = await response.json()
-
+      dispatch(authActions.logIn(resData.loggedAccount))
+      toast({
+        title: "Success!",
+        description: resData.message,
+        className: "bg-[#FFE047] text-black"
+      })
       router.push('/homePage')
       setIsRegister(false)
 
     } catch (err: unknown) {
       const requestError = err as ErrorType
-      console.log(requestError.message)
+      toast({
+        title: "Error!",
+        description: requestError.message,
+        className: "bg-red-700 text-white"
+      })
       setIsRegister(false)
     }
   }

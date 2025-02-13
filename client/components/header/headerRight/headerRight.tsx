@@ -8,9 +8,9 @@ import {
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { IoTicketOutline, IoStarOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "@/store/slices/authSlice";
+import { useToast } from "@/hooks/use-toast"
 
 interface ErrorType {
   message: string
@@ -33,6 +33,8 @@ export default function HeaderRight() {
   const router = useRouter()
   const authInformation = useSelector((state: AuthenticationObject) => state.rootReducer.userInfo.userInfo)
   const dispatch = useDispatch()
+  const { toast } = useToast()
+
 
   async function logOut() {
     try {
@@ -49,11 +51,21 @@ export default function HeaderRight() {
 
       const resData = await response.json()
       dispatch(authActions.logOut())
+      toast({
+        title: "Success!",
+        description: resData.message,
+        className: "bg-[#FFE047] text-black"
+      })
       router.push('/')
 
     } catch (err: unknown) {
       const error = err as ErrorType
-      console.log(error.message)
+      toast({
+        title: "Error!",
+        description: error.message,
+        className: "bg-red-700 text-white"
+      })
+    
     }
   }
 

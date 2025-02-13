@@ -24,14 +24,15 @@ exports.createAccount = async (req, res, next) => {
 
     const hashedPw = await bcrypt.hash(password, 12)
 
-    User.create({
+    const createdUser = await User.create({
       name: fullName.trim(),
       surname,
       email,
       password: hashedPw,
     })
 
-    res.status(200).json({ message: 'Account created successfully!' })
+    req.session.userInfo = { userId: createdUser.id, name: createdUser.name, isAdmin: createdUser.isAdmin }
+    res.status(200).json({ message: 'Account created successfully!', loggedAccount: { userId: createdUser.id, name: createdUser.name, isAdmin: createdUser.isAdmin } })
     return;
   } catch (err) {
     next(err)
