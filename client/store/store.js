@@ -1,4 +1,3 @@
-const redux = require('redux')
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import {
   persistStore, persistReducer,

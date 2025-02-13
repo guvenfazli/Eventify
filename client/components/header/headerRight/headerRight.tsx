@@ -1,4 +1,3 @@
-"use client"
 import {
   Tooltip,
   TooltipContent,
@@ -9,15 +8,31 @@ import {
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { IoTicketOutline, IoStarOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { authActions } from "@/store/slices/authSlice";
 
 interface ErrorType {
   message: string
 }
 
+interface AuthenticationObject {
+  rootReducer: {
+    userInfo: {
+      userInfo: {
+        userId: number,
+        name: string,
+        isAdmin: boolean
+      }
+    }
+  }
+}
 
 export default function HeaderRight() {
 
   const router = useRouter()
+  const authInformation = useSelector((state: AuthenticationObject) => state.rootReducer.userInfo.userInfo)
+  const dispatch = useDispatch()
 
   async function logOut() {
     try {
@@ -33,6 +48,7 @@ export default function HeaderRight() {
       }
 
       const resData = await response.json()
+      dispatch(authActions.logOut())
       router.push('/')
 
     } catch (err: unknown) {

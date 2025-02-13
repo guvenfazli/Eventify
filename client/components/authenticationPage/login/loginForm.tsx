@@ -3,6 +3,8 @@ import AuthFormInput from "../authFormInput"
 import Link from "next/link"
 import { BaseSyntheticEvent, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useDispatch } from "react-redux"
+import { authActions } from "@/store/slices/authSlice"
 
 
 interface ErrorType {
@@ -13,6 +15,7 @@ export default function LoginForm() {
 
   const router = useRouter()
   const [isLogging, setIsLogging] = useState<boolean>(false)
+  const dispatch = useDispatch()
 
   async function loginAccount(e: BaseSyntheticEvent) {
     e.preventDefault()
@@ -37,6 +40,7 @@ export default function LoginForm() {
       }
 
       const resData = await response.json()
+      dispatch(authActions.logIn(resData.loggedAccount))
       router.push('/homePage')
       setIsLogging(false)
 

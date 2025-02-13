@@ -62,7 +62,7 @@ exports.loginAccount = async (req, res, next) => {
 
     req.session.userInfo = { userId: foundUser.id, name: foundUser.name, isAdmin: foundUser.isAdmin }
 
-    res.status(200).json({ message: `Welcome back ${foundUser.name}!` })
+    res.status(200).json({ message: `Welcome back ${foundUser.name}!`, loggedAccount: { userId: foundUser.id, name: foundUser.name, isAdmin: foundUser.isAdmin } })
     return;
   } catch (err) {
     next(err)
