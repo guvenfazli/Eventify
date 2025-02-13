@@ -1,5 +1,9 @@
+import GreetSection from "@/components/homePage/greetSection/greetSection"
+
 export default function Page() {
   return (
-    <p>Welcome to the homepage.</p>
+    <div className="flex flex-col items-start justify-start">
+      <GreetSection />
+    </div>
   )
 }
