@@ -4,7 +4,9 @@ export default function Page() {
   return (
     <div className="flex flex-col items-start justify-start">
       <GreetSection />
-      <ExploreCategories />
+      <div className="flex flex-col justify-start items-start px-32 w-full">
+        <ExploreCategories />
+      </div>
     </div>
   )
 }

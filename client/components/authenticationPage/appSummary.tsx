@@ -1,5 +1,5 @@
 import Image from "next/image"
-import ticketIcon from "../../assets/authPage/ticket.png"
+import ticketIcon from "@/public/assets/authPage/ticket.png"
 export default function AppSummary() {
   return (
     <div className="flex flex-col justify-start items-start w-1/2 h-screen">
