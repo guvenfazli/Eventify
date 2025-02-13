@@ -7,7 +7,7 @@ export default function Categories() {
       <SingleCategory imageUrl="art.jpg" category="Art" />
       <SingleCategory imageUrl="sports.jpg" category="Sports" />
       <SingleCategory imageUrl="tech.jpg" category="Technology" />
-      <SingleCategory imageUrl="travel.jpg" category="Technology" />
+      <SingleCategory imageUrl="travel.jpg" category="Travel" />
     </div>
   )
 }
