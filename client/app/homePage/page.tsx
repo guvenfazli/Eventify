@@ -1,5 +1,6 @@
 import GreetSection from "@/components/homePage/greetSection/greetSection"
 import ExploreCategories from "@/components/homePage/exploreCategories/exploreCategories"
+import PopularEvents from "@/components/homePage/popularEvents/popularEvents"
 export default async function Page() {
 
   try {
@@ -18,6 +19,7 @@ export default async function Page() {
         <GreetSection countryList={countryList} />
         <div className="flex flex-col justify-start items-start px-32 w-full">
           <ExploreCategories />
+          <PopularEvents />
         </div>
       </div>
     )
@@ -30,6 +32,4 @@ export default async function Page() {
       </div>
     </div>
   }
-
-
 }
