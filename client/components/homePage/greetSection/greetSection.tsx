@@ -1,8 +1,15 @@
 "use client"
 
 import SearchSection from "./searchSection"
+import { useDispatch } from "react-redux"
+import { restCountriesAction } from "@/store/slices/restCountriesSlice"
 
 export default function GreetSection({ countryList }: any) {
+
+  const dispatch = useDispatch()
+
+  dispatch(restCountriesAction.getCountries(countryList))
+
   return (
     <div className="flex flex-col items-center justify-center w-full relative space-y-7 min-h-[578px] bg-[url('/assets/homePage/eventPicture.jpeg')] bg-bottom bg-cover">
       <div className="absolute inset-0 bg-[#2B293D] opacity-50" />

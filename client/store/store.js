@@ -5,14 +5,15 @@ import {
 } from 'redux-persist';
 import storage from "redux-persist/lib/storage"
 import authSlice from "./slices/authSlice"
-
+import restCountriesSlice from "./slices/restCountriesSlice"
 const persistConfig = {
   key: 'root',
   storage,
 }
 
 const rootReducer = persistReducer(persistConfig, combineReducers({
-  userInfo: authSlice.reducer
+  userInfo: authSlice.reducer,
+  countrySlice: restCountriesSlice.reducer
 }))
 
 export const store = configureStore({

@@ -1,5 +1,6 @@
 import CreateEvent from "@/components/createEvent/createEvent"
-export default function Page(){
+export default async function Page() {
+
   return (
     <div>
       <CreateEvent />

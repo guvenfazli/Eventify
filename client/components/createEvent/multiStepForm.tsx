@@ -2,10 +2,11 @@ import FirstStep from "./firstStep/firstStep"
 import SecondStep from "./secondStep/secondStep"
 interface ComponentProps {
   step: number,
-  setStep: React.Dispatch<React.SetStateAction<number>>
+  setStep: React.Dispatch<React.SetStateAction<number>>,
+
 }
 
-export default function MultiStepForm({ step, setStep }: ComponentProps) {
+export default function MultiStepForm({ step, setStep, }: ComponentProps) {
   return (
     <form>
 
