@@ -16,8 +16,6 @@ export default function EventFormInput({ placeholder, name }: ComponentProps) {
     dispatch(multiStepFormAction.fillTheForm({ [name]: e?.target.value }))
   }
 
-
-
   return (
     <input onChange={fillTheForm} value={multiFormData[name] || ""} className="border border-[#ACACAC] rounded-md px-5 py-2 font-opensans text-[22px] outline-none placeholder:text-[#ACACAC] w-1/2" placeholder={placeholder} name={name} />
   )
