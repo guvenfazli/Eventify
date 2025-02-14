@@ -6,15 +6,19 @@ import {
 import storage from "redux-persist/lib/storage"
 import authSlice from "./slices/authSlice"
 import restCountriesSlice from "./slices/restCountriesSlice"
+import multiStepFormSlice from "./slices/multiStepFormSlice"
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: [multiStepFormSlice]
 }
 
 const rootReducer = persistReducer(persistConfig, combineReducers({
   userInfo: authSlice.reducer,
-  countrySlice: restCountriesSlice.reducer
+  countrySlice: restCountriesSlice.reducer,
+  multiFormSlice: multiStepFormSlice.reducer
 }))
+
 
 export const store = configureStore({
   reducer: { rootReducer },

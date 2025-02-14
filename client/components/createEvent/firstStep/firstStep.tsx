@@ -4,6 +4,11 @@ import EventCategory from "./eventDetails/eventCategory"
 import DatenTime from "./date&time/dateTime"
 import EventLocation from "./eventLocation/eventLocation"
 import EventDescription from "./description/eventDescription"
+
+
+
+
+
 export default function FirstStep() {
   return (
     <>
