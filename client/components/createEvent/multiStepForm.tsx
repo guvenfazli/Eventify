@@ -3,6 +3,7 @@ import EventDetails from "./eventDetails/eventDetails"
 import EventCategory from "./eventDetails/eventCategory"
 import DatenTime from "./date&time/dateTime"
 import EventLocation from "./eventLocation/eventLocation"
+import EventDescription from "./description/eventDescription"
 export default function MultiStepForm() {
   return (
     <form>
@@ -25,7 +26,11 @@ export default function MultiStepForm() {
         <EventLocation formLabel="Where?" />
       </div>
 
+      <FormSection formSection="Description" />
 
+      <div className="flex flex-col gap-10 mb-10">
+        <EventDescription formLabel="Description" />
+      </div>
     </form>
   )
 }
