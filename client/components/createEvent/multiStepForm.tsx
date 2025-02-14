@@ -1,36 +1,32 @@
-import FormSection from "./formSection"
-import EventDetails from "./eventDetails/eventDetails"
-import EventCategory from "./eventDetails/eventCategory"
-import DatenTime from "./date&time/dateTime"
-import EventLocation from "./eventLocation/eventLocation"
-import EventDescription from "./description/eventDescription"
-export default function MultiStepForm() {
+import FirstStep from "./firstStep/firstStep"
+import SecondStep from "./secondStep/secondStep"
+interface ComponentProps {
+  step: number,
+  setStep: React.Dispatch<React.SetStateAction<number>>
+}
+
+export default function MultiStepForm({ step, setStep }: ComponentProps) {
   return (
     <form>
-      <FormSection formSection="Event Details" />
 
-      <div className="flex flex-col gap-10 mb-10">
-        <EventDetails formLabel="Event Title" />
-        <EventCategory formLabel="Event Category" />
+      {step === 0 && <FirstStep />}
+      {step === 1 && <SecondStep />}
+
+
+
+      <div className="flex justify-center items-center w-full">
+
+        {step > 0 &&
+          <button onClick={() => setStep(prev => prev -= 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20x] font-opensans font-bold">
+            Back
+          </button>
+        }
+
+        <button onClick={() => setStep(prev => prev += 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20x] font-opensans font-bold">
+          Continue
+        </button>
       </div>
 
-      <FormSection formSection="Date & Time" />
-
-      <div className="flex flex-col gap-10 mb-10">
-        <DatenTime formLabel="Sessions" />
-      </div>
-
-      <FormSection formSection="Location" />
-
-      <div className="flex flex-col gap-10 mb-10">
-        <EventLocation formLabel="Where?" />
-      </div>
-
-      <FormSection formSection="Description" />
-
-      <div className="flex flex-col gap-10 mb-10">
-        <EventDescription formLabel="Description" />
-      </div>
     </form>
   )
 }

@@ -1,5 +1,5 @@
-import EventFormLabel from "../eventFormLabel"
-import EventFormInput from "../eventFormInput"
+import EventFormLabel from "../../eventFormLabel"
+import EventFormInput from "../../eventFormInput"
 
 interface ComponentProps {
   formLabel: string

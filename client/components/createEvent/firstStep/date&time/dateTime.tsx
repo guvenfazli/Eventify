@@ -1,4 +1,4 @@
-import EventFormLabel from "../eventFormLabel"
+import EventFormLabel from "../../eventFormLabel"
 import ChooseDateTime from "./chooseDateTime"
 interface ComponentProps {
   formLabel: string

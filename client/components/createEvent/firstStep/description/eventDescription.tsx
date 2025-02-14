@@ -1,4 +1,4 @@
-import EventFormLabel from "../eventFormLabel"
+import EventFormLabel from "../../eventFormLabel"
 
 interface ComponentProps {
   formLabel: string
@@ -12,7 +12,7 @@ export default function EventDescription({ formLabel }: ComponentProps) {
           <EventFormLabel htmlFor="description">{formLabel}</EventFormLabel>
         </div>
         <div className="flex gap-3 items-center justify-start w-full">
-          <textarea cols={150} rows={100} name="description" id="description"
+          <textarea cols={150} rows={10} name="description" id="description"
             className="border border-[#ACACAC] rounded-md px-5 py-2 font-opensans outline-none placeholder:text-[#ACACAC]" 
             placeholder="Please add a small text about the event..."
           />
