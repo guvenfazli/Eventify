@@ -1,7 +1,11 @@
+import EventDate from "./eventDate"
+import EventInformation from "./eventInformation"
 export default function EventCardBottom() {
   return (
-    <div>
-      <p>Here will be the information for Date, title, time, price, who's interested</p>
+    <div className="flex w-full justify-around items-start p-3 gap-5">
+      <EventDate />
+
+      <EventInformation />
     </div>
   )
 }

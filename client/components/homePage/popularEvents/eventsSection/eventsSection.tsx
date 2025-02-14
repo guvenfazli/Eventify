@@ -8,7 +8,7 @@ export default function EventsSection() {
       <EventCard />
       <EventCard />
       <EventCard />
-      <EventCard />
+  
     </div>
   )
 }
