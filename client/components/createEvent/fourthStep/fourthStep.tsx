@@ -7,7 +7,7 @@ interface ComponentProps {
 
 export default function FourthStep({ filePicker }: ComponentProps) {
   return (
-    <div>
+    <div className="mb-10">
       <FormSection formSection="Event Preview" />
       <div className="flex justify-center items-start w-full p-5 border-2 border-[#2B293D] rounded-xl">
         <EventPreview />

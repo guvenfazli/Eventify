@@ -10,7 +10,7 @@ const multiStepFormSlice = createSlice({
     startTime: "",
     endTime: "",
     location: "",
-    description: "",
+    description: ``,
     eventType: "",
     ticketQuantity: "",
     ticketPrice: "",

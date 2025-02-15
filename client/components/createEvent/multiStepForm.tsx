@@ -11,10 +11,10 @@ interface ComponentProps {
 }
 
 export default function MultiStepForm({ step, setStep }: ComponentProps) {
-  
+
   const [filePicker, setFilePicker] = useState<File | undefined>()
-  
-  
+
+
   return (
     <form>
 
@@ -26,14 +26,24 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
       <div className="flex justify-center items-center gap-5 w-full">
 
         {step > 0 &&
-          <button onClick={() => setStep(prev => prev -= 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20x] font-opensans font-bold">
+          <button onClick={() => setStep(prev => prev -= 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20px] font-opensans font-bold">
             Back
           </button>
         }
 
-        <button onClick={() => setStep(prev => prev += 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20x] font-opensans font-bold">
-          Continue
-        </button>
+        {step !== 3 &&
+          <button onClick={() => setStep(prev => prev += 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20px] font-opensans font-bold">
+            Continue
+          </button>
+        }
+
+        {step === 3 &&
+          <button type="button" className="bg-[#FFE047] text-[#2B293D] rounded-lg px-5 py-2 text-[20px] font-opensans font-bold">
+            Create Event!
+          </button>
+        }
+
+
       </div>
 
     </form>
