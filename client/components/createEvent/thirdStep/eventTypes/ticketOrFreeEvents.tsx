@@ -1,14 +1,12 @@
 import { IoTicketOutline } from "react-icons/io5";
 import { MdMoneyOffCsred } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { multiStepFormAction } from "@/store/slices/multiStepFormSlice";
-
-
 
 interface ComponentProps {
   eventType: string
 }
+
 export default function TicketOrFreeEvents({ eventType }: ComponentProps) {
 
   const dispatch = useDispatch()
