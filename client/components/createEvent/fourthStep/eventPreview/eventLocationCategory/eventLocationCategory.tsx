@@ -1,10 +1,12 @@
-import EventLocation from "./eventLocation"
+import EventTicketInformation from "../eventInformation/eventTicketInformation"
 import EventCategory from "./eventCategory"
 export default function EventLocationCategory() {
   return (
-    <div className="flex items-start justify-between w-full text-[#2D2C3C]">
-      <EventLocation />
-      <EventCategory />
+    <div className="flex flex-col items-end justify-start w-full text-[#2D2C3C]">
+      <div className="flex flex-col justify-between h-full">
+        <EventTicketInformation />
+        <EventCategory />
+      </div>
     </div>
   )
 }

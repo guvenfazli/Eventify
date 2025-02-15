@@ -8,8 +8,10 @@ export default function EventPreview() {
     <div className="flex flex-col w-full justify-start items-start gap-5">
       <EventImage />
       <EventTitle />
-      <EventInformation />
-      <EventLocationCategory />
+      <div className="flex justify-between w-full">
+        <EventInformation />
+        <EventLocationCategory />
+      </div>
       <EventDescription />
     </div>
   )
