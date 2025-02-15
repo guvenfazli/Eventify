@@ -16,7 +16,6 @@ export default async function Page() {
     }
 
     const countryList = await response.json()
-    console.log(countryList)
 
     return (
       <div className="flex flex-col items-start justify-start">
