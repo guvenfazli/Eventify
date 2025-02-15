@@ -2,6 +2,7 @@ import FirstStep from "./firstStep/firstStep"
 import SecondStep from "./secondStep/secondStep"
 import ThirdStep from "./thirdStep/thirdStep"
 import FourthStep from "./fourthStep/fourthStep"
+import { useState } from "react"
 
 interface ComponentProps {
   step: number,
@@ -10,13 +11,17 @@ interface ComponentProps {
 }
 
 export default function MultiStepForm({ step, setStep }: ComponentProps) {
+  
+  const [filePicker, setFilePicker] = useState<File | undefined>()
+  
+  
   return (
     <form>
 
       {step === 0 && <FirstStep />}
-      {step === 1 && <SecondStep />}
+      {step === 1 && <SecondStep setFilePicker={setFilePicker} />}
       {step === 2 && <ThirdStep />}
-      {step === 3 && <FourthStep />}
+      {step === 3 && <FourthStep filePicker={filePicker} />}
 
       <div className="flex justify-center items-center gap-5 w-full">
 

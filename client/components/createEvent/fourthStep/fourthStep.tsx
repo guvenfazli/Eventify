@@ -1,7 +1,11 @@
 import FormSection from "../formSection"
 import EventPreview from "./eventPreview/eventPreview"
 
-export default function FourthStep() {
+interface ComponentProps {
+  filePicker: File | undefined
+}
+
+export default function FourthStep({ filePicker }: ComponentProps) {
   return (
     <div>
       <FormSection formSection="Event Preview" />
