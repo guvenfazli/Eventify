@@ -13,7 +13,9 @@ const multiStepFormSlice = createSlice({
     description: "",
     eventType: "",
     ticketQuantity: "",
-    ticketPrice: ""
+    ticketPrice: "",
+    image: {},
+    imageURL: ""
   },
   reducers: {
     fillTheForm(state, action) {
