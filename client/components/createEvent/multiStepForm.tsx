@@ -1,6 +1,6 @@
 import FirstStep from "./firstStep/firstStep"
 import SecondStep from "./secondStep/secondStep"
-
+import ThirdStep from "./thirdStep/thirdStep"
 
 
 interface ComponentProps {
@@ -15,7 +15,7 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
 
       {step === 0 && <FirstStep />}
       {step === 1 && <SecondStep />}
-
+      {step === 2 && <ThirdStep />}
       <div className="flex justify-center items-center gap-5 w-full">
 
         {step > 0 &&
