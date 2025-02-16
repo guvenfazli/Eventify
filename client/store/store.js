@@ -10,7 +10,7 @@ import multiStepFormSlice from "./slices/multiStepFormSlice"
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [multiStepFormSlice]
+  blacklist: ["multiFormSlice"]
 }
 
 const rootReducer = persistReducer(persistConfig, combineReducers({
