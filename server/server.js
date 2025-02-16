@@ -49,9 +49,9 @@ app.use(cors({
   credentials: true,
   origin: 'http://localhost:3000'
 }))
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).array('eventImage', 1))
 app.use(cookieparser())
 app.use(bodyParser.json())
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter })).single('eventImage')
 app.use( // Session store for Sequelize with Dialect MySQL.
   session({
     secret: `${process.env.DB_SESSION_SECRET}`,
