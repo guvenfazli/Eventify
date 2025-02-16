@@ -23,7 +23,6 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
 
   async function createEvent(e: BaseSyntheticEvent) {
     e.preventDefault()
-    console.log(filePicker)
     const formData = { ...enteredValues }
     const fd = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
@@ -38,7 +37,11 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
         body: fd
       })
 
-      if (!response.ok) {
+      if (!filePicker) {
+        const error = new Error()
+        error.message = "Please choose an Image!"
+        throw error
+      } else if (!response.ok) {
         const resData = await response.json()
         const error = new Error(resData.message)
         throw error

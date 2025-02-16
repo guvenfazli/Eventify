@@ -3,7 +3,6 @@ import { useState } from "react"
 import CreateEventHeader from "./createEventHeader"
 import StepTracker from "./stepTracker"
 import MultiStepForm from "./multiStepForm"
-
 export default function CreateEvent() {
 
 
@@ -15,7 +14,7 @@ export default function CreateEvent() {
     <div className="flex flex-col w-full p-12 gap-12">
       <CreateEventHeader />
       <div className="flex flex-col w-full px-16 gap-10">
-        <StepTracker />
+        <StepTracker step={step} />
         <MultiStepForm step={step} setStep={setStep} />
       </div>
     </div>
