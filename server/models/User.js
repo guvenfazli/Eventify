@@ -1,10 +1,10 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes, literal } = require('sequelize')
 const sequelize = require('../utils/database')
 
 const User = sequelize.define('user', {
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
+    type: DataTypes.UUID,
+    defaultValue: literal('gen_random_uuid()'),
     primaryKey: true,
   },
   name: {

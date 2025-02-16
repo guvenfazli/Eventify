@@ -43,6 +43,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 /* Models */
 const User = require('./models/User')
+const Event = require('./models/Event')
 
 /* Middlewares */
 app.use(cors({
@@ -52,7 +53,7 @@ app.use(cors({
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).array('eventImage', 1))
 app.use(cookieparser())
 app.use(bodyParser.json())
-app.use( // Session store for Sequelize with Dialect MySQL.
+app.use( // Session store for Sequelize with Dialect PostgreSQL.
   session({
     secret: `${process.env.DB_SESSION_SECRET}`,
     store: new SequelizeStore({

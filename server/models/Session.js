@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = require('../utils/database')
 
-const Session = sequelize.define('session', {
+/* const Session = sequelize.define('session', {
   sid: {
     type: DataTypes.STRING,
     primaryKey: true,
@@ -10,7 +10,7 @@ const Session = sequelize.define('session', {
   userName: DataTypes.STRING,
   expires: DataTypes.DATE,
   data: DataTypes.TEXT,
-})
+}) */
 
 exports.extendDefaultFields = (defaults, session) => {
   return {
