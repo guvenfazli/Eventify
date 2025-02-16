@@ -6,12 +6,15 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
-const authRouter = require('./routes/authRoutes')
 const dotenv = require('dotenv')
 const { extendDefaultFields } = require('./models/Session')
 dotenv.config({ path: './.env' });
 
 var SequelizeStore = require("connect-session-sequelize")(session.Store);
+
+/* Routes */
+const authRouter = require('./routes/authRoutes')
+const adminRouter = require('./routes/adminRoutes')
 
 /* Swagger API */
 const swaggerUI = require('swagger-ui-express')
@@ -44,7 +47,7 @@ app.use( // Session store for Sequelize with Dialect MySQL.
 /* Routes */
 
 app.use('/auth', authRouter)
-
+app.use('/admin', adminRouter)
 
 
 app.use((error, req, res, next) => {
