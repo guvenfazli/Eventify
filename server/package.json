@@ -11,6 +11,7 @@
   "author": "Guven Fazli",
   "license": "ISC",
   "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.44",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "connect-session-sequelize": "^7.1.7",
