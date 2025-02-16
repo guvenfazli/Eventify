@@ -6,11 +6,29 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
+const multer = require('multer')
 const dotenv = require('dotenv')
 const { extendDefaultFields } = require('./models/Session')
 dotenv.config({ path: './.env' });
 
 var SequelizeStore = require("connect-session-sequelize")(session.Store);
+
+/* Multer Settings for Image Uploading */
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'eventImages')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'application/pdf') {
+    cb(null, true)
+  }
+}
 
 /* Routes */
 const authRouter = require('./routes/authRoutes')
@@ -33,6 +51,7 @@ app.use(cors({
 }))
 app.use(cookieparser())
 app.use(bodyParser.json())
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter })).single('eventImage')
 app.use( // Session store for Sequelize with Dialect MySQL.
   session({
     secret: `${process.env.DB_SESSION_SECRET}`,

@@ -23,7 +23,7 @@ export default function ChooseImage({ setFilePicker }: ComponentProps) {
 
   return (
     <div className="flex flex-col gap-10 mb-10">
-      <input onChange={(e) => uploadImage(e)} type="file" className="border border-[#ACACAC] rounded-md px-5 py-2 font-opensans text-[22px] outline-none placeholder:text-[#ACACAC] w-1/2" accept=".jpg, .jpeg, .png" />
+      <input name="eventImage" onChange={(e) => uploadImage(e)} type="file" className="border border-[#ACACAC] rounded-md px-5 py-2 font-opensans text-[22px] outline-none placeholder:text-[#ACACAC] w-1/2" accept=".jpg, .jpeg, .png"  />
     </div>
   )
 }
