@@ -1,9 +1,13 @@
 import { FaArrowLeft } from "react-icons/fa";
-
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 export default function CreateEventHeader() {
+
+  const router = useRouter()
+
   return (
     <div className="flex justify-start items-center gap-10 text-[#2D2C3C] text-[48px] font-bold font-monster">
-      <FaArrowLeft className="text-[34px]" />
+      <FaArrowLeft onClick={() => router.back()} className="text-[34px] hover:cursor-pointer" />
       <p>Create a New Event</p>
     </div>
   )
