@@ -40,7 +40,7 @@ export default function LoginForm() {
       }
 
       const resData = await response.json()
-      dispatch(authActions.logIn(resData.loggedAccount))
+
       toast({
         title: "Success!",
         description: resData.message,
@@ -48,6 +48,7 @@ export default function LoginForm() {
       })
       router.push('/homePage')
       setIsLogging(false)
+      dispatch(authActions.logIn(resData.loggedAccount))
 
     } catch (err: unknown) {
       const requestError = err as ErrorType

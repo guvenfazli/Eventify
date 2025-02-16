@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { IoTicketOutline, IoStarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "@/store/slices/authSlice";
+import { restCountriesAction } from "@/store/slices/restCountriesSlice"
 import { useToast } from "@/hooks/use-toast"
 
 interface ErrorType {
@@ -50,13 +51,14 @@ export default function HeaderRight() {
       }
 
       const resData = await response.json()
-      dispatch(authActions.logOut())
       toast({
         title: "Success!",
         description: resData.message,
         className: "bg-[#FFE047] text-black"
       })
       router.push('/')
+      dispatch(authActions.logOut())
+      dispatch(restCountriesAction.removeCountries())
 
     } catch (err: unknown) {
       const error = err as ErrorType
@@ -65,7 +67,7 @@ export default function HeaderRight() {
         description: error.message,
         className: "bg-red-700 text-white"
       })
-    
+
     }
   }
 
