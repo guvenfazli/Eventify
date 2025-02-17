@@ -33,6 +33,7 @@ const fileFilter = (req, file, cb) => {
 /* Routes */
 const authRouter = require('./routes/authRoutes')
 const adminRouter = require('./routes/adminRoutes')
+const userRouter = require('./routes/userRoutes')
 
 /* Swagger API */
 const swaggerUI = require('swagger-ui-express')
@@ -68,6 +69,7 @@ app.use( // Session store for Sequelize with Dialect PostgreSQL.
 
 app.use('/auth', authRouter)
 app.use('/admin', adminRouter)
+app.use('/', userRouter)
 
 
 app.use((error, req, res, next) => {

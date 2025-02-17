@@ -9,13 +9,22 @@ export default async function Page() {
   try {
 
     const response = await fetch('https://restcountries.com/v3.1/region/europe')
+    const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents', {
+      credentials: "include"
+    })
+
     if (!response.ok) {
       const resData = await response.json()
       const error = new Error(resData)
       throw error
     }
 
-    const countryList = await response.json()
+    const [countryRes, trendingRes] = await Promise.all([response, trendingAroundTheWorld])
+    const [countryList, trendingList] = await Promise.all([
+      countryRes.json(),
+      trendingRes.json()
+    ])
+
 
     return (
       <div className="flex flex-col items-start justify-start">
@@ -23,9 +32,9 @@ export default async function Page() {
         <div className="flex flex-col justify-start items-start px-32 w-full">
           <ExploreCategories />
           <div className="flex flex-col justify-start items-start gap-32 w-full">
+            <TrendingEvents trendingList={trendingList.foundEvents} />
             <PopularEvents />
             <OnlineEvents />
-            <TrendingEvents />
           </div>
         </div>
       </div>

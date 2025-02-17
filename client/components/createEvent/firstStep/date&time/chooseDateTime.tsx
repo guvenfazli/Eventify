@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import { useDispatch, useSelector } from "react-redux"
 import { multiStepFormAction } from "@/store/slices/multiStepFormSlice"
 
@@ -16,6 +17,8 @@ export default function ChooseDateTime({ label, htmlFor, inputType, name, placeH
 
   function fillTheForm(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch(multiStepFormAction.fillTheForm({ [name]: e?.target.value }))
+    const chosenDate = dayjs(e?.target.value).unix()
+    console.log(chosenDate)
   }
 
   return (
