@@ -21,7 +21,6 @@ interface event {
 
 interface ComponentProps {
   event: event
-
 }
 
 
@@ -30,7 +29,7 @@ export default function EventCardBottom({ event }: ComponentProps) {
   return (
     <div className="flex w-full justify-start items-start px-3 gap-5">
       <EventDate endDate={event.endDate} startDate={event.startDate}  />
-      <EventInformation />
+      <EventInformation event={event} />
     </div>
   )
 }

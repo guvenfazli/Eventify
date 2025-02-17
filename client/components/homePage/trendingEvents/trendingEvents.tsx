@@ -33,7 +33,7 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
         <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Trending Events Around the World</p>
       </div>
 
-      <div className="flex flex-col justify-start gap-5 items-start">
+      <div className="flex flex-col justify-start gap-5 items-start w-full">
         <EventsSection trendingList={trendingList} />
         <div className="flex w-full justify-center items-center">
           <button
