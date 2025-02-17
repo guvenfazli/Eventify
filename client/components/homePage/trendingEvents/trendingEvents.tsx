@@ -29,7 +29,7 @@ interface ComponentProps {
 export default function TrendingEvents({ trendingList }: ComponentProps) {
 
   const [eventList, setEventList] = useState<event[]>(trendingList)
-  const [page, setPage] = useState<number>(0)
+  const [page, setPage] = useState<number>(6)
 
   useEffect(() => {
 
@@ -55,17 +55,13 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
       }
     }
 
-    if (page > 0) {
+    if (page >= 6) {
       fetchMoreEvents()
     }
 
   }, [page, setPage])
 
-
   console.log(page)
-
-
-
 
   return (
     <div className="flex flex-col justify-start items-start w-full">
@@ -76,7 +72,7 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
       <div className="flex flex-col justify-start gap-5 items-start w-full">
         <EventsSection trendingList={eventList} />
         <div className="flex w-full justify-center items-center">
-          <button onClick={() => setPage(prev => prev += 1)}
+          <button onClick={() => setPage(prev => prev += 6)}
             className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">
             See More
           </button>

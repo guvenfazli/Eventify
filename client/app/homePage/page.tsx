@@ -9,7 +9,7 @@ export default async function Page() {
   try {
 
     const response = await fetch('https://restcountries.com/v3.1/region/europe')
-    const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents?page=0', {
+    const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents?page=6', {
       credentials: "include"
     })
 
