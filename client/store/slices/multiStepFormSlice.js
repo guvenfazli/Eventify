@@ -20,6 +20,23 @@ const multiStepFormSlice = createSlice({
   reducers: {
     fillTheForm(state, action) {
       return { ...state, ...action.payload }
+    },
+    emptyTheForm(state) {
+      return state = {
+        title: "",
+        category: "",
+        startDate: "",
+        endDate: "",
+        startTime: "",
+        endTime: "",
+        location: "",
+        description: ``,
+        eventType: "",
+        ticketQuantity: "",
+        ticketPrice: "",
+        image: {},
+        imageURL: ""
+      }
     }
   }
 })

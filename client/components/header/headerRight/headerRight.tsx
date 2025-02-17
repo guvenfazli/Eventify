@@ -11,6 +11,7 @@ import { IoTicketOutline, IoStarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "@/store/slices/authSlice";
 import { restCountriesAction } from "@/store/slices/restCountriesSlice"
+import { multiStepFormAction } from "@/store/slices/multiStepFormSlice"
 import { useToast } from "@/hooks/use-toast"
 
 interface ErrorType {
@@ -58,6 +59,7 @@ export default function HeaderRight() {
       })
       router.push('/')
       dispatch(authActions.logOut())
+      dispatch(multiStepFormAction.emptyTheForm())
       dispatch(restCountriesAction.removeCountries())
 
     } catch (err: unknown) {
