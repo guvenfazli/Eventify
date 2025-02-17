@@ -9,11 +9,11 @@ export default async function Page() {
   try {
 
     const response = await fetch('https://restcountries.com/v3.1/region/europe')
-    const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents', {
+    const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents?page=0', {
       credentials: "include"
     })
 
-    if (!response.ok) {
+    if (!response.ok || !trendingAroundTheWorld.ok) {
       const resData = await response.json()
       const error = new Error(resData)
       throw error

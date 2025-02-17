@@ -3,7 +3,7 @@ export default function OnlineEvents() {
   return (
     <div className="flex flex-col justify-start items-start w-full">
       <div className="flex flex-col justify-start gap-5 items-start">
-        <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Discover Best of Online Events</p>
+        <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Discover Best of Free Events</p>
       </div>
 
       <div className="flex flex-col justify-start gap-5 items-start w-full">

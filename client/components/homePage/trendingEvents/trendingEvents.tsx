@@ -1,3 +1,5 @@
+"use client"
+import { useState, useEffect } from "react"
 import EventsSection from "../popularEvents/eventsSection/eventsSection"
 
 interface event {
@@ -25,8 +27,46 @@ interface ComponentProps {
 
 
 export default function TrendingEvents({ trendingList }: ComponentProps) {
-  console.log(trendingList)
-  
+
+  const [eventList, setEventList] = useState<event[]>(trendingList)
+  const [page, setPage] = useState<number>(0)
+
+  useEffect(() => {
+
+    async function fetchMoreEvents() {
+      try {
+
+        const response = await fetch(`http://localhost:8080/trendingWorldEvents?page=${page}`, {
+          credentials: "include"
+        })
+
+        if (!response.ok) {
+          const resData = await response.json()
+          const error = new Error(resData)
+          throw error
+        }
+
+        const resData = await response.json()
+        setEventList(resData.foundEvents)
+
+      } catch (err: unknown) {
+        const error = err as { message: string }
+        console.log(error.message)
+      }
+    }
+
+    if (page > 0) {
+      fetchMoreEvents()
+    }
+
+  }, [page, setPage])
+
+
+  console.log(page)
+
+
+
+
   return (
     <div className="flex flex-col justify-start items-start w-full">
       <div className="flex flex-col justify-start gap-5 items-start">
@@ -34,9 +74,9 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
       </div>
 
       <div className="flex flex-col justify-start gap-5 items-start w-full">
-        <EventsSection trendingList={trendingList} />
+        <EventsSection trendingList={eventList} />
         <div className="flex w-full justify-center items-center">
-          <button
+          <button onClick={() => setPage(prev => prev += 1)}
             className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">
             See More
           </button>
