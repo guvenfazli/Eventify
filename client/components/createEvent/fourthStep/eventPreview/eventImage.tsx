@@ -6,9 +6,8 @@ export default function EventImage() {
   const imageURL = useSelector((state: any) => state.rootReducer.multiFormSlice.imageURL)
 
   return (
-    <div className="flex w-full relative min-h-[570px] border border-red-700">
-      <p>Will be picture here</p>
-      <Image fill src={imageURL} alt="uploadedEventPic" />
+    <div className="flex w-full relative min-h-[570px]">
+      <Image fill src={imageURL} alt="uploadedEventPic" className=" rounded-3xl" />
     </div>
     
   )
