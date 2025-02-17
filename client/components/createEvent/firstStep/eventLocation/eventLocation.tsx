@@ -45,7 +45,7 @@ export default function EventLocation({ formLabel }: ComponentProps) {
               <SelectValue placeholder="Please Choose a Location!" />
             </SelectTrigger>
             <SelectContent>
-              {countryList.map((country: { name: { common: string } }) => <SelectItem key={country.name.common} value={country.name.common}>{country.name.common}</SelectItem>)}
+              {countryList?.map((country: { name: { common: string } }) => <SelectItem key={country.name.common} value={country.name.common}>{country.name.common}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>

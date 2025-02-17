@@ -19,7 +19,7 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
   const enteredValues = useSelector((state: any) => state.rootReducer.multiFormSlice)
   const [filePicker, setFilePicker] = useState<File | undefined>()
 
-
+  console.log(enteredValues)
 
   async function createEvent(e: BaseSyntheticEvent) {
     e.preventDefault()
@@ -73,7 +73,7 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
         }
 
         {step !== 3 &&
-          <button onClick={() => setStep(prev => prev += 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20px] font-opensans font-bold">
+          <button disabled={step === 1 && enteredValues.imageURL.length <= 0}  onClick={() => setStep(prev => prev += 1)} type="button" className="bg-[#2B293D] text-white rounded-lg px-5 py-2 text-[20px] font-opensans font-bold disabled:bg-[#2B293D]/30">
             Continue
           </button>
         }
