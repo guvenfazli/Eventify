@@ -19,7 +19,7 @@ export default function PopularEvents() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-start gap-5 items-start">
+      <div className="flex flex-col justify-start gap-5 items-start w-full">
         {/* <EventsSection /> */}
         <div className="flex w-full justify-center items-center">
           <button

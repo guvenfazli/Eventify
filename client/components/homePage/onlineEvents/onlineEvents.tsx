@@ -6,7 +6,7 @@ export default function OnlineEvents() {
         <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Discover Best of Online Events</p>
       </div>
 
-      <div className="flex flex-col justify-start gap-5 items-start">
+      <div className="flex flex-col justify-start gap-5 items-start w-full">
         {/* <EventsSection /> */}
         <div className="flex w-full justify-center items-center">
           <button

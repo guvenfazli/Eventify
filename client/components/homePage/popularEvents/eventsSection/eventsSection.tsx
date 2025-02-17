@@ -26,7 +26,7 @@ interface ComponentProps {
 export default function EventsSection({ trendingList }: ComponentProps) {
 
   return (
-    <div className="grid grid-cols-3 gap-y-5  w-full">
+    <div className="grid grid-cols-3 gap-y-5 w-full">
       {trendingList.map((event: event) => <EventCard key={event.id} event={event} />)}
     </div>
   )
