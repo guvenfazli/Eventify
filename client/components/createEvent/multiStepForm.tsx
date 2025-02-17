@@ -3,9 +3,10 @@ import SecondStep from "./secondStep/secondStep"
 import ThirdStep from "./thirdStep/thirdStep"
 import FourthStep from "./fourthStep/fourthStep"
 import { BaseSyntheticEvent, useState } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useToast } from "@/hooks/use-toast"
-
+import { multiStepFormAction } from "@/store/slices/multiStepFormSlice"
+import { useRouter } from "next/navigation"
 
 interface ErrorType {
   message: string
@@ -18,6 +19,8 @@ interface ComponentProps {
 
 export default function MultiStepForm({ step, setStep }: ComponentProps) {
 
+  const dispatch = useDispatch()
+  const router = useRouter()
   const enteredValues = useSelector((state: any) => state.rootReducer.multiFormSlice)
   const [filePicker, setFilePicker] = useState<File | undefined>()
   const [isCreating, setIsCreating] = useState<boolean>(false)
@@ -28,10 +31,17 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
     e.preventDefault()
     const formData = { ...enteredValues }
     const fd = new FormData()
+
     Object.entries(formData).forEach(([key, value]) => {
-      fd.append(key, value as string);
+      if (value !== undefined) {
+        if (key !== "imageURL") {
+          fd.append(key, value as string);
+        }
+      }
     });
+
     fd.append("eventImage", filePicker as File)
+
 
     try {
       setIsCreating(true)
@@ -58,8 +68,10 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
         description: resData.message,
         className: "bg-[#FFE047] text-black"
       })
-      setIsCreating(false)
-    } catch (err: unknown) {
+/*       router.push('/homePage')
+ */      setIsCreating(false)
+/*       dispatch(multiStepFormAction.emptyTheForm())
+ */    } catch (err: unknown) {
       const error = err as ErrorType
       toast({
         title: "Error!",

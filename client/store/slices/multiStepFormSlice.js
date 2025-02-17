@@ -3,19 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const multiStepFormSlice = createSlice({
   name: "multiStepFormSlice",
   initialState: {
-    title: null,
-    category: null,
-    startDate: null,
-    endDate: null,
-    startTime: null,
-    endTime: null,
-    location: null,
-    description: null,
-    eventType: null,
-    ticketQuantity: null,
-    ticketPrice: null,
-    image: null,
-    imageURL: null
+    title: undefined,
+    category: undefined,
+    startDate: undefined,
+    endDate: undefined,
+    startTime: undefined,
+    endTime: undefined,
+    location: undefined,
+    description: undefined,
+    eventType: undefined,
+    ticketQuantity: undefined,
+    ticketPrice: undefined,
+    image: undefined,
+    imageURL: undefined
   },
   reducers: {
     fillTheForm(state, action) {
@@ -23,19 +23,19 @@ const multiStepFormSlice = createSlice({
     },
     emptyTheForm(state) {
       return state = {
-        title: null,
-        category: null,
-        startDate: null,
-        endDate: null,
-        startTime: null,
-        endTime: null,
-        location: null,
-        description: null,
-        eventType: null,
-        ticketQuantity: null,
-        ticketPrice: null,
-        image: null,
-        imageURL: null
+        title: undefined,
+        category: undefined,
+        startDate: undefined,
+        endDate: undefined,
+        startTime: undefined,
+        endTime: undefined,
+        location: undefined,
+        description: undefined,
+        eventType: undefined,
+        ticketQuantity: undefined,
+        ticketPrice: undefined,
+        image: undefined,
+        imageURL: undefined
       }
     }
   }
