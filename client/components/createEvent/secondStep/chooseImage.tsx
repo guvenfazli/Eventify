@@ -16,7 +16,7 @@ export default function ChooseImage({ setFilePicker }: ComponentProps) {
     const chosenFile = e.target.files[0]
     const imageURL = URL.createObjectURL(chosenFile)
     dispatch(multiStepFormAction.fillTheForm({ ["imageURL"]: imageURL }))
-    setFilePicker(e.target.files)
+    setFilePicker(chosenFile)
   }
 
 

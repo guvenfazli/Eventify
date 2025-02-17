@@ -18,9 +18,6 @@ router.post('/createEvent', [
     .withMessage('Start Date is required!')
     .isDate()
     .withMessage('It must be a valid date!'),
-  body('endDate')
-    .isDate()
-    .withMessage('It must be a valid date!'),
   body('location')
     .notEmpty()
     .withMessage('Location can not be empty!'),
