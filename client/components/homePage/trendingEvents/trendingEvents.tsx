@@ -32,7 +32,6 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
   const [page, setPage] = useState<number>(6)
 
   useEffect(() => {
-
     async function fetchMoreEvents() {
       try {
 
@@ -60,8 +59,6 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
     }
 
   }, [page, setPage])
-
-  console.log(page)
 
   return (
     <div className="flex flex-col justify-start items-start w-full">
