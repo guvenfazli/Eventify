@@ -48,6 +48,7 @@ const Event = sequelize.define("event", {
   },
   imageURL: {
     type: DataTypes.STRING,
+    allowNull: false
   }
 })
 
