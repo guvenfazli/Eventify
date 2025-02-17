@@ -4,6 +4,8 @@ import ThirdStep from "./thirdStep/thirdStep"
 import FourthStep from "./fourthStep/fourthStep"
 import { BaseSyntheticEvent, useState } from "react"
 import { useSelector } from "react-redux"
+import { useToast } from "@/hooks/use-toast"
+
 
 interface ErrorType {
   message: string
@@ -18,10 +20,12 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
 
   const enteredValues = useSelector((state: any) => state.rootReducer.multiFormSlice)
   const [filePicker, setFilePicker] = useState<File | undefined>()
+  const [isCreating, setIsCreating] = useState<boolean>(false)
+  const { toast } = useToast()
+
 
   async function createEvent(e: BaseSyntheticEvent) {
     e.preventDefault()
-    console.log(filePicker)
     const formData = { ...enteredValues }
     const fd = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
@@ -30,6 +34,7 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
     fd.append("eventImage", filePicker as File)
 
     try {
+      setIsCreating(true)
       const response = await fetch('http://localhost:8080/admin/createEvent', {
         method: "POST",
         credentials: "include",
@@ -48,9 +53,21 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
 
       const resData = await response.json()
 
+      toast({
+        title: "Success!",
+        description: resData.message,
+        className: "bg-[#FFE047] text-black"
+      })
+      setIsCreating(false)
     } catch (err: unknown) {
       const error = err as ErrorType
-      console.log(error.message)
+      toast({
+        title: "Error!",
+        description: error.message,
+        className: "bg-red-700 text-white"
+      })
+      setIsCreating(false)
+
     }
   }
 
@@ -78,7 +95,7 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
         }
 
         {step === 3 &&
-          <button className="bg-[#FFE047] text-[#2B293D] rounded-lg px-5 py-2 text-[20px] font-opensans font-bold">
+          <button disabled={isCreating} className="bg-[#FFE047] text-[#2B293D] rounded-lg px-5 py-2 text-[20px] font-opensans font-bold disabled:bg-[#FFE047]/50 disabled:text-[#2B293D]/50">
             Create Event!
           </button>
         }
