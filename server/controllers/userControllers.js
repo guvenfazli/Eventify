@@ -7,7 +7,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     const foundEvents = await Event.findAll()
 
     if (foundEvents.length <= 0) {
-      throwError("No events found!")
+      throwError(404, "No events found!")
     }
 
     res.status(200).json({ foundEvents })

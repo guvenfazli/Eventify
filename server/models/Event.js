@@ -14,6 +14,10 @@ const Event = sequelize.define("event", {
     type: DataTypes.STRING,
     allowNull: false
   },
+  interested: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
   startDate: {
     type: DataTypes.INTEGER,
     allowNull: false

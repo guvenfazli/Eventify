@@ -5,6 +5,7 @@ interface event {
   title: string,
   category: string,
   startDate: number,
+  interested: number,
   endDate: number,
   startTime: string,
   endTime: string,
@@ -32,7 +33,7 @@ export default function EventInformation({ event }: ComponentProps) {
       <p className="font-opensans font-semibold text-[18px] text-[#5A5A5A]">{event.location}</p>
       <p className="font-opensans text-[18px] text-[#5A5A5A]">{event.startTime} - {event.endTime}</p>
 
-      <EventStats eventType={event.eventType} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} />
+      <EventStats eventType={event.eventType} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} interested={event.interested} />
     </div>
   )
 }
