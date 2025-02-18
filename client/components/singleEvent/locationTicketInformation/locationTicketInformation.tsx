@@ -27,7 +27,7 @@ export default function LocationTicketInformation({ location, eventType, ticketQ
         <div className="flex items-center justify-start gap-3">
           <IoTicket className="text-[30px]" />
           <p className="font-semibold text-[24px] capitalize">Ticket Type: {eventType}</p>
-          {eventType !== "free" && <p>/ {ticketQuantity} x <span className="text-[20px]">{ticketPrice} EUR</span></p>}
+          {eventType !== "free" && <p>/ {ticketQuantity.toLocaleString()} x <span className="text-[20px]">{ticketPrice} EUR</span></p>}
         </div>
 
       </div>
