@@ -21,7 +21,6 @@ interface event {
 
 interface ComponentProps {
   trendingList: event[]
-
 }
 
 export default function EventsSection({ trendingList }: ComponentProps) {
