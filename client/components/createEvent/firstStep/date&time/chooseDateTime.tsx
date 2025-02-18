@@ -15,7 +15,7 @@ export default function ChooseDateTime({ label, htmlFor, inputType, name, placeH
   const dispatch = useDispatch()
   const { toast } = useToast()
   const multiFormData = useSelector((state: any) => state.rootReducer.multiFormSlice)
-  console.log(multiFormData)
+
   function fillTheForm(e: React.ChangeEvent<HTMLInputElement>) {
     const todaysDate = dayjs(new Date()).unix()
     const chosenTimestamp = dayjs(e?.target.value).unix()

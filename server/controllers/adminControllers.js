@@ -28,7 +28,7 @@ exports.createEvent = async (req, res, next) => {
 
     }
 
-    if (todaysDate > +startDate || isNaN(+startDate)) {
+    if (todaysDate > +startDate || isNaN(+startDate) || +endDate < +startDate) {
       throwError(410, "Please choose a valid date!")
     }
 
