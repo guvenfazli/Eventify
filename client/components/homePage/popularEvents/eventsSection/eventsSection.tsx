@@ -15,7 +15,8 @@ interface event {
   ticketPrice: number,
   imageURL: string,
   createdAt: Date,
-  updatedAt: Date
+  updatedAt: Date,
+  interested: number
 }
 
 interface ComponentProps {
