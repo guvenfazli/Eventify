@@ -68,10 +68,10 @@ export default function MultiStepForm({ step, setStep }: ComponentProps) {
         description: resData.message,
         className: "bg-[#FFE047] text-black"
       })
-/*       router.push('/homePage')
- */      setIsCreating(false)
-/*       dispatch(multiStepFormAction.emptyTheForm())
- */    } catch (err: unknown) {
+      router.push('/homePage')
+      setIsCreating(false)
+      dispatch(multiStepFormAction.emptyTheForm())
+    } catch (err: unknown) {
       const error = err as ErrorType
       toast({
         title: "Error!",
