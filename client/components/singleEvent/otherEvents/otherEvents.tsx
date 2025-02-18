@@ -1,5 +1,14 @@
 "use client"
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import EventCard from "@/components/homePage/eventCard/eventCard"
+
 import { useEffect, useState } from "react"
 
 interface ErrorType {
@@ -21,8 +30,8 @@ interface Event {
   ticketQuantity: number,
   ticketPrice: number,
   imageURL: string,
-  createdAt: string,
-  updatedAt: string
+  createdAt: Date,
+  updatedAt: Date
 }
 
 interface ComponentProps {
@@ -64,11 +73,24 @@ export default function OtherEvents({ event }: ComponentProps) {
 
   }, [])
 
-  console.log(similarEvents)
+
 
   return (
     <div className="flex flex-col justify-start items-start w-full">
       <p className="text-[36px] text-[#2D2C3C] font-bold font-opensans">Other Events You May Like</p>
+
+      <Carousel className="w-full">
+        <CarouselContent>
+          {similarEvents.map((event: Event) =>
+
+            <CarouselItem className="basis-1/3" key={event.id}>
+              <EventCard event={event} />
+            </CarouselItem>
+          )}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </div>
   )
 }

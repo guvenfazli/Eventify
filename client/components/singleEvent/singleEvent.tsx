@@ -21,8 +21,8 @@ interface Event {
   ticketQuantity: number,
   ticketPrice: number,
   imageURL: string,
-  createdAt: string,
-  updatedAt: string
+  createdAt: Date,
+  updatedAt: Date
 }
 
 interface ComponentProps {
