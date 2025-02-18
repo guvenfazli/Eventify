@@ -25,13 +25,6 @@ const Event = sequelize.define("event", {
   endDate: {
     type: DataTypes.INTEGER,
   },
-  startTime: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  endTime: {
-    type: DataTypes.STRING,
-  },
   location: {
     type: DataTypes.STRING,
     allowNull: false

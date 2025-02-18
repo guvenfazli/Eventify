@@ -15,25 +15,21 @@ export default function ChooseDateTime({ label, htmlFor, inputType, name, placeH
   const dispatch = useDispatch()
   const { toast } = useToast()
   const multiFormData = useSelector((state: any) => state.rootReducer.multiFormSlice)
-
+  console.log(multiFormData)
   function fillTheForm(e: React.ChangeEvent<HTMLInputElement>) {
-    const time = e?.target.value.split('T')
     const todaysDate = dayjs(new Date()).unix()
-    const chosenDate = dayjs(e?.target.value).unix()
-    if (todaysDate > chosenDate) {
+    const chosenTimestamp = dayjs(e?.target.value).unix()
+
+    if (todaysDate > chosenTimestamp) {
       toast({
         title: "Error!",
         description: "Date and time can not be older than today!",
         className: "bg-red-700 text-white"
       })
     }
-    if (name === "startDate") {
-      dispatch(multiStepFormAction.fillTheForm({ ["startDate"]: time[0] }))
-      dispatch(multiStepFormAction.fillTheForm({ ["startTime"]: time[1] }))
-    } else {
-      dispatch(multiStepFormAction.fillTheForm({ ["endDate"]: time[0] }))
-      dispatch(multiStepFormAction.fillTheForm({ ["endTime"]: time[1] }))
-    }
+
+    dispatch(multiStepFormAction.fillTheForm({ [name]: chosenTimestamp }))
+
   }
 
   return (
