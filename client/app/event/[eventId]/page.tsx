@@ -1,5 +1,5 @@
 import { SearchParams } from "next/dist/server/request/search-params"
-
+import SingleEvent from "@/components/singleEvent/singleEvent"
 interface FetchedEvent {
   id: string,
   title: string,
@@ -50,7 +50,7 @@ export default async function Page({ params }: ComponentProps) {
 
     return (
       <div>
-        <p>Will be the detail page of an event!</p>
+        <SingleEvent event={resData.event} />
       </div>
     )
 
