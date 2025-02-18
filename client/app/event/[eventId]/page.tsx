@@ -1,5 +1,32 @@
 import { SearchParams } from "next/dist/server/request/search-params"
 
+interface FetchedEvent {
+  id: string,
+  title: string,
+  category: string,
+  interested: number,
+  startDate: number,
+  endDate: number,
+  startTime: string,
+  endTime: string,
+  location: string,
+  description: string,
+  eventType: string,
+  ticketQuantity: number,
+  ticketPrice: number,
+  imageURL: string,
+  createdAt: string,
+  updatedAt: string
+}
+
+interface ErrorType {
+  message: string
+}
+
+interface responseData {
+  event: FetchedEvent
+}
+
 interface ComponentProps {
   params: Promise<SearchParams>
 }
@@ -15,11 +42,11 @@ export default async function Page({ params }: ComponentProps) {
 
     if (!response.ok) {
       const resData = await response.json()
-      const error = new Error(resData.message)
+      const error: ErrorType = new Error(resData.message)
       throw error
     }
 
-    const resData = await response.json()
+    const resData: responseData = await response.json()
 
     return (
       <div>
@@ -28,7 +55,7 @@ export default async function Page({ params }: ComponentProps) {
     )
 
   } catch (err: unknown) {
-    const error = err as { message: string }
+    const error = err as ErrorType
     return (
       <div>
         <p>{error.message}</p>
