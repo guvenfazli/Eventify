@@ -45,6 +45,11 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 /* Models */
 const User = require('./models/User')
 const Event = require('./models/Event')
+const UserEventInterested = require('./models/UserEventInterested')
+
+/* Relations */
+User.belongsToMany(Event, { through: UserEventInterested })
+Event.belongsToMany(User, { through: UserEventInterested })
 
 /* Middlewares */
 app.use(cors({

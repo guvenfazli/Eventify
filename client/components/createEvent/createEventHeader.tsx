@@ -1,6 +1,5 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-
 export default function CreateEventHeader() {
 
   const router = useRouter()

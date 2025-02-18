@@ -14,7 +14,7 @@ export default function ImageTitleFavorite({ imageURL, title }: ComponentProps) 
 
       <div className="flex items-center justify-between w-full">
         <p className="font-extrabold text-[60px] font-opensans text-[#2D2C3C]">{title}</p>
-        <button><IoStarOutline className="text-[45px] text-[#2D2C3C]" /></button>
+        <button><IoStarOutline className="text-[45px] text-[#2D2C3C]"/></button>
       </div>
     </div>
   )
