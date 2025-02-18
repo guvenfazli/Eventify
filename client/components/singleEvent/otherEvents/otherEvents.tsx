@@ -8,7 +8,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import EventCard from "@/components/homePage/eventCard/eventCard"
-
+import Loading from "@/app/homePage/loading"
+import ClientErrorComp from "@/components/clientErrorComp/clientErrorComp"
 import { useEffect, useState } from "react"
 
 interface ErrorType {
@@ -40,7 +41,7 @@ interface ComponentProps {
 
 export default function OtherEvents({ event }: ComponentProps) {
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isError, setIsError] = useState<boolean | string>(false)
   const [similarEvents, setSimilarEvents] = useState<Event[]>([])
   console.log(event)
@@ -60,12 +61,11 @@ export default function OtherEvents({ event }: ComponentProps) {
 
         const resData = await response.json()
         setSimilarEvents(resData.similarEvents)
-
-
         setIsLoading(false)
       } catch (err: unknown) {
         const error = err as ErrorType
         setIsError(error.message)
+        setIsLoading(false)
       }
     }
 
@@ -78,18 +78,22 @@ export default function OtherEvents({ event }: ComponentProps) {
   return (
     <div className="flex flex-col justify-start items-start w-full">
       <p className="text-[36px] text-[#2D2C3C] font-bold font-opensans">Other Events You May Like</p>
-      
-      <Carousel className="w-full">
-        <CarouselContent>
-          {similarEvents.map((event: Event) =>
-            <CarouselItem className="basis-1/3" key={event.id}>
-              <EventCard event={event} />
-            </CarouselItem>
-          )}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+
+      {isLoading && <Loading />}
+
+      {isError ? <ClientErrorComp errorMessage={isError} /> :
+        <Carousel className="w-full">
+          <CarouselContent>
+            {similarEvents.map((event: Event) =>
+              <CarouselItem className="basis-1/3" key={event.id}>
+                <EventCard event={event} />
+              </CarouselItem>
+            )}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      }
     </div>
   )
 }
