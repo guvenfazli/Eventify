@@ -1,4 +1,5 @@
 import ImageTitleFavorite from "./imageTitleFavorite/imageTitleFavorite"
+import DateTimeBuyTickets from "./dateTimeBuyTickets/dateTimeBuyTickets"
 interface Event {
   id: string,
   title: string,
@@ -24,8 +25,11 @@ interface ComponentProps {
 
 export default function SingleEvent({ event }: ComponentProps) {
   return (
-    <div className="flex flex-col justify-start items-start w-full p-12 gap-12">
-      <ImageTitleFavorite imageURL={event.imageURL} title={event.title} />
+    <div className="flex justify-start items-start w-full px-12">
+      <div className="flex flex-col justify-start items-start w-full p-12 gap-12">
+        <ImageTitleFavorite imageURL={event.imageURL} title={event.title} />
+        <DateTimeBuyTickets startDate={event.startDate} startTime={event.startTime} endDate={event.endDate} endTime={event.endTime} />
+      </div>
     </div>
   )
 }
