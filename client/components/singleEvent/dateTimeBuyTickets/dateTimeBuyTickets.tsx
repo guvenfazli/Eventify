@@ -16,17 +16,15 @@ export default function DateTimeBuyTickets({ startDate, startTime, endDate, endT
     endDate: endDate ? dayjs.unix(endDate).format("DD/MM/YY") : undefined
   }
 
-  console.log(endTime)
-
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex justify-between items-center w-full">
       <div className="flex flex-col items-start justify-start text-[#2D2C3C] font-opensans">
         <p className="text-[36px] font-bold">Date and Time</p>
 
         <div className="flex items-center justify-start gap-3">
           <CiCalendarDate className="text-[30px] font-semibold" />
           <p className="font-semibold text-[24px]">{formattedDates.startDate}</p>
-          {endDate !== 0 && <p>- {formattedDates.endDate}</p>}
+          {endDate !== 0 && <p className="font-semibold text-[24px]">- {formattedDates.endDate}</p>}
         </div>
 
         <div className="flex items-center justify-start gap-3">
@@ -41,8 +39,6 @@ export default function DateTimeBuyTickets({ startDate, startTime, endDate, endT
           <IoTicket className="mr-5" /> Buy Tickets
         </button>
       </div>
-
-
     </div>
   )
 }
