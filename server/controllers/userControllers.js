@@ -2,6 +2,7 @@ const { throwError } = require('../utils/throwError')
 const User = require('../models/User')
 const Event = require('../models/Event')
 const UserEventInterested = require('../models/UserEventInterested')
+const { Op } = require('sequelize')
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
@@ -74,6 +75,32 @@ exports.beInterested = async (req, res, next) => {
 
     res.status(200).json({ message: "You are now interested!" })
     return;
+  } catch (err) {
+    next(err)
+  }
+
+}
+
+exports.fetchSimilarEvents = async (req, res, next) => {
+  const { location, category, id } = req.query
+
+  try {
+
+    const similarEvents = await Event.findAll({
+      where:
+      {
+        [Op.or]:
+          [{ location }, { category }],
+        [Op.not]: [{ id }]
+      }
+    })
+
+    if (similarEvents.length === 0) {
+      throwError(404, "Could not find any similar event!")
+    }
+
+    res.status(200).json({ similarEvents })
+    return
   } catch (err) {
     next(err)
   }
