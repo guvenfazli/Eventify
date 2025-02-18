@@ -1,15 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/adminControllers')
-const multer = require('multer')
-const upload = multer()
 const { body, } = require('express-validator')
 
 
-router.post('/createEvent', upload.single('eventImage'), [
+router.post('/createEvent', [
   body('title')
-    .exists()
-    .withMessage('Title can not be empty!')
     .notEmpty()
     .withMessage('Title can not be empty!')
     .isLength({ min: 2 })
@@ -27,7 +23,9 @@ router.post('/createEvent', upload.single('eventImage'), [
     .withMessage('Location can not be empty!'),
   body('description')
     .notEmpty()
-    .withMessage('Description can not be empty!'),
+    .withMessage('Description can not be empty!')
+    .isLength({ min: 20 })
+    .withMessage("Please enter at least 20 characters of description."),
   body('eventType')
     .notEmpty()
     .withMessage('Event Type can not be empty!'),
