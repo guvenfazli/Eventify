@@ -16,7 +16,6 @@ export default function EventDescription({ formLabel }: ComponentProps) {
     dispatch(multiStepFormAction.fillTheForm({ ["description"]: e?.target.value }))
   }
 
-  console.log(multiFormData)
   return (
     <div className="flex flex-col w-full">
       <div className="flex w-full gap-5 justify-start items-center">
