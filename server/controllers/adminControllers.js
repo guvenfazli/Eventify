@@ -5,15 +5,13 @@ const dayjs = require('dayjs')
 
 exports.createEvent = async (req, res, next) => {
 
-  const { title, category, startDate, endDate, startTime, endTime, location, description, eventType, ticketQuantity, ticketPrice, imageURL } = req.body
+  const { title, category, startDate, endDate, location, description, eventType, ticketQuantity, ticketPrice } = req.body
   const uploadedFile = req.files[0] ? req.files[0] : undefined
   const convertedQuantity = +ticketQuantity
   const convertedPrice = +ticketPrice
 
-  
+
   // Adding startDates as timestamp integers, in order to do checking on frontend.
-  const convertedDate = dayjs(new Date(startDate + 'T' + startTime)).unix() // Combining chosen Time and Date in order to create the correct Timestamp
-  const convertedEndDate = endDate ? dayjs(new Date(endDate)).unix() : undefined
   const todaysDate = dayjs(new Date()).unix()
 
   try {
@@ -25,17 +23,17 @@ exports.createEvent = async (req, res, next) => {
 
     if (!uploadedFile) {
       throwError(410, "Please upload an image for your event!")
-    } else if (convertedEndDate && isNaN(convertedEndDate)) {
+    } else if (endDate && isNaN(+endDate)) {
       throwError(410, "Please choose a valid end date!")
 
     }
 
-    if (todaysDate > convertedDate) {
+    if (todaysDate > +startDate || isNaN(+startDate)) {
       throwError(410, "Please choose a valid date!")
     }
 
     if (eventType === "paid") {
-      if (isNaN(convertedQuantity) || isNaN(convertedPrice) || isNaN(convertedDate)) {
+      if (isNaN(convertedQuantity) || isNaN(convertedPrice) || isNaN(+startDate)) {
         throwError(410, "Please enter numeric values for quantity and price!")
       }
     }
@@ -44,10 +42,8 @@ exports.createEvent = async (req, res, next) => {
     const createdEvent = await Event.create({
       title,
       category,
-      startDate: convertedDate,
-      endDate: +convertedEndDate || 0,
-      startTime,
-      endTime,
+      startDate: +startDate,
+      endDate: +endDate || 0,
       location,
       description,
       eventType,

@@ -23,8 +23,6 @@ interface Event {
   interested: number,
   startDate: number,
   endDate: number,
-  startTime: string,
-  endTime: string,
   location: string,
   description: string,
   eventType: string,
@@ -32,7 +30,7 @@ interface Event {
   ticketPrice: number,
   imageURL: string,
   createdAt: Date,
-  updatedAt: Date
+  updatedAt: Date,
 }
 
 interface ComponentProps {

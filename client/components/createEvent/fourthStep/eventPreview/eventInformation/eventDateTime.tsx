@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function EventDateTime() {
 
   const multiStepValues = useSelector((state: any) => state.rootReducer.multiFormSlice)
-  console.log(multiStepValues)
+
   return (
     <div className="flex flex-col items-start justify-start text-[#2D2C3C] font-opensans">
       <p className="text-[36px] font-bold">Date and Time</p>

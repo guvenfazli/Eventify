@@ -7,8 +7,6 @@ interface event {
   category: string,
   startDate: number,
   endDate: number,
-  startTime: string,
-  endTime: string,
   location: string,
   description: string,
   eventType: string,
@@ -16,7 +14,8 @@ interface event {
   ticketPrice: number,
   imageURL: string,
   createdAt: Date,
-  updatedAt: Date
+  updatedAt: Date,
+  interested: number
 }
 
 interface ComponentProps {
@@ -28,7 +27,7 @@ interface ComponentProps {
 export default function EventCardBottom({ event }: ComponentProps) {
   return (
     <div className="flex w-full justify-start items-start px-3 gap-5">
-      <EventDate endDate={event.endDate} startDate={event.startDate}  />
+      <EventDate endDate={event.endDate} startDate={event.startDate} />
       <EventInformation event={event} />
     </div>
   )

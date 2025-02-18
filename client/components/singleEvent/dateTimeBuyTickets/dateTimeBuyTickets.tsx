@@ -5,15 +5,15 @@ import dayjs from "dayjs";
 interface ComponentProps {
   startDate: number,
   endDate: number,
-  startTime: string,
-  endTime: string
 }
 
-export default function DateTimeBuyTickets({ startDate, startTime, endDate, endTime }: ComponentProps) {
+export default function DateTimeBuyTickets({ startDate, endDate }: ComponentProps) {
 
   const formattedDates = {
     startDate: dayjs.unix(startDate).format("DD/MM/YY"),
-    endDate: endDate ? dayjs.unix(endDate).format("DD/MM/YY") : undefined
+    startTime: dayjs.unix(startDate).format("HH:mm"),
+    endDate: endDate ? dayjs.unix(endDate).format("DD/MM/YY") : undefined,
+    endTime: endDate ? dayjs.unix(endDate).format("HH:mm") : undefined
   }
 
   return (
@@ -29,8 +29,8 @@ export default function DateTimeBuyTickets({ startDate, startTime, endDate, endT
 
         <div className="flex items-center justify-start gap-3">
           <CiClock1 className="text-[30px]" />
-          <p className="font-semibold text-[24px]">{startTime}</p>
-          {endTime !== "null" && <p className="font-semibold text-[24px]">{endTime}</p>}
+          <p className="font-semibold text-[24px]">{formattedDates.startTime}</p>
+          {endDate !== undefined && <p className="font-semibold text-[24px]">{formattedDates.endTime}</p>}
         </div>
       </div>
 
