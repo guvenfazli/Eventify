@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 import { useDispatch, useSelector } from "react-redux"
 import { multiStepFormAction } from "@/store/slices/multiStepFormSlice"
-
+import { useToast } from "@/hooks/use-toast"
 interface ComponentProps {
   label: string
   htmlFor: string,
@@ -13,12 +13,27 @@ interface ComponentProps {
 export default function ChooseDateTime({ label, htmlFor, inputType, name, placeHolder }: ComponentProps) {
 
   const dispatch = useDispatch()
+  const { toast } = useToast()
   const multiFormData = useSelector((state: any) => state.rootReducer.multiFormSlice)
 
   function fillTheForm(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch(multiStepFormAction.fillTheForm({ [name]: e?.target.value }))
+    const time = e?.target.value.split('T')
+    const todaysDate = dayjs(new Date()).unix()
     const chosenDate = dayjs(e?.target.value).unix()
-    console.log(chosenDate)
+    if (todaysDate > chosenDate) {
+      toast({
+        title: "Error!",
+        description: "Date and time can not be older than today!",
+        className: "bg-red-700 text-white"
+      })
+    }
+    if (name === "startDate") {
+      dispatch(multiStepFormAction.fillTheForm({ ["startDate"]: time[0] }))
+      dispatch(multiStepFormAction.fillTheForm({ ["startTime"]: time[1] }))
+    } else {
+      dispatch(multiStepFormAction.fillTheForm({ ["endDate"]: time[0] }))
+      dispatch(multiStepFormAction.fillTheForm({ ["endTime"]: time[1] }))
+    }
   }
 
   return (

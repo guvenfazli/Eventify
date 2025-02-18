@@ -25,7 +25,6 @@ export default async function Page() {
       trendingRes.json()
     ])
 
-
     return (
       <div className="flex flex-col items-start justify-start">
         <GreetSection countryList={countryList} />

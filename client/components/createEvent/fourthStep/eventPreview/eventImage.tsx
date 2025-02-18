@@ -7,7 +7,7 @@ export default function EventImage() {
 
   return (
     <div className="flex w-full relative min-h-[570px]">
-      <Image fill src={imageURL} alt="uploadedEventPic" className=" rounded-3xl" />
+      <Image src={imageURL} alt="uploadedEventPic" className=" rounded-3xl" style={{backgroundPosition: "center", backgroundSize: "cover"}} />
     </div>
     
   )

@@ -6,12 +6,15 @@ const dayjs = require('dayjs')
 exports.createEvent = async (req, res, next) => {
 
   const { title, category, startDate, endDate, startTime, endTime, location, description, eventType, ticketQuantity, ticketPrice, imageURL } = req.body
-
   const uploadedFile = req.files[0] ? req.files[0] : undefined
   const convertedQuantity = +ticketQuantity
   const convertedPrice = +ticketPrice
-  const convertedDate = dayjs(new Date(startDate)).unix()
+
+  
+  // Adding startDates as timestamp integers, in order to do checking on frontend.
+  const convertedDate = dayjs(new Date(startDate + 'T' + startTime)).unix() // Combining chosen Time and Date in order to create the correct Timestamp
   const convertedEndDate = endDate ? dayjs(new Date(endDate)).unix() : undefined
+  const todaysDate = dayjs(new Date()).unix()
 
   try {
     const errors = validationResult(req)
@@ -25,6 +28,10 @@ exports.createEvent = async (req, res, next) => {
     } else if (convertedEndDate && isNaN(convertedEndDate)) {
       throwError(410, "Please choose a valid end date!")
 
+    }
+
+    if (todaysDate > convertedDate) {
+      throwError(410, "Please choose a valid date!")
     }
 
     if (eventType === "paid") {

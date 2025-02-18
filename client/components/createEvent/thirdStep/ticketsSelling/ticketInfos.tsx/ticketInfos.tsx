@@ -16,7 +16,6 @@ export default function TicketInfos({ label, htmlFor, inputType, name, placeHold
   const multiStepValues = useSelector((state: any) => state.rootReducer.multiFormSlice)
   const [numError, isNumError] = useState<boolean>(false)
 
-
   function changeTicketInfoValue(type: string, e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.value.length > 0 && isNaN(+e.target.value)) {
       isNumError(true)
@@ -25,7 +24,6 @@ export default function TicketInfos({ label, htmlFor, inputType, name, placeHold
       dispatch(multiStepFormAction.fillTheForm({ [name]: +e.target.value }))
     }
   }
-
 
   return (
     <div className="flex flex-col justify-start items-start">

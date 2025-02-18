@@ -11,10 +11,8 @@ export default function DatenTime({ formLabel }: ComponentProps) {
           <EventFormLabel htmlFor="title">{formLabel}</EventFormLabel>
         </div>
         <div className="flex gap-3 items-center justify-start w-full">
-          <ChooseDateTime htmlFor="startDate" inputType="date" label="Start Date *" name="startDate" />
-          <ChooseDateTime htmlFor="endDate" inputType="date" label="End Date" name="endDate" />
-          <ChooseDateTime htmlFor="startTime" inputType="text" label="Start Time *" name="startTime" placeHolder="07:00 PM" />
-          <ChooseDateTime htmlFor="endTime" inputType="text" label="End Time" name="endTime" placeHolder="12:00 AM" />
+          <ChooseDateTime htmlFor="startDate" inputType="datetime-local" label="Start Date *" name="startDate" />
+          <ChooseDateTime htmlFor="endDate" inputType="datetime-local" label="End Date" name="endDate" />
         </div>
       </div>
     </div>
