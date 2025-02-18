@@ -1,5 +1,7 @@
 const { throwError } = require('../utils/throwError')
+const User = require('../models/User')
 const Event = require('../models/Event')
+const UserEventInterested = require('../models/UserEventInterested')
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
@@ -35,4 +37,45 @@ exports.fetchSingleEvent = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+
+}
+
+exports.beInterested = async (req, res, next) => {
+  const userId = req.session.userInfo.userId
+  const eventId = req.params.eventId
+
+  try {
+
+    if (!userId) {
+      throwError(410, "Please log in first!")
+    } else if (!eventId) {
+      throwError(410, "Event does not exist!")
+    }
+
+    const foundUser = await User.findByPk(userId, { include: Event })
+    const foundEvent = await Event.findByPk(eventId)
+    const alreadytInterested = foundUser.events.some((event) => event.id === eventId)
+    if (alreadytInterested) {
+      await UserEventInterested.destroy({ where: { userId, eventId } })
+      foundEvent.interested -= 1
+      foundEvent.save()
+      res.status(200).json({ message: "You are not interested anymore!" })
+      return;
+    }
+
+    const interested = await foundUser.addEvent(foundEvent)
+
+    if (!interested) {
+      throwError(404, 'Something went wrong!')
+    }
+
+    foundEvent.interested += 1
+    await foundEvent.save()
+
+    res.status(200).json({ message: "You are now interested!" })
+    return;
+  } catch (err) {
+    next(err)
+  }
+
 }

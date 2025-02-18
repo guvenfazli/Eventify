@@ -1,10 +1,54 @@
+"use client"
 import Image from "next/image";
 import { IoStar, IoStarOutline } from "react-icons/io5";
+import { useToast } from "@/hooks/use-toast";
+interface ErrorType {
+  message: string
+}
+
+
 interface ComponentProps {
   imageURL: string,
-  title: string
+  title: string,
+  eventId: string
 }
-export default function ImageTitleFavorite({ imageURL, title }: ComponentProps) {
+export default function ImageTitleFavorite({ imageURL, title, eventId }: ComponentProps) {
+
+  const { toast } = useToast()
+
+  async function beInterested() {
+    try {
+      const response = await fetch(`http://localhost:8080/beInterested/${eventId}`, {
+        method: "POST",
+        credentials: "include"
+      })
+
+      if (!response.ok) {
+        const resData = await response.json()
+        const error = new Error(resData.message)
+        throw error
+      }
+
+      const resData = await response.json()
+
+      toast({
+        title: "Success!",
+        description: resData.message,
+        className: "bg-[#FFE047] text-black"
+      })
+
+    } catch (err: unknown) {
+      const error = err as ErrorType
+      toast({
+        title: "Error!",
+        description: error.message,
+        className: "bg-red-700 text-white"
+      })
+    }
+  }
+
+
+
 
   return (
     <div className="flex flex-col justify-start items-start w-full">
@@ -14,7 +58,7 @@ export default function ImageTitleFavorite({ imageURL, title }: ComponentProps) 
 
       <div className="flex items-center justify-between w-full">
         <p className="font-extrabold text-[60px] font-opensans text-[#2D2C3C]">{title}</p>
-        <button><IoStarOutline className="text-[45px] text-[#2D2C3C]"/></button>
+        <button onClick={beInterested}><IoStarOutline className="text-[45px] text-[#2D2C3C]" /></button>
       </div>
     </div>
   )

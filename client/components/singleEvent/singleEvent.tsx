@@ -32,7 +32,7 @@ export default function SingleEvent({ event }: ComponentProps) {
     <div className="flex justify-start items-start w-full p-12">
       <PageRotator />
       <div className="flex flex-col justify-start items-start w-full px-12 gap-12">
-        <ImageTitleFavorite imageURL={event.imageURL} title={event.title} />
+        <ImageTitleFavorite imageURL={event.imageURL} title={event.title} eventId={event.id} />
         <DateTimeBuyTickets startDate={event.startDate} startTime={event.startTime} endDate={event.endDate} endTime={event.endTime} />
         <LocationTicketInformation location={event.location} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} eventType={event.eventType} />
         <Category eventCategory={event.category} />
