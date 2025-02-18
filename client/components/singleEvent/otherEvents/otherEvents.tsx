@@ -78,11 +78,10 @@ export default function OtherEvents({ event }: ComponentProps) {
   return (
     <div className="flex flex-col justify-start items-start w-full">
       <p className="text-[36px] text-[#2D2C3C] font-bold font-opensans">Other Events You May Like</p>
-
+      
       <Carousel className="w-full">
         <CarouselContent>
           {similarEvents.map((event: Event) =>
-
             <CarouselItem className="basis-1/3" key={event.id}>
               <EventCard event={event} />
             </CarouselItem>

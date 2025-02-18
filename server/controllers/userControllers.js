@@ -10,7 +10,6 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
   try {
     const foundEvents = await Event.findAll({ limit: page })
-    console.log(foundEvents)
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
@@ -92,7 +91,8 @@ exports.fetchSimilarEvents = async (req, res, next) => {
         [Op.or]:
           [{ location }, { category }],
         [Op.not]: [{ id }]
-      }
+      },
+      limit: 12
     })
 
     if (similarEvents.length === 0) {
