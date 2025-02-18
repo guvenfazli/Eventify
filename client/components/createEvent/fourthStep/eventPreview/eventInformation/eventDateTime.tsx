@@ -17,8 +17,9 @@ export default function EventDateTime() {
 
       <div className="flex items-center justify-start gap-3">
         <CiClock1 className="text-[30px]" />
-        <p className="font-semibold text-[24px]">{multiStepValues.startTime} - </p>
-        <p className="font-semibold text-[24px]">{multiStepValues.endTime}</p>
+        <p className="font-semibold text-[24px]">{multiStepValues.startTime}  </p>
+        {multiStepValues.endTime && <p className="font-semibold text-[24px]">- {multiStepValues.endTime}</p>}
+
       </div>
     </div>
   )

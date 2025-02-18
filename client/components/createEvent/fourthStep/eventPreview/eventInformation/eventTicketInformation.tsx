@@ -11,7 +11,7 @@ export default function EventTicketInformation() {
 
       <div className="flex items-center justify-start gap-3">
         <IoTicket className="text-[30px] font-semibold" />
-        <p className="font-semibold text-[24px]">Ticket Type: {multiStepValues.eventType} / {multiStepValues.ticketQuantity} x <span className="text-[20px]">{multiStepValues.ticketPrice} EUR</span></p>
+        <p className="font-semibold text-[24px] capitalize">Ticket Type: {multiStepValues.eventType} / {multiStepValues.ticketQuantity} x <span className="text-[20px]">{multiStepValues.ticketPrice} EUR</span></p>
       </div>
     </div>
   )

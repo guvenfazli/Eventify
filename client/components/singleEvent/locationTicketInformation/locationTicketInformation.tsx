@@ -29,7 +29,6 @@ export default function LocationTicketInformation({ location, eventType, ticketQ
           <p className="font-semibold text-[24px] capitalize">Ticket Type: {eventType}</p>
           {eventType !== "free" && <p>/ {ticketQuantity.toLocaleString()} x <span className="text-[20px]">{ticketPrice} EUR</span></p>}
         </div>
-
       </div>
     </div>
   )

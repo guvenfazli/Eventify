@@ -34,20 +34,20 @@ exports.createEvent = async (req, res, next) => {
     }
 
 
-    /*     const createdEvent = await Event.create({
-          title,
-          category,
-          startDate: convertedDate,
-          endDate: +convertedEndDate || 0,
-          startTime,
-          endTime,
-          location,
-          description,
-          eventType,
-          ticketQuantity: +ticketQuantity || 0,
-          ticketPrice: +ticketPrice || 0,
-          imageURL: uploadedFile.path
-        }) */
+    const createdEvent = await Event.create({
+      title,
+      category,
+      startDate: convertedDate,
+      endDate: +convertedEndDate || 0,
+      startTime,
+      endTime,
+      location,
+      description,
+      eventType,
+      ticketQuantity: +ticketQuantity || 0,
+      ticketPrice: +ticketPrice || 0,
+      imageURL: uploadedFile.path
+    })
 
     res.status(200).json({ message: 'Event successfully created!' })
 

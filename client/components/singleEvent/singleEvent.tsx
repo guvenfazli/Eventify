@@ -4,6 +4,7 @@ import DateTimeBuyTickets from "./dateTimeBuyTickets/dateTimeBuyTickets"
 import LocationTicketInformation from "./locationTicketInformation/locationTicketInformation"
 import Category from "./category/category"
 import Description from "./description/description"
+import OtherEvents from "./otherEvents/otherEvents"
 interface Event {
   id: string,
   title: string,
@@ -37,6 +38,7 @@ export default function SingleEvent({ event }: ComponentProps) {
         <LocationTicketInformation location={event.location} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} eventType={event.eventType} />
         <Category eventCategory={event.category} />
         <Description description={event.description} />
+        <OtherEvents />
       </div>
     </div>
   )
