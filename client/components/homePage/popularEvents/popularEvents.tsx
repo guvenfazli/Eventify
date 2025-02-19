@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import UpcomingEvents from "./eventsSection/upcomingEvents"
+import ClientErrorComp from "@/components/clientErrorComp/clientErrorComp"
 
 interface event {
   id: string,
@@ -26,7 +28,9 @@ interface ErrorType {
 export default function PopularEvents() {
 
   const [upcomingList, setUpcomingList] = useState<event[]>([])
-  const [days, setDays] = useState<number>(7)
+  const [isError, setIsError] = useState<boolean | string>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [days, setDays] = useState<number>(0)
   const [page, setPage] = useState<number>(6)
 
   useEffect(() => {
@@ -39,17 +43,22 @@ export default function PopularEvents() {
 
         if (!response.ok) {
           const resData = await response.json()
+          console.log(resData)
           const error = new Error(resData.message)
           throw error
         }
 
         const resData = await response.json()
-        setUpcomingList(resData.upcomingList)
 
+        setIsLoading(false)
+        setIsError(false)
+        setUpcomingList(resData.upcomingList)
 
       } catch (err: unknown) {
         const error = err as ErrorType
-        console.log(error.message)
+        setIsLoading(false)
+        setUpcomingList([])
+        setIsError(error.message)
       }
     }
 
@@ -65,18 +74,19 @@ export default function PopularEvents() {
         <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Upcoming Events</p>
         <div className="flex justify-start space-x-10 items-center text-[#6F6F6F]">
           <button onClick={() => setDays(0)}
-            className="text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out">
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 0 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
             Today
           </button>
-          <button onClick={() => setDays(1)}
-            className="text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out">Tomorrow</button>
+          <button onClick={() => setDays(2)}
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 2 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>Tomorrow</button>
           <button onClick={() => setDays(7)}
-            className="text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out">This Week</button>
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 7 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>This Week</button>
         </div>
       </div>
 
       <div className="flex flex-col justify-start gap-5 items-start w-full">
-        {/* <EventsSection /> */}
+        {isError && <ClientErrorComp errorMessage={isError} />}
+        <UpcomingEvents upcomingList={upcomingList} />
         <div className="flex w-full justify-center items-center">
           <button
             className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">

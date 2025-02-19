@@ -52,8 +52,10 @@ export default function ImageTitleFavorite({ imageURL, title, eventId }: Compone
 
   return (
     <div className="flex flex-col justify-start items-start w-full">
-      <div className="flex justify-start items-start relative min-h-[570px] w-full mb-10 border border-red-700">
-        <Image fill src={`http://localhost:8080/${imageURL.replaceAll(/\\/g, "/")}`} alt="eventImage" />
+      <div className="flex w-full relative min-h-[570px]">
+        <div
+          className="absolute blur-sm top-0 right-0 bottom-0 left-0" style={{ background: `url(http://localhost:8080/${imageURL.replaceAll(/\\/g, "/")})`, backgroundPosition: "center", backgroundSize: "contain" }} />
+        <Image fill src={`http://localhost:8080/${imageURL.replaceAll(/\\/g, "/")}`} alt="uploadedEventPic" className="rounded-3xl" style={{ objectFit: "contain" }} />
       </div>
 
       <div className="flex items-center justify-between w-full">

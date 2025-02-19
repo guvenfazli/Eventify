@@ -1,4 +1,3 @@
-import Image from "next/image"
 import TagCard from "./tagCard"
 import ImageShowcase from "./imgShowcase"
 interface event {
@@ -27,7 +26,7 @@ export default function EventCardTop({ event }: ComponentProps) {
   
   return (
     <div className="flex w-full rounded-tl-lg rounded-tr-lg min-h-[254px] relative ">
-      <ImageShowcase imgURL={event.imageURL.replaceAll(/\\/g, '/')} />
+      <ImageShowcase imgURL={formattedURL} />
       <TagCard eventTag={event.category}  />
     </div>
   )

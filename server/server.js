@@ -6,6 +6,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
+const path = require('path')
 const multer = require('multer')
 const dotenv = require('dotenv')
 const { extendDefaultFields } = require('./models/Session')
@@ -57,6 +58,7 @@ app.use(cors({
   origin: 'http://localhost:3000'
 }))
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).array('eventImage', 1))
+app.use('/eventImages', express.static(path.join(__dirname, 'eventImages')))
 app.use(cookieparser())
 app.use(bodyParser.json())
 app.use( // Session store for Sequelize with Dialect PostgreSQL.

@@ -25,14 +25,18 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
 exports.fetchUpcomingEvents = async (req, res, next) => {
   const { page, days } = req.query
-  const todaysTimestamp = dayjs()
-  const calculatedDate = dayjs(todaysTimestamp.add(+days, 'd')).unix()
+  const todaysTimestamp = dayjs().startOf('day')
+  const calculatedDate = dayjs(todaysTimestamp.add(+days, 'd')).startOf('day').unix()
+
+  console.log(dayjs(todaysTimestamp).unix())
+  console.log(calculatedDate)
+
 
   try {
 
-    const upcomingList = await Event.findAll({ where: { startDate: { [Op.lt]: calculatedDate } } })
+    const upcomingList = await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
 
-    if (foundEvents.length === 0) {
+    if (upcomingList.length === 0) {
       throwError(404, "There is no upcoming events this week, sorry!")
     }
 
