@@ -4,9 +4,10 @@ const Event = require('../models/Event')
 const Ticket = require('../models/Ticket')
 const UserEventInterested = require('../models/UserEventInterested')
 const UserTicket = require('../models/UserTicket')
-const { Op } = require('sequelize')
+const { Op, Sequelize } = require('sequelize')
 const dayjs = require('dayjs')
 const { validationResult } = require('express-validator')
+const sequelize = require('../utils/database')
 
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
@@ -135,7 +136,6 @@ exports.buyTicket = async (req, res, next) => {
   const userId = req.session.userInfo.userId
   const { fullName, email, phone, ticketQuantity, totalPrice } = req.body
   const errors = validationResult(req)
-  console.log(ticketId, fullName, email, phone, ticketQuantity, totalPrice)
   const convertedQuantity = +ticketQuantity
 
   try {
@@ -154,6 +154,21 @@ exports.buyTicket = async (req, res, next) => {
       throwError(410, 'Tickets are sold out already!')
     }
 
+    const anotherPayment = await UserTicket.findOne({ where: { ticketId: ticketId, userId: userId } })
+
+    if (anotherPayment) {
+      await sequelize.transaction(async (t) => {
+        anotherPayment.totalPrice += +totalPrice
+        foundTicket.ticketQuantity -= convertedQuantity
+        await Promise.all([
+          foundTicket.save({ transaction: t }),
+          anotherPayment.save({ transaction: t })
+        ]);
+        return;
+      })
+    }
+
+
     const boughtTicket = await UserTicket.create({
       fullName,
       email,
@@ -162,8 +177,7 @@ exports.buyTicket = async (req, res, next) => {
       userId,
       ticketId
     })
-    
-    console.log(foundTicket.ticketQuantity)
+
     foundTicket.ticketQuantity -= convertedQuantity
     await foundTicket.save()
     res.status(200).json({ message: 'Thank you for choosing Eventify!' })
