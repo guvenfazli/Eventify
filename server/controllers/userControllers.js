@@ -3,6 +3,8 @@ const User = require('../models/User')
 const Event = require('../models/Event')
 const UserEventInterested = require('../models/UserEventInterested')
 const { Op } = require('sequelize')
+const dayjs = require('dayjs')
+
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
@@ -19,6 +21,13 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+}
+
+exports.fetchUpcomingEvents = async (req, res, next) => {
+  const { page, days } = req.query
+  const todaysTimestamp = dayjs()
+  const calculatedDate = dayjs(todaysTimestamp.add(+days, 'd')).unix()
+  console.log(calculatedDate)
 }
 
 exports.fetchSingleEvent = async (req, res, next) => {

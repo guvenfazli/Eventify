@@ -18,14 +18,14 @@ interface event {
 }
 
 interface ComponentProps {
-  trendingList: event[]
+  upcomingList: event[]
 }
 
-export default function EventsSection({ trendingList }: ComponentProps) {
+export default function UpcomingEvents({ upcomingList }: ComponentProps) {
 
   return (
     <div className="grid grid-cols-3 gap-y-5 w-full">
-      {trendingList.map((event: event) => <EventCard key={event.id} event={event} />)}
+      {upcomingList.map((event: event) => <EventCard key={event.id} event={event} />)}
     </div>
   )
 }

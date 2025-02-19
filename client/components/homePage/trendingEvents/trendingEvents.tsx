@@ -8,8 +8,6 @@ interface event {
   category: string,
   startDate: number,
   endDate: number,
-  startTime: string,
-  endTime: string,
   location: string,
   description: string,
   eventType: string,
@@ -17,7 +15,8 @@ interface event {
   ticketPrice: number,
   imageURL: string,
   createdAt: Date,
-  updatedAt: Date
+  updatedAt: Date,
+  interested: number
 }
 
 interface ComponentProps {
