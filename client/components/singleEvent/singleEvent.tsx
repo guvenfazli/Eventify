@@ -40,7 +40,6 @@ interface ComponentProps {
 
 export default function SingleEvent({ event }: ComponentProps) {
 
-  console.log(event)
   return (
     <div className="flex justify-start items-start w-full p-12">
       <PageRotator />

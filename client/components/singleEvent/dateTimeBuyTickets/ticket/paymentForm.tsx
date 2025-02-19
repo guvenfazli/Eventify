@@ -56,7 +56,8 @@ export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: Componen
       </div>
 
       <div className="flex w-full justify-center items-center">
-        <button type="submit" className="bg-[#FFE047] font-opensans text-[#2B293D] font-semibold rounded-lg py-2 w-full hover:bg-[#FFE047]/50 duration-100 ">Buy</button>
+        <button disabled={ticketQ === 0} type="submit"
+          className="bg-[#FFE047] font-opensans text-[#2B293D] font-semibold rounded-lg py-2 w-full hover:text-[#2B293D]/50 hover:bg-[#FFE047]/50 duration-100 disabled:bg-[#FFE047]/50 disabled:text-[#2B293D]/50">Buy</button>
       </div>
     </form>
   )

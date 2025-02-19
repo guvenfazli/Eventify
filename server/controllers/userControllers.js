@@ -3,8 +3,10 @@ const User = require('../models/User')
 const Event = require('../models/Event')
 const Ticket = require('../models/Ticket')
 const UserEventInterested = require('../models/UserEventInterested')
+const UserTicket = require('../models/UserTicket')
 const { Op } = require('sequelize')
 const dayjs = require('dayjs')
+const { validationResult } = require('express-validator')
 
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
@@ -130,8 +132,45 @@ exports.beInterested = async (req, res, next) => {
 
 exports.buyTicket = async (req, res, next) => {
   const ticketId = req.params.ticketId
+  const userId = req.session.userInfo.userId
   const { fullName, email, phone, ticketQuantity, totalPrice } = req.body
+  const errors = validationResult(req)
   console.log(ticketId, fullName, email, phone, ticketQuantity, totalPrice)
+  const convertedQuantity = +ticketQuantity
+
+  try {
+
+    if (!errors.isEmpty()) {
+      throwError(410, errors.array()[0].msg)
+    }
+
+    const foundTicket = await Ticket.findByPk(ticketId)
+
+    if (!foundTicket) {
+      throwError(404, 'Ticket could not found!')
+    } else if (convertedQuantity === 0) {
+      throwError(410, 'Please at least choose one ticket!')
+    } else if (convertedQuantity > foundTicket) {
+      throwError(410, 'Tickets are sold out already!')
+    }
+
+    const boughtTicket = await UserTicket.create({
+      fullName,
+      email,
+      phone,
+      totalPrice: +totalPrice,
+      userId,
+      ticketId
+    })
+    
+    console.log(foundTicket.ticketQuantity)
+    foundTicket.ticketQuantity -= convertedQuantity
+    await foundTicket.save()
+    res.status(200).json({ message: 'Thank you for choosing Eventify!' })
+    return;
+  } catch (err) {
+    next(err)
+  }
 }
 
 exports.fetchSimilarEvents = async (req, res, next) => {
