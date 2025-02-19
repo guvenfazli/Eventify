@@ -164,8 +164,10 @@ exports.buyTicket = async (req, res, next) => {
           foundTicket.save({ transaction: t }),
           anotherPayment.save({ transaction: t })
         ]);
-        return;
       })
+      
+      res.status(200).json({ message: 'Thank you for choosing Eventify!' })
+      return;
     }
 
 
