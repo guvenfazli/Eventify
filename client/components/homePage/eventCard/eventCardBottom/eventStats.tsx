@@ -15,7 +15,7 @@ export default function EventStats({ eventType, ticketQuantity, ticketPrice, int
         <IoTicket className="text-[#5A5A5A]" />
         {eventType === "free" ?
           <p className="font-semibold font-opensans text-[#5A5A5A]">Free</p> :
-          <p className="font-semibold font-opensans text-[#5A5A5A]">{ticketPrice}</p>
+          <p className="font-semibold font-opensans text-[#5A5A5A]">{ticketPrice} <span className="text-xs">EUR</span></p>
         }
       </div>
 

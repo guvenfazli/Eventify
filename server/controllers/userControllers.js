@@ -28,10 +28,6 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
   const todaysTimestamp = dayjs().startOf('day')
   const calculatedDate = dayjs(todaysTimestamp.add(+days, 'd')).startOf('day').unix()
 
-  console.log(dayjs(todaysTimestamp).unix())
-  console.log(calculatedDate)
-
-
   try {
 
     const upcomingList = await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
