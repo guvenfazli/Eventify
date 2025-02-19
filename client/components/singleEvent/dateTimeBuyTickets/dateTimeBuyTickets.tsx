@@ -18,9 +18,11 @@ import Ticket from "./ticket/ticket";
 interface ComponentProps {
   startDate: number,
   endDate: number,
+  ticketPrice: number,
+  ticketQuantity: number
 }
 
-export default function DateTimeBuyTickets({ startDate, endDate }: ComponentProps) {
+export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ticketQuantity }: ComponentProps) {
 
   const [isProceed, setIsProceed] = useState<boolean>(false)
 
@@ -62,7 +64,7 @@ export default function DateTimeBuyTickets({ startDate, endDate }: ComponentProp
             <DialogHeader className="bg-white py-5 px-2">
               <DialogTitle className="text-[#2D2C3C] font-opensans">Select Tickets</DialogTitle>
             </DialogHeader>
-            <Ticket isProceed={isProceed} />
+            <Ticket isProceed={isProceed} ticketPrice={ticketPrice} ticketQuantity={ticketQuantity} />
             <DialogFooter>
               <button onClick={() => setIsProceed(prev => !prev)} className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">{!isProceed ? 'Proceed' : 'Back'}</button>
 
