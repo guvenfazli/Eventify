@@ -27,7 +27,20 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
   const { page, days } = req.query
   const todaysTimestamp = dayjs()
   const calculatedDate = dayjs(todaysTimestamp.add(+days, 'd')).unix()
-  console.log(calculatedDate)
+
+  try {
+
+    const upcomingList = await Event.findAll({ where: { startDate: { [Op.lt]: calculatedDate } } })
+
+    if (foundEvents.length === 0) {
+      throwError(404, "There is no upcoming events this week, sorry!")
+    }
+
+    res.status(200).json({ upcomingList })
+    return;
+  } catch (err) {
+    next(err)
+  }
 }
 
 exports.fetchSingleEvent = async (req, res, next) => {
