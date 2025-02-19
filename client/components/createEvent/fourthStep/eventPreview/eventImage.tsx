@@ -7,8 +7,10 @@ export default function EventImage() {
 
   return (
     <div className="flex w-full relative min-h-[570px]">
-      <Image fill src={imageURL} alt="uploadedEventPic" className=" rounded-3xl" />
+      <div
+        className="absolute blur-sm top-0 right-0 bottom-0 left-0" style={{ background: `url(${imageURL})`, backgroundPosition: "center", backgroundSize: "contain" }} />
+      <Image fill src={imageURL} alt="uploadedEventPic" className="rounded-3xl" style={{ objectFit: "contain" }} />
     </div>
-    
+
   )
 }
