@@ -24,6 +24,7 @@ export default async function Page() {
       countryRes.json(),
       trendingRes.json()
     ])
+    
 
     return (
       <div className="flex flex-col items-start justify-start">

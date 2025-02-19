@@ -33,7 +33,14 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
     const upcomingList = await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
 
     if (upcomingList.length === 0) {
-      throwError(404, "There is no upcoming events this week, sorry!")
+      if (+days === 0) {
+        throwError(404, "There is no upcoming events today, sorry!")
+      } else if (+days === 2) {
+        throwError(404, "There is no upcoming events tomorrow, sorry!")
+      } else {
+        throwError(404, "There is no upcoming events this week, sorry!")
+
+      }
     }
 
     res.status(200).json({ upcomingList })

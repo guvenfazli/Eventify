@@ -47,10 +47,15 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 const User = require('./models/User')
 const Event = require('./models/Event')
 const UserEventInterested = require('./models/UserEventInterested')
+const Ticket = require('./models/Ticket')
 
 /* Relations */
 User.belongsToMany(Event, { through: UserEventInterested })
 Event.belongsToMany(User, { through: UserEventInterested })
+
+Event.hasOne(Ticket, { onDelete: 'CASCADE' })
+Ticket.belongsTo(Event, { onDelete: 'CASCADE' })
+
 
 /* Middlewares */
 app.use(cors({
