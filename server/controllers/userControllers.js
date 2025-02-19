@@ -128,6 +128,12 @@ exports.beInterested = async (req, res, next) => {
 
 }
 
+exports.buyTicket = async (req, res, next) => {
+  const ticketId = req.params.ticketId
+  const { fullName, email, phone, ticketQuantity, totalPrice } = req.body
+  console.log(ticketId, fullName, email, phone, ticketQuantity, totalPrice)
+}
+
 exports.fetchSimilarEvents = async (req, res, next) => {
   const { location, category, id } = req.query
 

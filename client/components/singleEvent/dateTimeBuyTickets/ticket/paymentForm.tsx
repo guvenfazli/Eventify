@@ -14,8 +14,11 @@ interface ComponentProps {
 export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: ComponentProps) {
 
   async function buyTicket(e: BaseSyntheticEvent) {
-
+    e.preventDefault()
     const fd = new FormData(e.currentTarget as HTMLFormElement)
+
+    fd.append("ticketQuantity", `${ticketQ}`)
+    fd.append("totalPrice", `${ticketQ * ticketPrice}`)
 
     try {
       const response = await fetch(`http://localhost:8080/buyTicket/${ticketId}`, {
@@ -50,6 +53,10 @@ export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: Componen
       <div className="flex justify-around items-center w-full">
         <p className="text-[20px] font-bold">Ticket Quantity: <span className="text-[#287921]">{ticketQ}</span></p>
         <p className="text-[20px] font-bold">Total Price: <span className="text-[#287921]">{ticketQ * ticketPrice} <span className="text-sm text-[#2D2C3C]">EUR</span></span></p>
+      </div>
+
+      <div className="flex w-full justify-center items-center">
+        <button type="submit" className="bg-[#FFE047] font-opensans text-[#2B293D] font-semibold rounded-lg py-2 w-full hover:bg-[#FFE047]/50 duration-100 ">Buy</button>
       </div>
     </form>
   )

@@ -48,6 +48,7 @@ const User = require('./models/User')
 const Event = require('./models/Event')
 const UserEventInterested = require('./models/UserEventInterested')
 const Ticket = require('./models/Ticket')
+const UserTicket = require('./models/UserTicket')
 
 /* Relations */
 User.belongsToMany(Event, { through: UserEventInterested })
@@ -55,6 +56,9 @@ Event.belongsToMany(User, { through: UserEventInterested })
 
 Event.hasOne(Ticket, { onDelete: 'CASCADE' })
 Ticket.belongsTo(Event, { onDelete: 'CASCADE' })
+
+User.belongsToMany(Ticket, { through: UserTicket })
+Ticket.belongsToMany(User, { through: UserTicket })
 
 
 /* Middlewares */

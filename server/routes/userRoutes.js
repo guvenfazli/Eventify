@@ -12,5 +12,6 @@ router.get('/similarEvents', controller.fetchSimilarEvents)
 
 /* P O S T S */
 router.post('/beInterested/:eventId', controller.beInterested)
+router.post('/buyTicket/:ticketId', controller.buyTicket)
 
 module.exports = router
