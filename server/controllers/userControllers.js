@@ -48,7 +48,7 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
 
   try {
 
-    const freeList = await Event.findAll({ where: { eventType: "free" }, limit: +page })
+    const freeList = await Event.findAll({ where: { eventType: "free" }, limit: +page, order: [['interested', 'DESC']] })
 
     if (freeList.length === 0) {
       throwError(404, "There is no free event at the moment, sorry!")
