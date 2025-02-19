@@ -64,7 +64,11 @@ export default function DateTimeBuyTickets({ startDate, endDate }: ComponentProp
             </DialogHeader>
             <Ticket isProceed={isProceed} />
             <DialogFooter>
-              <button onClick={() => setIsProceed(prev => !prev)} className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">Proceed</button>
+              <button onClick={() => setIsProceed(prev => !prev)} className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">{!isProceed ? 'Proceed' : 'Back'}</button>
+
+              {isProceed &&
+                <button className="bg-[#FFE047] font-opensans text-[#2B293D] font-semibold rounded-lg py-2 px-6 hover:bg-[#FFE047]/50 duration-100 ">Buy</button>
+              }
             </DialogFooter>
           </DialogContent>
         </Dialog>
