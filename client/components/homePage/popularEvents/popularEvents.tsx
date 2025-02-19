@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import UpcomingEvents from "./eventsSection/upcomingEvents"
 import ClientErrorComp from "@/components/clientErrorComp/clientErrorComp"
+import Loading from "@/app/createEvent/loading"
+import EventsSection from "./eventsSection/eventsSection"
 
 interface event {
   id: string,
@@ -37,6 +39,8 @@ export default function PopularEvents() {
     async function fetchUpcomingEvents() {
 
       try {
+        setIsLoading(true)
+        setIsError(false)
         const response = await fetch(`http://localhost:8080/upcomingEvents?page=${page}&days=${days}`, {
           credentials: "include"
         })
@@ -51,9 +55,7 @@ export default function PopularEvents() {
         const resData = await response.json()
 
         setIsLoading(false)
-        setIsError(false)
         setUpcomingList(resData.upcomingList)
-
       } catch (err: unknown) {
         const error = err as ErrorType
         setIsLoading(false)
@@ -86,7 +88,8 @@ export default function PopularEvents() {
 
       <div className="flex flex-col justify-start gap-5 items-start w-full">
         {isError && <ClientErrorComp errorMessage={isError} />}
-        <UpcomingEvents upcomingList={upcomingList} />
+        {isLoading && <Loading />}
+        <EventsSection eventList={upcomingList} />
         <div className="flex w-full justify-center items-center">
           <button
             className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">

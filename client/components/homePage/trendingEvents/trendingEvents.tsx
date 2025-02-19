@@ -66,7 +66,7 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
       </div>
 
       <div className="flex flex-col justify-start gap-5 items-start w-full">
-        <EventsSection trendingList={eventList} />
+        <EventsSection eventList={eventList} />
         <div className="flex w-full justify-center items-center">
           <button onClick={() => setPage(prev => prev += 6)}
             className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">

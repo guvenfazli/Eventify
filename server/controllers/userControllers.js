@@ -11,7 +11,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
   const page = req.query.page
 
   try {
-    const foundEvents = await Event.findAll({ limit: page })
+    const foundEvents = await Event.findAll({ limit: page, order: [['interested', 'DESC']] })
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
@@ -37,6 +37,24 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
     }
 
     res.status(200).json({ upcomingList })
+    return;
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.fetchBestFreeEvents = async (req, res, next) => {
+  const { page } = req.query
+
+  try {
+
+    const freeList = await Event.findAll({ where: { eventType: "free" }, limit: +page })
+
+    if (freeList.length === 0) {
+      throwError(404, "There is no free event at the moment, sorry!")
+    }
+
+    res.status(200).json({ freeList })
     return;
   } catch (err) {
     next(err)

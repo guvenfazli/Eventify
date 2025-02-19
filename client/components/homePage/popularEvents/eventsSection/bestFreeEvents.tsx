@@ -18,14 +18,15 @@ interface event {
 }
 
 interface ComponentProps {
-  eventList: event[]
+  freeEventList: event[]
 }
 
-export default function EventsSection({ eventList }: ComponentProps) {
+export default function BestFreeEvents({ freeEventList }: ComponentProps) {
+
 
   return (
     <div className="grid grid-cols-3 gap-y-5 w-full">
-      {eventList.map((event: event) => <EventCard key={event.id} event={event} />)}
+      {freeEventList.map((event: event) => <EventCard key={event.id} event={event} />)}
     </div>
   )
 }

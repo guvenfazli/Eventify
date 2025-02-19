@@ -5,6 +5,8 @@ const controller = require('../controllers/userControllers')
 /* G E T S */
 router.get('/trendingWorldEvents', controller.fetchTrendingAroundTheWorldEvents)
 router.get('/upcomingEvents', controller.fetchUpcomingEvents)
+router.get('/bestFreeEvents', controller.fetchBestFreeEvents)
+
 router.get('/getEvent/:eventId', controller.fetchSingleEvent)
 router.get('/similarEvents', controller.fetchSimilarEvents)
 
