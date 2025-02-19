@@ -1,4 +1,5 @@
-import { BaseSyntheticEvent } from "react"
+import { BaseSyntheticEvent, useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 import FormFields from "./formFields"
 
 interface ErrorType {
@@ -13,6 +14,8 @@ interface ComponentProps {
 
 export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: ComponentProps) {
 
+  const [isBuying, setIsBuying] = useState<boolean>(false)
+  const { toast } = useToast()
   async function buyTicket(e: BaseSyntheticEvent) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget as HTMLFormElement)
@@ -21,6 +24,7 @@ export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: Componen
     fd.append("totalPrice", `${ticketQ * ticketPrice}`)
 
     try {
+      setIsBuying(true)
       const response = await fetch(`http://localhost:8080/buyTicket/${ticketId}`, {
         method: "POST",
         credentials: "include",
@@ -34,16 +38,21 @@ export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: Componen
       }
 
       const resData = await response.json()
-      console.log(resData)
-
+      toast({
+        title: "Success!",
+        description: resData.message,
+        className: "bg-[#FFE047] text-black"
+      })
+      setIsBuying(false)
     } catch (err: unknown) {
       const error = err as ErrorType
-      console.log(error.message)
+      toast({
+        title: "Error!",
+        description: error.message,
+        className: "bg-red-700 text-white"
+      })
     }
   }
-
-
-
 
   return (
     <form onSubmit={(e) => buyTicket(e)} className="flex flex-col gap-4 justify-start items-start w-full bg-white px-5 py-2">
@@ -56,8 +65,8 @@ export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: Componen
       </div>
 
       <div className="flex w-full justify-center items-center">
-        <button disabled={ticketQ === 0} type="submit"
-          className="bg-[#FFE047] font-opensans text-[#2B293D] font-semibold rounded-lg py-2 w-full hover:text-[#2B293D]/50 hover:bg-[#FFE047]/50 duration-100 disabled:bg-[#FFE047]/50 disabled:text-[#2B293D]/50">Buy</button>
+        <button disabled={ticketQ === 0 || isBuying} type="submit"
+          className="bg-[#FFE047] font-opensans text-[#2B293D] font-semibold rounded-lg py-2 w-full hover:text-[#2B293D]/50 hover:bg-[#FFE047]/50 duration-100 disabled:bg-[#FFE047]/50 disabled:text-[#2B293D]/50">{!isBuying ? 'Buy' : 'Processing'}</button>
       </div>
     </form>
   )
