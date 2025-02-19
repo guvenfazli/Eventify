@@ -1,13 +1,49 @@
+import { BaseSyntheticEvent } from "react"
 import FormFields from "./formFields"
+
+interface ErrorType {
+  message: string
+}
 
 interface ComponentProps {
   ticketQ: number,
-  ticketPrice: number
+  ticketPrice: number,
+  ticketId: string
 }
 
-export default function PaymentForm({ ticketQ, ticketPrice }: ComponentProps) {
+export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: ComponentProps) {
+
+  async function buyTicket(e: BaseSyntheticEvent) {
+
+    const fd = new FormData(e.currentTarget as HTMLFormElement)
+
+    try {
+      const response = await fetch(`http://localhost:8080/buyTicket/${ticketId}`, {
+        method: "POST",
+        credentials: "include",
+        body: fd
+      })
+
+      if (!response.ok) {
+        const resData = await response.json()
+        const error = new Error(resData.message)
+        throw error
+      }
+
+      const resData = await response.json()
+      console.log(resData)
+
+    } catch (err: unknown) {
+      const error = err as ErrorType
+      console.log(error.message)
+    }
+  }
+
+
+
+
   return (
-    <form className="flex flex-col gap-4 justify-start items-start w-full bg-white px-5 py-2">
+    <form onSubmit={(e) => buyTicket(e)} className="flex flex-col gap-4 justify-start items-start w-full bg-white px-5 py-2">
       <FormFields name="fullName" label="Full Name" placeholder="Enter Your Full Name" type="text" />
       <FormFields name="email" placeholder="Enter Your Email" type="email" />
       <FormFields name="phone" label="Phone Number" placeholder="Enter Your Phone Number" type="text" />

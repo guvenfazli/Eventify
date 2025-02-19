@@ -74,7 +74,7 @@ exports.fetchSingleEvent = async (req, res, next) => {
 
   try {
 
-    const foundEvent = await Event.findByPk(eventId)
+    const foundEvent = await Event.findByPk(eventId, { include: Ticket })
 
     if (!foundEvent) {
       throwError(404, "We could not find that event.")

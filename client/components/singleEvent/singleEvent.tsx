@@ -6,6 +6,16 @@ import Category from "./category/category"
 import Description from "./description/description"
 import OtherEvents from "./otherEvents/otherEvents"
 
+interface EventTicket {
+  createdAt: string,
+  eventId: string,
+  id: string,
+  ticketPrice: number,
+  ticketQuantity: number,
+  title: string,
+  updatedAt: string
+}
+
 interface Event {
   id: string,
   title: string,
@@ -20,7 +30,8 @@ interface Event {
   ticketPrice: number,
   imageURL: string,
   createdAt: Date,
-  updatedAt: Date
+  updatedAt: Date,
+  ticket: EventTicket
 }
 
 interface ComponentProps {
@@ -28,12 +39,14 @@ interface ComponentProps {
 }
 
 export default function SingleEvent({ event }: ComponentProps) {
+
+  console.log(event)
   return (
     <div className="flex justify-start items-start w-full p-12">
       <PageRotator />
       <div className="flex flex-col justify-start items-start w-full px-12 gap-12">
         <ImageTitleFavorite imageURL={event.imageURL} title={event.title} eventId={event.id} />
-        <DateTimeBuyTickets startDate={event.startDate} endDate={event.endDate} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} />
+        <DateTimeBuyTickets ticket={event.ticket} eventType={event.eventType} startDate={event.startDate} endDate={event.endDate} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} />
         <LocationTicketInformation location={event.location} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} eventType={event.eventType} />
         <Category eventCategory={event.category} />
         <Description description={event.description} />

@@ -15,14 +15,30 @@ import { IoTicket } from "react-icons/io5";
 import dayjs from "dayjs";
 import Ticket from "./ticket/ticket";
 
+interface EventTicket {
+  createdAt: string,
+  eventId: string,
+  id: string,
+  ticketPrice: number,
+  ticketQuantity: number,
+  title: string,
+  updatedAt: string
+}
+
 interface ComponentProps {
   startDate: number,
   endDate: number,
   ticketPrice: number,
-  ticketQuantity: number
+  ticketQuantity: number,
+  eventType: string,
+  ticket: EventTicket
 }
 
-export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ticketQuantity }: ComponentProps) {
+
+
+
+
+export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ticketQuantity, eventType, ticket }: ComponentProps) {
 
   const [isProceed, setIsProceed] = useState<boolean>(false)
 
@@ -56,7 +72,7 @@ export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ti
       <div className="flex flex-col items-start justify-start text-[#2D2C3C] font-opensans">
         <Dialog>
           <DialogTrigger asChild>
-            <button className="bg-[#FFE047] text-[28px] font-semibold font-opensans text-[#2B293D] flex items-center rounded-lg py-3 px-10 hover:cursor-pointer hover:bg-[#FFE047]/50 hover:text-[#2B293D]/50 duration-150 ease-in-out">
+            <button disabled={eventType === "free"} className="bg-[#FFE047] text-[28px] font-semibold font-opensans text-[#2B293D] flex items-center rounded-lg py-3 px-10 hover:cursor-pointer hover:bg-[#FFE047]/50 hover:text-[#2B293D]/50 duration-150 ease-in-out disabled:bg-[#FFE047]/60 disabled:text-[#2B293D]/60 disabled:pointer-events-none">
               <IoTicket className="mr-5" /> Buy Tickets
             </button>
           </DialogTrigger>
@@ -64,7 +80,7 @@ export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ti
             <DialogHeader className="bg-white py-5 px-2">
               <DialogTitle className="text-[#2D2C3C] font-opensans">Select Tickets</DialogTitle>
             </DialogHeader>
-            <Ticket isProceed={isProceed} ticketPrice={ticketPrice} ticketQuantity={ticketQuantity} />
+            <Ticket ticket={ticket} isProceed={isProceed} ticketPrice={ticketPrice} ticketQuantity={ticketQuantity} />
             <DialogFooter>
               <button onClick={() => setIsProceed(prev => !prev)} className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">{!isProceed ? 'Proceed' : 'Back'}</button>
 
