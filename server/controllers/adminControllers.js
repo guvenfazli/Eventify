@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const { throwError } = require('../utils/throwError')
 const Event = require('../models/Event')
+const Ticket = require('../models/Ticket')
 const dayjs = require('dayjs')
 
 exports.createEvent = async (req, res, next) => {
@@ -51,6 +52,14 @@ exports.createEvent = async (req, res, next) => {
       ticketPrice: +ticketPrice || 0,
       imageURL: uploadedFile.path
     })
+
+    if (eventType === "paid") {
+      const createdTicket = await createdEvent.createTicket({
+        title: createdEvent.title,
+        ticketQuantity: +ticketQuantity,
+        ticketPrice: +ticketPrice
+      })
+    }
 
     res.status(200).json({ message: 'Event successfully created!' })
 

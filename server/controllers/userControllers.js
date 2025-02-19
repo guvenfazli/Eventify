@@ -1,6 +1,7 @@
 const { throwError } = require('../utils/throwError')
 const User = require('../models/User')
 const Event = require('../models/Event')
+const Ticket = require('../models/Ticket')
 const UserEventInterested = require('../models/UserEventInterested')
 const { Op } = require('sequelize')
 const dayjs = require('dayjs')
