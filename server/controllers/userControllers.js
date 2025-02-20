@@ -153,8 +153,10 @@ exports.buyTicket = async (req, res, next) => {
       throwError(404, 'Ticket could not found!')
     } else if (convertedQuantity === 0) {
       throwError(410, 'Please at least choose one ticket!')
-    } else if (convertedQuantity > foundTicket.ticketQuantity) {
+    } else if (foundTicket.ticketQuantity === 0) {
       throwError(410, 'Tickets are sold out already!')
+    } else if (convertedQuantity > foundTicket.ticketQuantity) {
+      throwError(410, 'There is not that much ticket left!')
     }
 
     const anotherPayment = await UserTicket.findOne({ where: { ticketId: ticketId, userId: userId } })
