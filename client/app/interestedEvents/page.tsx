@@ -14,7 +14,7 @@ export default async function Page() {
 
   try {
 
-    const response = await fetch('http://localhost:8080/interestedEvents', {
+    const response = await fetch('http://localhost:8080/interestedEvents?filter=title&direction=DESC', {
       headers: { Cookie: `connect.sid=${myCookie!.value}` },
       credentials: "include"
     })
