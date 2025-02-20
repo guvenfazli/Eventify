@@ -246,6 +246,24 @@ exports.fetchSimilarEvents = async (req, res, next) => {
 
 }
 
+exports.fetchMyTickets = async (req, res, next) => {
+  const userId = req.session.userInfo.userId
+
+  try {
+    const foundUser = await User.findByPk(userId, { include: Ticket })
+
+    if (foundUser.tickets.length === 0) {
+      throwError(404, 'You do not have any tickets!')
+    }
+
+    res.status(200).json({ tickets: foundUser.tickets })
+    return;
+
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.interestedEvents = async (req, res, next) => {
   const userId = req.session.userInfo.userId
   const { filter, direction } = req.query

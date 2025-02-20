@@ -79,7 +79,7 @@ export default function HeaderRight() {
       <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger>
-            <Link href={'/tickets'}>
+            <Link href={'/myTickets'}>
               <IoTicketOutline className="text-[#FFE047]" />
             </Link>
           </TooltipTrigger>

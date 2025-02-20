@@ -24,7 +24,7 @@ export default function Header() {
 
   if (authInformation.isLogged) {
     return (
-      <header className="flex items-center justify-between px-10 py-1 bg-[#2B293D] shadow-md">
+      <header className="flex items-center justify-between px-10 py-1 bg-[#2B293D] shadow-md font-monster">
         <HeaderLeft />
         <HeaderMid />
         <HeaderRight />
