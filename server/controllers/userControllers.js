@@ -159,13 +159,14 @@ exports.buyTicket = async (req, res, next) => {
     if (anotherPayment) {
       await sequelize.transaction(async (t) => {
         anotherPayment.totalPrice += +totalPrice
+        anotherPayment.totalQuantity += convertedQuantity
         foundTicket.ticketQuantity -= convertedQuantity
         await Promise.all([
           foundTicket.save({ transaction: t }),
           anotherPayment.save({ transaction: t })
         ]);
       })
-      
+
       res.status(200).json({ message: 'Thank you for choosing Eventify!' })
       return;
     }
@@ -176,6 +177,7 @@ exports.buyTicket = async (req, res, next) => {
       email,
       phone,
       totalPrice: +totalPrice,
+      totalQuantity: convertedQuantity,
       userId,
       ticketId
     })

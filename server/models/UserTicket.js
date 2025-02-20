@@ -22,6 +22,10 @@ const UserTicket = sequelize.define('userTicket', {
   totalPrice: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  totalQuantity: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 })
 
