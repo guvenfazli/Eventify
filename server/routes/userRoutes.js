@@ -8,7 +8,7 @@ router.get('/upcomingEvents', controller.fetchUpcomingEvents)
 router.get('/bestFreeEvents', controller.fetchBestFreeEvents)
 router.get('/getEvent/:eventId', controller.fetchSingleEvent)
 router.get('/similarEvents', controller.fetchSimilarEvents)
-
+router.get('/interestedEvents', controller.interestedEvents)
 
 /* P O S T S */
 router.post('/beInterested/:eventId', controller.beInterested)

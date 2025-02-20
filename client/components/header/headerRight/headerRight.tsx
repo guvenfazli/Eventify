@@ -92,7 +92,7 @@ export default function HeaderRight() {
       <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger>
-            <Link href={'/interested'}>
+            <Link href={'/interestedEvents'}>
               <IoStarOutline className="text-[#FFE047]" />
             </Link>
           </TooltipTrigger>

@@ -12,7 +12,7 @@ export default function CreateEvent() {
 
   return (
     <div className="flex flex-col w-full p-12 gap-12">
-      <CreateEventHeader />
+      <CreateEventHeader header="Create an Event" />
       <div className="flex flex-col w-full px-16 gap-10">
         <StepTracker step={step} />
         <MultiStepForm step={step} setStep={setStep} />

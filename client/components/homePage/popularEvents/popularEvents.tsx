@@ -32,7 +32,7 @@ export default function PopularEvents() {
   const [upcomingList, setUpcomingList] = useState<event[]>([])
   const [isError, setIsError] = useState<boolean | string>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [days, setDays] = useState<number>(0)
+  const [days, setDays] = useState<number>(1)
   const [page, setPage] = useState<number>(6)
 
   useEffect(() => {
@@ -75,14 +75,14 @@ export default function PopularEvents() {
       <div className="flex flex-col justify-start gap-5 items-start">
         <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Upcoming Events</p>
         <div className="flex justify-start space-x-10 items-center text-[#6F6F6F]">
-          <button onClick={() => setDays(0)}
-            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 0 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
+          <button onClick={() => setDays(1)}
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 1 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
             Today
           </button>
           <button onClick={() => setDays(2)}
             className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 2 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>Tomorrow</button>
-          <button onClick={() => setDays(7)}
-            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 7 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>This Week</button>
+          <button onClick={() => setDays(8)}
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days === 8 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>This Week</button>
         </div>
       </div>
 

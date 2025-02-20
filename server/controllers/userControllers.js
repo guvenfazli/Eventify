@@ -217,3 +217,22 @@ exports.fetchSimilarEvents = async (req, res, next) => {
   }
 
 }
+
+exports.interestedEvents = async (req, res, next) => {
+  const userId = req.session.userInfo.userId
+
+  try {
+    const foundUser = await User.findByPk(userId, { include: Event })
+
+    if (!foundUser) {
+      throwError(404, "Could not find the user!")
+    } else if (foundUser.events.length === 0) {
+      throwError(404, "You have no interested events at the moment!")
+    }
+
+    res.status(200).json({ interestedEvents: foundUser.events })
+
+  } catch (err) {
+    next(err)
+  }
+}
