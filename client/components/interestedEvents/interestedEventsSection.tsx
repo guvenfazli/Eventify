@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
 import EventCard from "../homePage/eventCard/eventCard"
+import Loading from "@/app/createEvent/loading"
+import ClientErrorComp from "../clientErrorComp/clientErrorComp"
 
 interface event {
   id: string,
@@ -19,23 +21,26 @@ interface event {
   interested: number
 }
 
-interface ComponentProps {
-  interestedEvents: event[]
-}
 
 interface ErrorType {
   message: string
 }
 
-export default function InterestedEventsSection({ interestedEvents }: ComponentProps) {
+export default function InterestedEventsSection() {
 
   const [filterType, setFilterType] = useState<{ filter: string, direction: string }>({ filter: 'title', direction: 'ASC' })
-  const [interestedEventsList, setInterestedEventsList] = useState<event[]>(interestedEvents || [])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean | string>(false)
+  const [interestedEventsList, setInterestedEventsList] = useState<event[]>([])
 
   useEffect(() => {
 
     async function filterInterestedEvents() {
+
       try {
+        setIsError(false)
+        setIsLoading(true)
+
         const response = await fetch(`http://localhost:8080/interestedEvents?filter=${filterType.filter}&direction=${filterType.direction}`, {
           credentials: "include"
         })
@@ -49,10 +54,13 @@ export default function InterestedEventsSection({ interestedEvents }: ComponentP
         const resData = await response.json()
 
         setInterestedEventsList(resData.interestedEvents)
+        setIsLoading(false)
       } catch (err: unknown) {
         const error = err as ErrorType
-        console.log(error.message)
+        setIsError(error.message)
+        setIsLoading(false)
       }
+
     }
 
     filterInterestedEvents()
@@ -63,27 +71,34 @@ export default function InterestedEventsSection({ interestedEvents }: ComponentP
   function filterInterestedEvents(filter: string, direction: string) {
     setFilterType((prev) => {
       if (prev.filter === filter) {
-        return prev
+        if (prev.direction === 'DESC') {
+          const updatedFilter = { ...prev }
+          updatedFilter.direction = 'ASC'
+          return updatedFilter
+        } else {
+          const updatedFilter = { ...prev }
+          updatedFilter.direction = 'DESC'
+          return updatedFilter
+        }
       }
+      
       const newFilter = { filter, direction }
       return newFilter
     })
   }
 
-  console.log(filterType)
-
-
-
   return (
     <div className="flex flex-col w-full justify-start items-start gap-5">
       <div className="flex justify-start items-center gap-5">
-        <button onClick={() => filterInterestedEvents('title', 'ASC')}>Title</button>
-        <button onClick={() => filterInterestedEvents('startDate', 'DESC')}>Soon</button>
-        <button onClick={() => filterInterestedEvents('interested', 'DESC')}>Interested</button>
-        <button onClick={() => filterInterestedEvents('ticketPrice', 'ASC')}>Price</button>
+        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'title' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('title', 'ASC')}>Title</button>
+        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'startDate' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('startDate', 'ASC')}>Soon</button>
+        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'interested' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('interested', 'DESC')}>Interested</button>
+        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'ticketPrice' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('ticketPrice', 'ASC')}>Price</button>
       </div>
 
       <div className="grid grid-cols-3 gap-y-5 w-full">
+        {isLoading && <Loading />}
+        {isError && <ClientErrorComp errorMessage={isError} />}
         {interestedEventsList.map((event: event) => <EventCard key={event.id} event={event} />)}
       </div>
     </div>

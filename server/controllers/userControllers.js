@@ -221,7 +221,7 @@ exports.fetchSimilarEvents = async (req, res, next) => {
 exports.interestedEvents = async (req, res, next) => {
   const userId = req.session.userInfo.userId
   const { filter, direction } = req.query
-  console.log(filter, direction)
+
   try {
     const foundUser = await User.findByPk(userId, { include: [{ model: Event }], order: [[{ model: Event }, filter, direction]] })
 
@@ -232,7 +232,6 @@ exports.interestedEvents = async (req, res, next) => {
     }
 
     res.status(200).json({ interestedEvents: foundUser.events })
-
   } catch (err) {
     next(err)
   }
