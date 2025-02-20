@@ -83,10 +83,6 @@ export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ti
             <Ticket ticket={ticket} isProceed={isProceed} ticketPrice={ticketPrice} ticketQuantity={ticketQuantity} />
             <DialogFooter>
               <button onClick={() => setIsProceed(prev => !prev)} className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">{!isProceed ? 'Proceed' : 'Back'}</button>
-
-
-            
-
             </DialogFooter>
           </DialogContent>
         </Dialog>

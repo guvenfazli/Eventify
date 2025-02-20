@@ -28,7 +28,7 @@ export default function Ticket({ isProceed, ticketPrice, ticketQuantity, ticket 
         <p>{!isProceed ? 'Ticket Type' : 'Payment'}</p>
       </div>
 
-      <div className={`flex justify-between items-center w-full overflow-hidden border-l-8 border-l-[#287921] text-[24px] py-4 px-2 bg-white border border-[#A9A9A9]/50 ${isProceed && 'py-0 px-0 border-none h-0'}`}>
+      <div className={`flex justify-between items-center w-full overflow-hidden border-l-8 border-l-[#287921] text-[24px]  bg-white border border-[#A9A9A9]/50 ${isProceed ? 'border-none h-0 py-0 px-0' : 'py-4 px-2'}`}>
         <div className="flex flex-col justify-start items-start">
           <p className="font-semibold">{ticket.title}</p>
           <p className="text-lg">{ticket.ticketPrice} EUR</p>
@@ -41,7 +41,7 @@ export default function Ticket({ isProceed, ticketPrice, ticketQuantity, ticket 
         </div>
       </div>
 
-      <div className={`flex justify-between items-center w-full duration-100 border-t-2 border-t-[#4872C6] text-[20px] py-4 px-2 bg-white border border-[#A9A9A9]/50 overflow-hidden ${!isProceed && 'py-0 px-0 border-none h-0'}`}>
+      <div className={`flex justify-between items-center w-full duration-100 border-t-2 border-t-[#4872C6] text-[20px] bg-white border border-[#A9A9A9]/50 overflow-hidden ${!isProceed ? 'py-0 px-0 border-none h-0' : 'py-4 px-2'}`}>
         <PaymentForm ticketQ={ticketQ} ticketPrice={ticketPrice} ticketId={ticket.id} />
       </div>
 
