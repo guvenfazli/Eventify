@@ -4,6 +4,9 @@ const Event = require('../models/Event')
 const Ticket = require('../models/Ticket')
 const UserEventInterested = require('../models/UserEventInterested')
 const UserTicket = require('../models/UserTicket')
+const fs = require('fs')
+const path = require('path')
+const PDFDocument = require('pdfkit')
 const { Op, Sequelize } = require('sequelize')
 const dayjs = require('dayjs')
 const { validationResult } = require('express-validator')
@@ -167,6 +170,18 @@ exports.buyTicket = async (req, res, next) => {
         ]);
       })
 
+      const doc = new PDFDocument()
+
+      const folderPath = path.resolve(__dirname, '..', 'invoices')
+      const filePath = path.join(folderPath, `${foundTicket.eventId}.pdf`)
+
+      doc.pipe(fs.createWriteStream(filePath))
+      doc.text('----------')
+      doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${anotherPayment.totalQuantity += convertedQuantity} = ${anotherPayment.totalPrice += +totalPrice} EUR`)
+      doc.text('Thank you for choosing Eventify!')
+      doc.text('----------')
+      doc.end()
+
       res.status(200).json({ message: 'Thank you for choosing Eventify!' })
       return;
     }
@@ -184,6 +199,19 @@ exports.buyTicket = async (req, res, next) => {
 
     foundTicket.ticketQuantity -= convertedQuantity
     await foundTicket.save()
+
+    const doc = new PDFDocument()
+
+    const folderPath = path.resolve(__dirname, '..', 'invoices')
+    const filePath = path.join(folderPath, `${boughtTicket.id}.pdf`)
+
+    doc.pipe(fs.createWriteStream(filePath))
+    doc.text('----------')
+    doc.text(`Your Ticket Invoice for ${boughtTicket.title} X ${boughtTicket.totalQuantity} = ${boughtTicket.totalPrice} EUR`)
+    doc.text('Thank you for choosing Eventify!')
+    doc.text('----------')
+    doc.end()
+
     res.status(200).json({ message: 'Thank you for choosing Eventify!' })
     return;
   } catch (err) {
