@@ -9,6 +9,7 @@ router.get('/bestFreeEvents', controller.fetchBestFreeEvents)
 router.get('/getEvent/:eventId', controller.fetchSingleEvent)
 router.get('/similarEvents', controller.fetchSimilarEvents)
 router.get('/myTickets', controller.fetchMyTickets)
+router.get('/getInvoice/:invoiceId', controller.getInvoice)
 router.get('/interestedEvents', controller.interestedEvents)
 
 /* P O S T S */

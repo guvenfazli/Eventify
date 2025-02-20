@@ -7,7 +7,6 @@ interface ComponentProps {
 
 export default function ImageShowcase({ imgURL }: ComponentProps) {
   
-  console.log(imgURL)
   return (
     <>
       <Image fill src={`http://localhost:8080/${imgURL}`} alt="eventImage" />

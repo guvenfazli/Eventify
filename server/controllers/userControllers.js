@@ -264,6 +264,16 @@ exports.fetchMyTickets = async (req, res, next) => {
   }
 }
 
+exports.getInvoice = async (req, res, next) => {
+  const invoiceId = req.params.invoiceId
+  const folderPath = path.resolve(__dirname, '..', 'invoices')
+  const filePath = path.join(folderPath, `${invoiceId}.pdf`)
+  const readStream = fs.createReadStream(filePath)
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'inline')
+  readStream.pipe(res)
+}
+
 exports.interestedEvents = async (req, res, next) => {
   const userId = req.session.userInfo.userId
   const { filter, direction } = req.query
