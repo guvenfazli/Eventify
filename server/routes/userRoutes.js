@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/userControllers')
+const { body, } = require('express-validator')
 
 /* G E T S */
 router.get('/trendingWorldEvents', controller.fetchTrendingAroundTheWorldEvents)
@@ -14,6 +15,26 @@ router.get('/interestedEvents', controller.interestedEvents)
 
 /* P O S T S */
 router.post('/beInterested/:eventId', controller.beInterested)
-router.post('/buyTicket/:ticketId', controller.buyTicket)
+router.post('/buyTicket/:ticketId', [
+  body('fullName')
+    .notEmpty()
+    .withMessage('Please provide a valid name!')
+    .isLength({ min: 2 })
+    .withMessage('Fullname must be minimum 2 characters!'),
+  body('email')
+    .isEmail()
+    .withMessage('Please provide a correct/valid email!')
+    .notEmpty()
+    .withMessage('Email can not be empty!'),
+  body('phone')
+    .isEmpty()
+    .withMessage('Please provide a phone number!'),
+  body('ticketQuantity')
+    .notEmpty()
+    .withMessage('Please at least buy one ticket!'),
+  body('totalPrice')
+    .notEmpty()
+    .withMessage('Please pay for the tickets!')
+], controller.buyTicket)
 
 module.exports = router

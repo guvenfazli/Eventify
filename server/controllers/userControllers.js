@@ -153,7 +153,7 @@ exports.buyTicket = async (req, res, next) => {
       throwError(404, 'Ticket could not found!')
     } else if (convertedQuantity === 0) {
       throwError(410, 'Please at least choose one ticket!')
-    } else if (convertedQuantity > foundTicket) {
+    } else if (convertedQuantity > foundTicket.ticketQuantity) {
       throwError(410, 'Tickets are sold out already!')
     }
 
