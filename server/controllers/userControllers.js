@@ -220,9 +220,10 @@ exports.fetchSimilarEvents = async (req, res, next) => {
 
 exports.interestedEvents = async (req, res, next) => {
   const userId = req.session.userInfo.userId
-
+  const { filter, direction } = req.query
+  console.log(filter, direction)
   try {
-    const foundUser = await User.findByPk(userId, { include: Event })
+    const foundUser = await User.findByPk(userId, { include: [{ model: Event }], order: [[{ model: Event }, filter, direction]] })
 
     if (!foundUser) {
       throwError(404, "Could not find the user!")
