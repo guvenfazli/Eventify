@@ -22,11 +22,11 @@ interface event {
 }
 
 interface FilterSettings {
-  srch: string | undefined,
-  location: string | undefined,
-  price: string | undefined,
-  date: number | undefined,
-  category: string | undefined
+  srch: string | null,
+  location: string | null,
+  price: string | null,
+  date: number | number[] | null,
+  category: string | string[] | null
 }
 
 interface ErrorType {
@@ -40,12 +40,14 @@ export default function SearchResults() {
   const location = searchParams.get('location')
   const [eventList, setEventList] = useState<event[]>([])
   const [filterSettings, setFilterSettings] = useState<FilterSettings>({
-    srch: srch ? srch : undefined,
-    location: location ? location : undefined,
-    price: undefined,
-    date: undefined,
-    category: undefined
+    srch: srch ? srch : null,
+    location: location ? location : null,
+    price: null,
+    date: null,
+    category: null
   })
+
+  console.log(filterSettings)
 
   useEffect(() => {
     async function searchFilteredEvents() {
@@ -70,7 +72,7 @@ export default function SearchResults() {
 
   return (
     <div className="flex justify-start items-start w-full p-3 gap-16">
-      <NavBar />
+      <NavBar setFilterSettings={setFilterSettings} />
       <div className="grid grid-cols-2 gap-y-5 w-full">
         <SearchedEventCard />
         <SearchedEventCard />

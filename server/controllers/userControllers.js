@@ -296,5 +296,5 @@ exports.interestedEvents = async (req, res, next) => {
 }
 
 exports.searchEvents = async (req, res, next) => {
-  console.log('Worked.')
+  const filterOptions = req.query
 }
