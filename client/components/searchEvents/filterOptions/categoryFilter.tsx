@@ -1,11 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox"
 
 interface FilterSettings {
-  srch: string | null,
-  location: string | null,
-  price: string | null,
-  date: number | number[] | null,
-  category: string | string[] | null
+  [key: string]: string | string[] | number | number[] | null,
 }
 
 interface ComponentProps {
@@ -14,59 +10,32 @@ interface ComponentProps {
 
 export default function CategoryFilter({ setFilterSettings }: ComponentProps) {
 
-  function addFilter(filter: string, value: string) {
+  function addFilter(filter: string, value: string) { // Converts the key - value into an array if there is already a value.
     setFilterSettings((prev) => {
       const updated = { ...prev }
       if (updated[filter] !== null) {
-        console.log('Worked')
-        const isArray = Array.isArray(updated[filter])
-        if (isArray) {
-          const sameValue = updated[filter].some((sameV: string) => sameV === value)
+
+        if (Array.isArray(updated[filter])) {
+          const sameValue = updated[filter]!.some((sameV) => sameV === value)
           if (sameValue) {
-            const foundIndex = updated[filter].findIndex((sameV: string) => sameV === value)
+            const foundIndex = updated[filter].findIndex((sameV) => sameV === value)
             updated[filter].splice(foundIndex, 1)
             return updated
           }
-          updated[filter].push(value)
+          const chosenField = updated[filter] as string[]
+          chosenField.push(value)
           return updated;
         }
-        const convertedToArray = { ...prev, [filter]: [updated[filter]] }
-        convertedToArray[filter].push(value)
+
+        const convertedToArray = { ...prev, [filter as string]: [updated[filter]] }
+        const chosenField = convertedToArray[filter] as string[]
+        chosenField!.push(value)
         return convertedToArray
       }
       updated[filter] = value
       return updated
     })
   }
-
-  /*   const testObj = {
-      name: "Güven",
-      surname: "another Value"
-    }
-  
-    function addFilter(filter: string, value: string) {
-      const updated: { [key: string]: string[] | string } = { ...testObj }
-      if (updated[filter] !== null) {
-        const isArray = Array.isArray(updated[filter])
-  
-        if (isArray) {
-          const sameValue = updated[filter].some((sameV: string) => sameV === value)
-          if (sameValue) {
-            const foundIndex = updated[filter].findIndex((sameV: string) => sameV === value)
-            updated[filter].splice(foundIndex, 1)
-            console.log(updated)
-            return updated
-          }
-        }
-  
-        const convertedToArray = { ...updated, [filter]: [updated[filter]] }
-        convertedToArray[filter].push(value)
-        console.log(convertedToArray)
-        return convertedToArray
-      }
-    } */
-
-
 
   return (
     <div className="flex flex-col justify-start items-start w-full gap-5 border-b pb-5 border-b-[#6F6F6F]/30">
@@ -83,22 +52,22 @@ export default function CategoryFilter({ setFilterSettings }: ComponentProps) {
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="art" value="art" name="category" />
+          <Checkbox id="art" value="art" name="category" onClick={() => addFilter("category", "art")} />
           <label htmlFor="art" className="text-[20px] font-opensans text-[#2B293D]">Art</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="sport" value="sport" name="category" />
+          <Checkbox id="sport" value="sport" name="category" onClick={() => addFilter("category", "sport")} />
           <label htmlFor="sport" className="text-[20px] font-opensans text-[#2B293D]">Sports</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="business" value="business" name="category" />
+          <Checkbox id="business" value="business" name="category" onClick={() => addFilter("category", "business")} />
           <label htmlFor="business" className="text-[20px] font-opensans text-[#2B293D]">Business</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="tech" value="tech" name="category" />
+          <Checkbox id="tech" value="tech" name="category" onClick={() => addFilter("category", "tech")} />
           <label htmlFor="tech" className="text-[20px] font-opensans text-[#2B293D]">Technology</label>
         </div>
       </div>

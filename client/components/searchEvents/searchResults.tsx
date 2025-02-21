@@ -22,11 +22,7 @@ interface event {
 }
 
 interface FilterSettings {
-  srch: string | null,
-  location: string | null,
-  price: string | null,
-  date: number | number[] | null,
-  category: string | string[] | null
+  [key: string]: string | string[] | number | number[] | null,
 }
 
 interface ErrorType {
@@ -42,7 +38,7 @@ export default function SearchResults() {
   const [filterSettings, setFilterSettings] = useState<FilterSettings>({
     srch: srch ? srch : null,
     location: location ? location : null,
-    price: null,
+    eventType: null,
     date: null,
     category: null
   })
@@ -72,7 +68,7 @@ export default function SearchResults() {
 
   return (
     <div className="flex justify-start items-start w-full p-3 gap-16">
-      <NavBar setFilterSettings={setFilterSettings} />
+      <NavBar setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
       <div className="grid grid-cols-2 gap-y-5 w-full">
         <SearchedEventCard />
         <SearchedEventCard />

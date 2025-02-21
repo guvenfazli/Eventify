@@ -3,23 +3,26 @@ import DateFilter from "./filterOptions/dateFilter"
 import CategoryFilter from "./filterOptions/categoryFilter"
 
 interface FilterSettings {
-  srch: string | null,
-  location: string | null,
-  price: string | null,
-  date: number | number[] | null,
-  category: string | string[] | null
+  [key: string]: string | string[] | number | number[] | null,
 }
 
 interface ComponentProps {
   setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>
+  filterSettings: {
+    srch: string | null
+    location: string | null,
+    eventType: string | null,
+    date: number | number[] | null,
+    category: string | string[] | null
+  }
 }
 
-export default function NavBar({ setFilterSettings }: ComponentProps) {
+export default function NavBar({ setFilterSettings, filterSettings }: ComponentProps) {
   return (
     <form className="flex flex-col w-1/5 justify-start items-start px-8 py-5 gap-12 border-r border-r-[#6F6F6F]/30">
       <p className="font-monster text-[32px] font-semibold text-black">Filters</p>
-      <PriceFilter />
-      <DateFilter />
+      <PriceFilter setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
+      <DateFilter setFilterSettings={setFilterSettings} />
       <CategoryFilter setFilterSettings={setFilterSettings} />
 
       <div className="flex justify-center items-center w-full">
