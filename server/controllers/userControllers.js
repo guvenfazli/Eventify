@@ -294,3 +294,7 @@ exports.interestedEvents = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.searchEvents = async (req, res, next) => {
+  console.log('Worked.')
+}
