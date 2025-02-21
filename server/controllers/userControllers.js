@@ -297,4 +297,11 @@ exports.interestedEvents = async (req, res, next) => {
 
 exports.searchEvents = async (req, res, next) => {
   const filterOptions = req.query
+  const filterArray = Object.entries(filterOptions)
+  const filter = Object.fromEntries(filterArray).map(([key, value]) => {
+    if(value !== 'null' || value !== undefined || value !== null){
+      return
+    }
+  })
+  console.log(filter)
 }

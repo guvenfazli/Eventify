@@ -48,7 +48,7 @@ export default function SearchResults() {
   useEffect(() => {
     async function searchFilteredEvents() {
       try {
-        const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.price}&startDate=${filterSettings.date}&category=${filterSettings.category}`)
+        const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.date}&category=${filterSettings.category}`)
 
         if (!response.ok) {
           const resData = await response.json()
@@ -68,7 +68,7 @@ export default function SearchResults() {
 
   return (
     <div className="flex justify-start items-start w-full p-3 gap-16">
-      <NavBar setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
+      <NavBar setFilterSettings={setFilterSettings} filterSettings={filterSettings} setEventList={setEventList} />
       <div className="grid grid-cols-2 gap-y-5 w-full">
         <SearchedEventCard />
         <SearchedEventCard />
