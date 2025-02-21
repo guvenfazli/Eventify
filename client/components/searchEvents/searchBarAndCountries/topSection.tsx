@@ -7,9 +7,7 @@ export default function TopSection() {
       <div className="text-[48px] text-white font-bold z-10 font-monster tracking-wider">
         <p>Explore a world of events. Find what excites you!</p>
       </div>
-
       <SearchBarAndSelectOptions />
-
     </div>
   )
 }
