@@ -300,6 +300,30 @@ exports.searchEvents = async (req, res, next) => {
   const filterArray = Object.entries(filterOptions).filter(([key, value]) => value !== 'null' && key !== 'category')
   const filterObject = Object.fromEntries(filterArray)
   const categoryArray = filterOptions.category.split(',')
+  const todaysDate = dayjs(new Date).startOf('day')
+  const addedExtraDays = todaysDate.add(+filterObject.startDate, 'day').unix()
+  filterObject.startDate = addedExtraDays
+  console.log(addedExtraDays)
   console.log(categoryArray)
   console.log(filterObject)
+  try {
+
+    const filteredEvents = await Event.findAll({
+      where:
+      {
+        eventType: filterObject.eventType,
+        startDate: { [Op.between]: [todaysDate.unix(), addedExtraDays] },
+        category: { [Op.or]: categoryArray }
+      }
+    })
+
+    if (filteredEvents.length === 0) {
+      throwError(404, 'No event with these filters found!')
+    }
+
+    res.status(200).json({ filteredEvents })
+
+  } catch (err) {
+    next(err)
+  }
 }

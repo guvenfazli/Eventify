@@ -70,11 +70,10 @@ export default function SearchResults() {
     <div className="flex justify-start items-start w-full p-3 gap-16">
       <NavBar setFilterSettings={setFilterSettings} filterSettings={filterSettings} setEventList={setEventList} />
       <div className="grid grid-cols-2 gap-y-5 w-full">
-        <SearchedEventCard />
-        <SearchedEventCard />
-        <SearchedEventCard />
-        <SearchedEventCard />
-        <SearchedEventCard />
+
+        {eventList.map((event) => <SearchedEventCard key={event.id} event={event} />)}
+
+
       </div>
     </div>
   )

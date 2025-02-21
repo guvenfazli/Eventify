@@ -26,7 +26,8 @@ interface event {
 interface ComponentProps {
   setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>
   setEventList: React.Dispatch<React.SetStateAction<event[]>>
-  filterSettings: FilterSettings
+  filterSettings: FilterSettings,
+
 }
 
 interface ErrorType {
