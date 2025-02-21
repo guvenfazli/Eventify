@@ -39,6 +39,7 @@ export default function EventCategory({ formLabel }: ComponentProps) {
               <SelectItem value="entertainment">Entertainment</SelectItem>
               <SelectItem value="art">Art</SelectItem>
               <SelectItem value="sport">Sports</SelectItem>
+              <SelectItem value="business">Business</SelectItem>
               <SelectItem value="tech">Technology</SelectItem>
             </SelectContent>
           </Select>
