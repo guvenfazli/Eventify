@@ -6,18 +6,12 @@ interface FilterSettings {
 
 interface ComponentProps {
   setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>,
-  filterSettings: {
-    srch: string | null
-    location: string | null,
-    eventType: string | null,
-    date: number | number[] | null,
-    category: string | string[] | null
-  }
+  filterSettings: FilterSettings
 }
 
 export default function PriceFilter({ setFilterSettings, filterSettings }: ComponentProps) {
 
-  function addFilter(filter: string, value: string) { // Converts the key - value into an array if there is already a value.
+  function addFilter(filter: string, value: string) {
     setFilterSettings(prev => {
       const updated = { ...prev }
       if (updated[filter] === value) {

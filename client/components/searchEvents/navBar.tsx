@@ -8,13 +8,7 @@ interface FilterSettings {
 
 interface ComponentProps {
   setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>
-  filterSettings: {
-    srch: string | null
-    location: string | null,
-    eventType: string | null,
-    date: number | number[] | null,
-    category: string | string[] | null
-  }
+  filterSettings: FilterSettings
 }
 
 export default function NavBar({ setFilterSettings, filterSettings }: ComponentProps) {
@@ -22,7 +16,7 @@ export default function NavBar({ setFilterSettings, filterSettings }: ComponentP
     <form className="flex flex-col w-1/5 justify-start items-start px-8 py-5 gap-12 border-r border-r-[#6F6F6F]/30">
       <p className="font-monster text-[32px] font-semibold text-black">Filters</p>
       <PriceFilter setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
-      <DateFilter setFilterSettings={setFilterSettings} />
+      <DateFilter setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
       <CategoryFilter setFilterSettings={setFilterSettings} />
 
       <div className="flex justify-center items-center w-full">

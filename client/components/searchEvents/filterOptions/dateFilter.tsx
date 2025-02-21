@@ -9,23 +9,47 @@ import {
 } from "@/components/ui/dialog"
 import { Checkbox } from "@/components/ui/checkbox"
 
-export default function DateFilter() {
+interface FilterSettings {
+  [key: string]: string | string[] | number | number[] | null,
+}
+
+interface ComponentProps {
+  setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>
+  filterSettings: FilterSettings
+}
+
+
+export default function DateFilter({ setFilterSettings, filterSettings }: ComponentProps) {
+
+  function addFilter(filter: string, value: number) {
+    setFilterSettings(prev => {
+      const updated = { ...prev }
+      if (updated[filter] === value) {
+        updated[filter] = null
+        return updated
+      }
+      updated[filter] = value
+      return updated
+    })
+  }
+
+
   return (
     <div className="flex flex-col justify-start items-start w-full gap-5 border-b pb-5 border-b-[#6F6F6F]/30">
       <p className="text-[24px] font-semibold font-opensans text-[#2D2C3C]">Date</p>
       <div className="flex flex-col justify-start items-start gap-2">
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="1" />
+          <Checkbox id="1" value="1" name="eventType" checked={filterSettings.date === 1} onClick={() => addFilter('date', 1)} />
           <label htmlFor="1" className="text-[20px] font-opensans text-[#2B293D]">Today</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="2" />
+          <Checkbox id="2" value="2" name="eventType" checked={filterSettings.date === 2} onClick={() => addFilter('date', 2)} />
           <label htmlFor="2" className="text-[20px] font-opensans text-[#2B293D]">Tomorrow</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="8" />
+          <Checkbox id="8" value="8" name="eventType" checked={filterSettings.date === 8} onClick={() => addFilter('date', 8)} />
           <label htmlFor="8" className="text-[20px] font-opensans text-[#2B293D]">This Week</label>
         </div>
 
