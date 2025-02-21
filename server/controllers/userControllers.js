@@ -297,11 +297,9 @@ exports.interestedEvents = async (req, res, next) => {
 
 exports.searchEvents = async (req, res, next) => {
   const filterOptions = req.query
-  const filterArray = Object.entries(filterOptions)
-  const filter = Object.fromEntries(filterArray).map(([key, value]) => {
-    if(value !== 'null' || value !== undefined || value !== null){
-      return
-    }
-  })
-  console.log(filter)
+  const filterArray = Object.entries(filterOptions).filter(([key, value]) => value !== 'null' && key !== 'category')
+  const filterObject = Object.fromEntries(filterArray)
+  const categoryArray = filterOptions.category.split(',')
+  console.log(categoryArray)
+  console.log(filterObject)
 }
