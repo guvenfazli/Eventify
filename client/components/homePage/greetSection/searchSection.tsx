@@ -27,7 +27,7 @@ export default function SearchSection({ countryList }: any) {
   }
 
   async function searchEvents() {
-    router.push(`/events?srch=${searchKeyWords}&country=${chosenCountry}`)
+    router.push(`/events?srch=${searchKeyWords}&location=${chosenCountry}`)
   }
 
 
