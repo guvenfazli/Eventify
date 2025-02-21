@@ -9,7 +9,7 @@ interface ComponentProps {
 export default function HalfImageShowcase({ imgURL }: ComponentProps) {
   return (
     <>
-      <Image fill src={`http://localhost:8080/${imgURL}`} alt="eventImage" className="rounded-tl-md rounded-tr-md shadow-md bg-contain" />
+      <Image fill src={`http://localhost:8080/${imgURL}`} alt="eventImage" className="rounded-tl-md rounded-tr-md shadow-md bg-cover bg-center" />
     </>
   )
 }

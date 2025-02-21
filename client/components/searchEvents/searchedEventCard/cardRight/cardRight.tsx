@@ -1,5 +1,6 @@
 import { IoTicket } from "react-icons/io5";
 import dayjs from "dayjs";
+import Link from "next/link";
 interface event {
   id: string,
   title: string,
@@ -30,7 +31,7 @@ export default function CardRight({ event }: ComponentProps) {
 
   return (
     <div className="flex flex-col justify-around items-start h-full py-2">
-      <p className="text-[24px] font-semibold text-[#2D2C3C] font-opensans">{event.title}</p>
+      <Link href={`/event/${event.id}`} className="text-[24px] font-semibold text-[#2D2C3C] font-opensans hover:cursor-pointer hover:underline">{event.title}</Link>
       <p className="text-[20px] font-bold text-[#5A5A5A] font-opensans">{start + ' ' + startDay} - {end + ' ' + endDay} | {event.location}</p>
       <p className="text-[20px] text-[#5A5A5A] font-opensans">{dayjs.unix(event.startDate).format("HH:mm")} - {dayjs.unix(event.endDate).format("HH:mm")}</p>
 
