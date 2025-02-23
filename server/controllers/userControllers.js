@@ -303,9 +303,7 @@ exports.searchEvents = async (req, res, next) => {
   const todaysDate = dayjs(new Date).startOf('day')
   const addedExtraDays = todaysDate.add(+filterObject.startDate, 'day').unix()
   filterObject.startDate = addedExtraDays
-  console.log(addedExtraDays)
-  console.log(categoryArray)
-  console.log(filterObject)
+
   try {
 
     const filteredEvents = await Event.findAll({
