@@ -297,22 +297,33 @@ exports.interestedEvents = async (req, res, next) => {
 
 exports.searchEvents = async (req, res, next) => {
   const filterOptions = req.query
-  const filterArray = Object.entries(filterOptions).filter(([key, value]) => value !== 'null' && key !== 'category')
+  const filterArray = Object.entries(filterOptions).filter(([key, value]) => value !== 'null' && key !== 'category' && value !== 'undefined')
   const filterObject = Object.fromEntries(filterArray)
   const categoryArray = filterOptions.category.split(',')
   const todaysDate = dayjs(new Date).startOf('day')
   const addedExtraDays = todaysDate.add(+filterObject.startDate, 'day').unix()
   filterObject.startDate = addedExtraDays
 
+  console.log(filterObject.location)
+
   try {
 
+    const whereObject = {
+      eventType: filterObject.eventType,
+      startDate: { [Op.between]: [todaysDate.unix(), addedExtraDays] },
+      category: { [Op.or]: categoryArray },
+    }
+
+    if (filterObject.location) {
+      whereObject.location = filterObject.location
+    }
+
+    if (filterObject.srch) {
+      whereObject.title = filterObject.srch
+    }
+
     const filteredEvents = await Event.findAll({
-      where:
-      {
-        eventType: filterObject.eventType,
-        startDate: { [Op.between]: [todaysDate.unix(), addedExtraDays] },
-        category: { [Op.or]: categoryArray }
-      }
+      where: whereObject
     })
 
     if (filteredEvents.length === 0) {

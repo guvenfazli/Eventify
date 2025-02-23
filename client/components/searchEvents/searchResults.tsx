@@ -64,7 +64,14 @@ export default function SearchResults() {
         console.log(error.message)
       }
     }
+
+    if (srch && location) {
+      searchFilteredEvents()
+    }
+
   }, [])
+
+
 
   return (
     <div className="flex justify-start items-start w-full p-3 gap-16">
@@ -72,7 +79,6 @@ export default function SearchResults() {
       <div className="grid grid-cols-2 gap-y-5 w-full">
 
         {eventList.map((event) => <SearchedEventCard key={event.id} event={event} />)}
-
 
       </div>
     </div>
