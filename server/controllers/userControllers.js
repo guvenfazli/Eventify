@@ -14,11 +14,11 @@ const sequelize = require('../utils/database')
 
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
-
+  const todaysTimestamp = dayjs().unix()
   const page = req.query.page
 
   try {
-    const foundEvents = await Event.findAll({ limit: page, order: [['interested', 'DESC']] })
+    const foundEvents = await Event.findAll({ where: { startDate: { [Op.gt]: 1740360400 } }, limit: page, order: [['interested', 'DESC']] })
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
@@ -59,10 +59,12 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
 
 exports.fetchBestFreeEvents = async (req, res, next) => {
   const { page } = req.query
+  const todaysTimestamp = dayjs().unix()
+
 
   try {
 
-    const freeList = await Event.findAll({ where: { eventType: "free" }, limit: +page, order: [['interested', 'DESC']] })
+    const freeList = await Event.findAll({ where: { eventType: "free", startDate: { [Op.gt]: todaysTimestamp } }, limit: +page, order: [['interested', 'DESC']] })
 
     if (freeList.length === 0) {
       throwError(404, "There is no free event at the moment, sorry!")
