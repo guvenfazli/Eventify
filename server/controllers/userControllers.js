@@ -329,8 +329,6 @@ exports.searchEvents = async (req, res, next) => {
       whereObject.category = { [Op.or]: categoryArray }
     }
 
-    console.log(whereObject)
-
     const filteredEvents = await Event.findAll({
       where: whereObject, order: [['startDate', 'ASC']]
     })
