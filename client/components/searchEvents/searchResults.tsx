@@ -31,7 +31,12 @@ interface ErrorType {
   message: string
 }
 
-export default function SearchResults() {
+interface ComponenProps {
+  setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>
+  filterSettings: FilterSettings
+}
+
+export default function SearchResults({ setFilterSettings, filterSettings }: ComponenProps) {
 
   const searchParams = useSearchParams()
   const srch = searchParams.get('srch')
@@ -39,13 +44,7 @@ export default function SearchResults() {
   const [eventList, setEventList] = useState<event[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean | string>(false)
-  const [filterSettings, setFilterSettings] = useState<FilterSettings>({
-    srch: srch ? srch : null,
-    location: location ? location : null,
-    eventType: null,
-    date: null,
-    category: null
-  })
+
 
   useEffect(() => {
     async function searchFilteredEvents() {

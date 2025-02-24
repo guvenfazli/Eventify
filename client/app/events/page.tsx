@@ -27,7 +27,7 @@ export default function Page() {
   return (
     <div className="flex flex-col items-start justify-start">
       <TopSection setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
-      <SearchResults />
+      <SearchResults setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
     </div>
   )
 }

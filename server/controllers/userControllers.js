@@ -303,8 +303,6 @@ exports.searchEvents = async (req, res, next) => {
   const todaysDate = dayjs(new Date).startOf('day')
   const addedExtraDays = todaysDate.add(+filterObject.startDate, 'day').unix()
 
-  console.log(filterObject.location)
-
   try {
 
     const whereObject = {}
