@@ -50,7 +50,6 @@ export default function PopularEvents() {
 
         if (!response.ok) {
           const resData = await response.json()
-          console.log(resData)
           const error = new Error(resData.message)
           throw error
         }
@@ -79,13 +78,13 @@ export default function PopularEvents() {
         <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Upcoming Events</p>
         <div className="flex justify-start space-x-10 items-center text-[#6F6F6F]">
           <button onClick={() => setDays({ start: 0, end: 1 })}
-            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days.end === 1 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${(days.start === 0 && days.end === 1) && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
             Today
           </button>
           <button onClick={() => setDays({ start: 1, end: 1 })}
-            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days.end === 2 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>Tomorrow</button>
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${(days.start === 1 && days.end === 1) && 'bg-[#FFE047] text-[#2D2C3C]'}`}>Tomorrow</button>
           <button onClick={() => setDays({ start: 0, end: 8 })}
-            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${days.end === 8 && 'bg-[#FFE047] text-[#2D2C3C]'}`}>This Week</button>
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${(days.start === 0 && days.end === 8) && 'bg-[#FFE047] text-[#2D2C3C]'}`}>This Week</button>
         </div>
       </div>
 
