@@ -19,7 +19,7 @@ interface CountryStoreState {
 }
 
 interface FilterSettings {
-  [key: string]: string | string[] | number | number[] | null,
+  [key: string]: string | string[] | number | number[] | undefined,
 }
 
 interface ComponentProps {

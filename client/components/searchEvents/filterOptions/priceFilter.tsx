@@ -1,7 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox"
 
 interface FilterSettings {
-  [key: string]: string | string[] | number | number[] | null,
+  [key: string]: string | string[] | number | number[] | undefined,
 }
 
 interface ComponentProps {
@@ -15,7 +15,7 @@ export default function PriceFilter({ setFilterSettings, filterSettings }: Compo
     setFilterSettings(prev => {
       const updated = { ...prev }
       if (updated[filter] === value) {
-        updated[filter] = null
+        updated[filter] = undefined
         return updated
       }
       updated[filter] = value

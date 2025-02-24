@@ -3,7 +3,7 @@ import DateFilter from "./filterOptions/dateFilter"
 import CategoryFilter from "./filterOptions/categoryFilter"
 
 interface FilterSettings {
-  [key: string]: string | string[] | number | number[] | null,
+  [key: string]: string | string[] | number | number[] | undefined,
 }
 
 interface event {
@@ -42,7 +42,7 @@ export default function NavBar({ setFilterSettings, setEventList, filterSettings
     try {
       setIsError(false)
       setIsLoading(true)
-      const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.date}&category=${filterSettings.category}`)
+      const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.startDate}&endDate=${filterSettings.endDate}&category=${filterSettings.category}`)
 
       if (!response.ok) {
         const resData = await response.json()

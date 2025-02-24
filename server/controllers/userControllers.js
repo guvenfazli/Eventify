@@ -304,12 +304,12 @@ exports.interestedEvents = async (req, res, next) => {
 
 exports.searchEvents = async (req, res, next) => {
   const filterOptions = req.query
-  const filterArray = Object.entries(filterOptions).filter(([key, value]) => value !== 'null' && key !== 'category' && value !== 'undefined')
+  const filterArray = Object.entries(filterOptions).filter(([key, value]) => value !== 'null' && value !== 'undefined')
   const filterObject = Object.fromEntries(filterArray)
-  const categoryArray = filterOptions.category.split(',')
-  const todaysDate = dayjs(new Date).startOf('day')
-  const addedExtraDays = todaysDate.add(+filterObject.startDate, 'day').unix()
-  const todaysTimestamp = todaysExactTimestamp()
+  const categoryArray = filterObject.category && filterObject.category.split(',')
+  filterObject.category = categoryArray && categoryArray
+
+  const todaysTimestamp = filterObject.startDate ? filterObject.startDate : todaysExactTimestamp()
 
   try {
 
@@ -330,11 +330,11 @@ exports.searchEvents = async (req, res, next) => {
     }
 
     if (filterObject.startDate) {
-      whereObject.startDate = { [Op.between]: [todaysTimestamp, addedExtraDays] }
+      whereObject.startDate = { [Op.between]: [todaysTimestamp, filterObject.endDate] }
     }
 
     if (filterObject.category) {
-      whereObject.category = { [Op.or]: categoryArray }
+      whereObject.category = { [Op.or]: filterObject.category }
     }
 
     const filteredEvents = await Event.findAll({

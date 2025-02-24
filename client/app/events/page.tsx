@@ -5,7 +5,7 @@ import TopSection from "@/components/searchEvents/searchBarAndCountries/topSecti
 import SearchResults from "@/components/searchEvents/searchResults"
 
 interface FilterSettings {
-  [key: string]: string | string[] | number | number[] | null,
+  [key: string]: string | string[] | number | number[] | undefined,
 }
 
 export default function Page() {
@@ -15,14 +15,16 @@ export default function Page() {
   const location: string | null = searchParams.get('location')
 
   const [filterSettings, setFilterSettings] = useState<FilterSettings>({
-    srch: srch ? srch : null,
-    location: location ? location : null,
-    eventType: null,
-    date: null,
-    category: null
+    srch: srch ? srch : undefined,
+    location: location ? location : undefined,
+    eventType: undefined,
+    startDate: undefined,
+    endDate: undefined,
+    addedDays: undefined,
+    category: undefined
   })
 
-  console.log(filterSettings)
+  console.log(filterSettings.category)
 
   return (
     <div className="flex flex-col items-start justify-start">

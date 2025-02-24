@@ -1,7 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox"
 
 interface FilterSettings {
-  [key: string]: string | string[] | number | number[] | null,
+  [key: string]: string | string[] | number | number[] | undefined,
 }
 
 interface ComponentProps {
@@ -13,7 +13,7 @@ export default function CategoryFilter({ setFilterSettings }: ComponentProps) {
   function addFilter(filter: string, value: string) { // Converts the key - value into an array if there is already a value.
     setFilterSettings((prev) => {
       const updated = { ...prev }
-      if (updated[filter] !== null) {
+      if (updated[filter] !== undefined) {
 
         if (Array.isArray(updated[filter])) {
           const sameValue = updated[filter]!.some((sameV) => sameV === value)
