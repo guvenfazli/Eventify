@@ -307,10 +307,10 @@ exports.searchEvents = async (req, res, next) => {
 
   try {
 
-    const whereObject = {
-      eventType: filterObject.eventType,
-      startDate: { [Op.between]: [todaysDate.unix(), addedExtraDays] },
-      category: { [Op.or]: categoryArray },
+    const whereObject = {}
+
+    if (filterObject.eventType) {
+      whereObject.eventType = filterObject.eventType
     }
 
     if (filterObject.location) {
@@ -318,21 +318,21 @@ exports.searchEvents = async (req, res, next) => {
     }
 
     if (filterObject.srch) {
-      whereObject.title = filterObject.srch
+      whereObject.title = { [Op.substring]: filterObject.srch }
     }
 
     if (filterObject.startDate) {
-      filterObject.startDate = { [Op.between]: [todaysDate.unix(), addedExtraDays] }
+      whereObject.startDate = { [Op.between]: [todaysDate.unix(), addedExtraDays] }
     }
 
     if (filterObject.category) {
-      filterObject.category = { [Op.or]: categoryArray }
+      whereObject.category = { [Op.or]: categoryArray }
     }
 
-    console.log(filterObject)
+    console.log(whereObject)
 
     const filteredEvents = await Event.findAll({
-      where: filterObject
+      where: whereObject, order: [['startDate', 'ASC']]
     })
 
     if (filteredEvents.length === 0) {

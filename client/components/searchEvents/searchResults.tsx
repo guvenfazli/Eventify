@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import Loading from "@/app/createEvent/loading"
+import ClientErrorComp from "../clientErrorComp/clientErrorComp"
 import NavBar from "./navBar"
 import SearchedEventCard from "./searchedEventCard/searchedEventCard"
 
@@ -35,6 +37,8 @@ export default function SearchResults() {
   const srch = searchParams.get('srch')
   const location = searchParams.get('location')
   const [eventList, setEventList] = useState<event[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean | string>(false)
   const [filterSettings, setFilterSettings] = useState<FilterSettings>({
     srch: srch ? srch : null,
     location: location ? location : null,
@@ -43,11 +47,11 @@ export default function SearchResults() {
     category: null
   })
 
-  console.log(filterSettings)
-
   useEffect(() => {
     async function searchFilteredEvents() {
       try {
+        setIsError(false)
+        setIsLoading(true)
         const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.date}&category=${filterSettings.category}`)
 
         if (!response.ok) {
@@ -59,9 +63,11 @@ export default function SearchResults() {
         const resData = await response.json()
 
         setEventList(resData.filteredEvents)
+        setIsLoading(false)
       } catch (err: unknown) {
         const error = err as ErrorType
-        console.log(error.message)
+        setIsError(error.message)
+        setIsLoading(false)
       }
     }
 
@@ -75,12 +81,22 @@ export default function SearchResults() {
 
   return (
     <div className="flex justify-start items-start w-full p-3 gap-16">
-      <NavBar setFilterSettings={setFilterSettings} filterSettings={filterSettings} setEventList={setEventList} />
-      <div className="grid grid-cols-2 gap-y-5 w-full">
+      <NavBar setFilterSettings={setFilterSettings} filterSettings={filterSettings} setEventList={setEventList} setIsError={setIsError} setIsLoading={setIsLoading} />
 
-        {eventList.map((event) => <SearchedEventCard key={event.id} event={event} />)}
+      {isLoading && <Loading />}
+      {isError && <ClientErrorComp errorMessage={isError} />}
 
-      </div>
+      {(!srch && !location && eventList.length <= 0) &&
+        <div className="flex w-full justify-center items-center min-h-[450px]">
+          <p className="text-[24px] text-[#2D2C3C] font-bold">Please choose at least one filter option.</p>
+        </div>
+      }
+
+      {(!isLoading && !isError && eventList.length > 0) &&
+        <div className="grid grid-cols-2 gap-y-5 w-full">
+          {eventList.map((event) => <SearchedEventCard key={event.id} event={event} />)}
+        </div>
+      }
     </div>
   )
 }

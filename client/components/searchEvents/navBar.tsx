@@ -26,6 +26,8 @@ interface event {
 interface ComponentProps {
   setFilterSettings: React.Dispatch<React.SetStateAction<FilterSettings>>
   setEventList: React.Dispatch<React.SetStateAction<event[]>>
+  setIsError: React.Dispatch<React.SetStateAction<boolean | string>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   filterSettings: FilterSettings,
 
 }
@@ -34,10 +36,12 @@ interface ErrorType {
   message: string
 }
 
-export default function NavBar({ setFilterSettings, setEventList, filterSettings }: ComponentProps) {
+export default function NavBar({ setFilterSettings, setEventList, filterSettings, setIsError, setIsLoading }: ComponentProps) {
 
   async function filterEvents() {
     try {
+      setIsError(false)
+      setIsLoading(true)
       const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.date}&category=${filterSettings.category}`)
 
       if (!response.ok) {
@@ -49,9 +53,11 @@ export default function NavBar({ setFilterSettings, setEventList, filterSettings
       const resData = await response.json()
 
       setEventList(resData.filteredEvents)
+      setIsLoading(false)
     } catch (err: unknown) {
       const error = err as ErrorType
-      console.log(error.message)
+      setIsError(error.message)
+      setIsLoading(false)
     }
   }
 

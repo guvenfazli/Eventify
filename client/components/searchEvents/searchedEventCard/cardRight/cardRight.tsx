@@ -37,7 +37,8 @@ export default function CardRight({ event }: ComponentProps) {
 
       <div className="flex gap-1 items-center justify-start">
         <IoTicket className="text-[#287921] inline-block text-lg" />
-        <p className="text-[20px] text-[#287921] font-opensans font-semibold">{event.ticketPrice} <span className="text-sm">eur</span></p>
+        <p className="text-[20px] text-[#287921] font-opensans font-semibold">{event.ticketPrice === 0 ? 'Free' : event.ticketPrice}
+          {event.ticketPrice !== 0 && <span className="text-sm">eur</span>}</p>
       </div>
 
     </div>
