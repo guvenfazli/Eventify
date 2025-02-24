@@ -78,6 +78,8 @@ app.use( // Session store for Sequelize with Dialect PostgreSQL.
       extendDefaultFields: extendDefaultFields
     }),
     resave: false,
+    saveUninitialized: false,
+    cookie: { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 }
   })
 );
 
