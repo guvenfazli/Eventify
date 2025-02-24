@@ -11,14 +11,15 @@ const { Op, Sequelize } = require('sequelize')
 const dayjs = require('dayjs')
 const { validationResult } = require('express-validator')
 const sequelize = require('../utils/database')
+const { todaysExactTimestamp } = require('../utils/todaysDate')
 
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
-  const todaysTimestamp = dayjs().unix()
+  const todaysDate = todaysExactTimestamp()
   const page = req.query.page
 
   try {
-    const foundEvents = await Event.findAll({ where: { startDate: { [Op.gt]: 1740360400 } }, limit: page, order: [['interested', 'DESC']] })
+    const foundEvents = await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] })
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
@@ -31,18 +32,21 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 }
 
 exports.fetchUpcomingEvents = async (req, res, next) => {
-  const { page, days } = req.query
-  const todaysTimestamp = dayjs().startOf('day')
-  const calculatedDate = dayjs(todaysTimestamp.add(+days, 'd')).startOf('day').unix()
+  const { page, start, end } = req.query
+  const todaysTimestamp = dayjs().add(+start, 'd').startOf('day')
+  const calculatedDate = dayjs(todaysTimestamp.add(+end, 'd')).startOf('day').unix()
+
+  console.log(todaysTimestamp.unix())
+  console.log(calculatedDate)
 
   try {
 
     const upcomingList = await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
 
     if (upcomingList.length === 0) {
-      if (+days === 0) {
+      if (+start === 0) {
         throwError(404, "There is no upcoming events today, sorry!")
-      } else if (+days === 2) {
+      } else if (+start === 1) {
         throwError(404, "There is no upcoming events tomorrow, sorry!")
       } else {
         throwError(404, "There is no upcoming events this week, sorry!")
@@ -59,7 +63,7 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
 
 exports.fetchBestFreeEvents = async (req, res, next) => {
   const { page } = req.query
-  const todaysTimestamp = dayjs().unix()
+  const todaysTimestamp = todaysExactTimestamp()
 
 
   try {
@@ -142,6 +146,7 @@ exports.buyTicket = async (req, res, next) => {
   const { fullName, email, phone, ticketQuantity, totalPrice } = req.body
   const errors = validationResult(req)
   const convertedQuantity = +ticketQuantity
+  const todaysTimestamp = todaysExactTimestamp()
 
   try {
 
@@ -159,6 +164,8 @@ exports.buyTicket = async (req, res, next) => {
       throwError(410, 'Tickets are sold out already!')
     } else if (convertedQuantity > foundTicket.ticketQuantity) {
       throwError(410, 'There is not that much ticket left!')
+    } else if (foundTicket.startDate < todaysTimestamp) {
+      throwError(410, 'Event start date already passed!')
     }
 
     const anotherPayment = await UserTicket.findOne({ where: { ticketId: ticketId, userId: userId } })
@@ -225,15 +232,16 @@ exports.buyTicket = async (req, res, next) => {
 
 exports.fetchSimilarEvents = async (req, res, next) => {
   const { location, category, id } = req.query
+  const todaysTimestamp = todaysExactTimestamp()
 
   try {
 
     const similarEvents = await Event.findAll({
       where:
       {
-        [Op.or]:
-          [{ location }, { category }],
-        [Op.not]: [{ id }]
+        [Op.or]: [{ location }, { category }],
+        [Op.not]: [{ id }],
+        startDate: { [Op.gt]: todaysTimestamp }
       },
       limit: 12
     })
@@ -304,10 +312,13 @@ exports.searchEvents = async (req, res, next) => {
   const categoryArray = filterOptions.category.split(',')
   const todaysDate = dayjs(new Date).startOf('day')
   const addedExtraDays = todaysDate.add(+filterObject.startDate, 'day').unix()
+  const todaysTimestamp = todaysExactTimestamp()
 
   try {
 
-    const whereObject = {}
+    const whereObject = {
+      startDate: { [Op.gt]: todaysTimestamp }
+    }
 
     if (filterObject.eventType) {
       whereObject.eventType = filterObject.eventType
@@ -322,7 +333,7 @@ exports.searchEvents = async (req, res, next) => {
     }
 
     if (filterObject.startDate) {
-      whereObject.startDate = { [Op.between]: [todaysDate.unix(), addedExtraDays] }
+      whereObject.startDate = { [Op.between]: [todaysTimestamp, addedExtraDays] }
     }
 
     if (filterObject.category) {

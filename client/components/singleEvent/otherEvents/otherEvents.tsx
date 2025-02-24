@@ -42,7 +42,7 @@ export default function OtherEvents({ event }: ComponentProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isError, setIsError] = useState<boolean | string>(false)
   const [similarEvents, setSimilarEvents] = useState<Event[]>([])
-  console.log(event)
+
   useEffect(() => {
     async function fetchSimilarEvents() {
       try {
