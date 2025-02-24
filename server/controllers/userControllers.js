@@ -34,7 +34,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 exports.fetchUpcomingEvents = async (req, res, next) => {
   const { page, start, end } = req.query
   const todaysTimestamp = dayjs().add(+start, 'd').startOf('day')
-  const calculatedDate = dayjs(todaysTimestamp.add(+end, 'd')).startOf('day').unix()
+  const calculatedDate = dayjs(todaysTimestamp.add(+end, 'd')).endOf('day').unix()
 
   try {
 
