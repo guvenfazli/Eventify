@@ -42,7 +42,9 @@ export default function NavBar({ setFilterSettings, setEventList, filterSettings
     try {
       setIsError(false)
       setIsLoading(true)
-      const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.startDate}&endDate=${filterSettings.endDate}&category=${filterSettings.category}`)
+      const response = await fetch(`http://localhost:8080/searchEvents?srch=${filterSettings.srch}&location=${filterSettings.location}&eventType=${filterSettings.eventType}&startDate=${filterSettings.startDate}&endDate=${filterSettings.endDate}&category=${filterSettings.category}`, {
+        credentials: "include"
+      })
 
       if (!response.ok) {
         const resData = await response.json()
