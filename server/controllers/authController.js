@@ -71,7 +71,6 @@ exports.loginAccount = async (req, res, next) => {
 }
 
 exports.logOut = async (req, res, next) => {
-  console.log(req.session.userInfo)
   await req.session.destroy(() => {
     res.clearCookie('connect.sid')
     res.json({ message: 'Logged out!' })
