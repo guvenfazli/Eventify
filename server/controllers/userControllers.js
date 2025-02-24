@@ -286,9 +286,11 @@ exports.getInvoice = async (req, res, next) => {
 exports.interestedEvents = async (req, res, next) => {
   const userId = req.session.userInfo.userId
   const { filter, direction } = req.query
+  const todaysTimestamp = todaysExactTimestamp()
+
 
   try {
-    const foundUser = await User.findByPk(userId, { include: [{ model: Event }], order: [[{ model: Event }, filter, direction]] })
+    const foundUser = await User.findByPk(userId, { include: [{ model: Event, where: { startDate: { [Op.gt]: todaysTimestamp } } }], order: [[{ model: Event }, filter, direction]] })
 
     if (!foundUser) {
       throwError(404, "Could not find the user!")
