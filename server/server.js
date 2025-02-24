@@ -66,9 +66,9 @@ app.use(cors({
   credentials: true,
   origin: 'http://localhost:3000'
 }))
+app.use(cookieparser())
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).array('eventImage', 1))
 app.use('/eventImages', express.static(path.join(__dirname, 'eventImages')))
-app.use(cookieparser())
 app.use(bodyParser.json())
 app.use( // Session store for Sequelize with Dialect PostgreSQL.
   session({
@@ -79,7 +79,7 @@ app.use( // Session store for Sequelize with Dialect PostgreSQL.
     }),
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 }
+    cookie: { httpOnly: true, secure: false, maxAge: 24 * 60 * 60 * 1000 } // Will change secure after the project is ready to go production.
   })
 );
 

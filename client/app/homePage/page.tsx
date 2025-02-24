@@ -1,3 +1,4 @@
+import { cookies } from "next/headers"
 import GreetSection from "@/components/homePage/greetSection/greetSection"
 import ExploreCategories from "@/components/homePage/exploreCategories/exploreCategories"
 import PopularEvents from "@/components/homePage/popularEvents/popularEvents"
@@ -6,11 +7,14 @@ import TrendingEvents from "@/components/homePage/trendingEvents/trendingEvents"
 
 export default async function Page() {
 
-  try {
+  const cookie = cookies()
 
+  try {
     const response = await fetch('https://restcountries.com/v3.1/region/europe')
     const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents?page=6', {
-      credentials: "include"
+      headers: { Cookie: (await cookie).toString() }
+
+
     })
 
     if (!response.ok || !trendingAroundTheWorld.ok) {
@@ -24,7 +28,7 @@ export default async function Page() {
       countryRes.json(),
       trendingRes.json()
     ])
-    
+
 
     return (
       <div className="flex flex-col items-start justify-start">

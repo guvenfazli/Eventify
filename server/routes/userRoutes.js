@@ -1,18 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/userControllers')
+const { authCheck } = require('../utils/authCheck')
 const { body, } = require('express-validator')
 
 /* G E T S */
-router.get('/trendingWorldEvents', controller.fetchTrendingAroundTheWorldEvents)
-router.get('/upcomingEvents', controller.fetchUpcomingEvents)
-router.get('/bestFreeEvents', controller.fetchBestFreeEvents)
-router.get('/getEvent/:eventId', controller.fetchSingleEvent)
-router.get('/similarEvents', controller.fetchSimilarEvents)
-router.get('/myTickets', controller.fetchMyTickets)
-router.get('/getInvoice/:invoiceId', controller.getInvoice)
-router.get('/interestedEvents', controller.interestedEvents)
-router.get('/searchEvents', controller.searchEvents)
+router.get('/trendingWorldEvents', authCheck, controller.fetchTrendingAroundTheWorldEvents)
+router.get('/upcomingEvents', authCheck, controller.fetchUpcomingEvents)
+router.get('/bestFreeEvents', authCheck, controller.fetchBestFreeEvents)
+router.get('/getEvent/:eventId', authCheck, controller.fetchSingleEvent)
+router.get('/similarEvents', authCheck, controller.fetchSimilarEvents)
+router.get('/myTickets', authCheck, controller.fetchMyTickets)
+router.get('/getInvoice/:invoiceId', authCheck, controller.getInvoice)
+router.get('/interestedEvents', authCheck, controller.interestedEvents)
+router.get('/searchEvents', authCheck, controller.searchEvents)
 
 /* P O S T S */
 router.post('/beInterested/:eventId', controller.beInterested)

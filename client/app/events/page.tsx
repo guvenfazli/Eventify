@@ -24,8 +24,6 @@ export default function Page() {
     category: undefined
   })
 
-  console.log(filterSettings.category)
-
   return (
     <div className="flex flex-col items-start justify-start">
       <TopSection setFilterSettings={setFilterSettings} filterSettings={filterSettings} />

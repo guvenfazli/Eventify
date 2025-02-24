@@ -1,5 +1,17 @@
 import { SearchParams } from "next/dist/server/request/search-params"
 import SingleEvent from "@/components/singleEvent/singleEvent"
+import { cookies } from "next/headers"
+
+interface EventTicket {
+  createdAt: string,
+  eventId: string,
+  id: string,
+  ticketPrice: number,
+  ticketQuantity: number,
+  title: string,
+  updatedAt: string
+}
+
 interface FetchedEvent {
   id: string,
   title: string,
@@ -15,8 +27,10 @@ interface FetchedEvent {
   ticketQuantity: number,
   ticketPrice: number,
   imageURL: string,
-  createdAt: string,
-  updatedAt: string
+  createdAt: Date,
+  updatedAt: Date,
+  ticket: EventTicket
+
 }
 
 interface ErrorType {
@@ -34,10 +48,11 @@ interface ComponentProps {
 export default async function Page({ params }: ComponentProps) {
 
   const { eventId } = await params
+  const cookie = cookies()
 
   try {
     const response = await fetch(`http://localhost:8080/getEvent/${eventId}`, {
-      credentials: 'include'
+      headers: { Cookie: (await cookie).toString() }
     })
 
     if (!response.ok) {
