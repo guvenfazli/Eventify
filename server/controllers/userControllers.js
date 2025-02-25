@@ -170,7 +170,11 @@ exports.buyTicket = async (req, res, next) => {
 
     const anotherPayment = await UserTicket.findOne({ where: { ticketId: ticketId, userId: userId } })
 
-    if (anotherPayment) {
+    const folderPath = path.resolve(__dirname, '..', 'invoices')
+    const filePath = path.join(folderPath, `${foundTicket.eventId + ' ' + userId}.pdf`)
+    const qrFilePath = path.join(folderPath, `${foundTicket.eventId + ' ' + userId}.png`)
+
+    if (anotherPayment) { // If user already bought the ticket but re-buying it or buying more 
       await sequelize.transaction(async (t) => {
         anotherPayment.totalPrice += +totalPrice
         anotherPayment.totalQuantity += convertedQuantity
@@ -183,14 +187,8 @@ exports.buyTicket = async (req, res, next) => {
 
       const doc = new PDFDocument()
 
-      const folderPath = path.resolve(__dirname, '..', 'invoices')
-      const filePath = path.join(folderPath, `${foundTicket.eventId}.pdf`)
-      const qrFilePath = path.join(folderPath, `${foundTicket.eventId}.png`)
 
-      const qrCodeData = {
-        name: "Guven",
-        type: "Just Testing"
-      }
+      const qrCodeData = `https://eventify.com/events/${foundTicket.event.id}`
 
       const stringQr = JSON.stringify(qrCodeData)
 
@@ -213,6 +211,9 @@ exports.buyTicket = async (req, res, next) => {
       return;
     }
 
+
+    // If this is the first time user buys this ticket
+
     const boughtTicket = await UserTicket.create({
       fullName,
       email,
@@ -222,31 +223,23 @@ exports.buyTicket = async (req, res, next) => {
       userId,
       ticketId
     })
-
     foundTicket.ticketQuantity -= convertedQuantity
     await foundTicket.save()
 
     const doc = new PDFDocument()
 
-    const folderPath = path.resolve(__dirname, '..', 'invoices')
-    const filePath = path.join(folderPath, `${boughtTicket.id}.pdf`)
-    const qrFilePath = path.join(folderPath, `${foundTicket.eventId}.png`)
-
-    const qrCodeData = {
-      name: "Guven",
-      type: "Just Testing"
-    }
+    const qrCodeData = `https://eventify.com/events/${foundTicket.event.id}`
 
     const stringQr = JSON.stringify(qrCodeData)
 
-    const qrCode = QrCode.toFileStream(qrFilePath, stringQr, { width: 200 }, (err, url) => {
+    const qrCode = QrCode.toFile(qrFilePath, stringQr, { width: 200 }, (err, url) => {
       if (err) {
         console.log("Error occured while creating the QR Code!")
         return
       }
 
       doc.pipe(fs.createWriteStream(filePath))
-      doc.image(qrFilePath, { width: 200, height: 200 })
+      doc.image(qrFilePath, 150, 150, { width: 200, height: 200 })
       doc.text('----------------------------------------------------------------------')
       doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${boughtTicket.totalQuantity} = ${boughtTicket.totalPrice} EUR`)
       doc.text('Thank you for choosing Eventify!')
@@ -310,6 +303,7 @@ exports.fetchMyTickets = async (req, res, next) => {
 
 exports.getInvoice = async (req, res, next) => {
   const invoiceId = req.params.invoiceId
+  console.log(invoiceId)
   const folderPath = path.resolve(__dirname, '..', 'invoices')
   const filePath = path.join(folderPath, `${invoiceId}.pdf`)
   const readStream = fs.createReadStream(filePath)
