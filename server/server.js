@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const cookieparser = require('cookie-parser')
 const sequelize = require('./utils/database')
 const path = require('path')
-const redis = require('redis')
+const redisClient = require('./utils/redis')
 const multer = require('multer')
 const dotenv = require('dotenv')
 const { extendDefaultFields } = require('./models/Session')
@@ -35,14 +35,11 @@ const fileFilter = (req, file, cb) => {
 /* Redis Setup */
 
 async function createRedis() {
-  const client = redis.createClient({
-    host: 'localhost',
-    port: 6379
-  })
 
-  client.on('error', err => console.log('Redis Client Error', err))
 
-  await client.connect()
+  redisClient.on('error', err => console.log('Redis Client Error', err))
+
+  await redisClient.connect()
 
 }
 
