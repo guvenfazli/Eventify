@@ -35,13 +35,8 @@ const fileFilter = (req, file, cb) => {
 /* Redis Setup */
 
 async function createRedis() {
-
-  if (!redisClient) {
-    redisClient.on('error', err => console.log('Redis Client Error', err))
-    await redisClient.connect()
-  } else {
-    return redisClient
-  }
+  redisClient.on('error', err => console.log('Redis Client Error', err))
+  await redisClient.connect()
 }
 
 createRedis()

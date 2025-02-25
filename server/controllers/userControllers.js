@@ -84,13 +84,20 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
 
 exports.fetchSingleEvent = async (req, res, next) => {
   const eventId = req.params.eventId
-
   try {
 
-    const foundEvent = await Event.findByPk(eventId, { include: Ticket })
+
+
+    const foundEvent = await Event.findByPk(eventId, { include: [{ model: Ticket }, { model: User }] })
+    const isInterested = await UserEventInterested.findOne({ where: { userId: req.session.userInfo.userId, eventId: eventId } })
 
     if (!foundEvent) {
       throwError(404, "We could not find that event.")
+    }
+
+    const isInterestedCache = await redisClient.hGet(`event:${eventId}`, 'isInterested')
+    if (!isInterestedCache) {
+      redisClient.hSet(`event:${eventId}`, 'isInterested', isInterested ? 'true' : 'false')
     }
 
     res.status(200).json({ event: foundEvent })
