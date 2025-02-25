@@ -25,21 +25,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
       throwError(404, "No events found!")
     }
 
-    const qrCodeData = {
-      name: "Guven",
-      type: "Just Testing"
-    }
 
-    const stringQr = JSON.stringify(qrCodeData)
-
-    QrCode.toString(stringQr, { type: 'terminal' }, (err, url) => {
-      if (err) {
-        console.log("Error occured while creating the QR Code!")
-        return
-      }
-
-      console.log(url)
-    })
 
     res.status(200).json({ foundEvents })
     return;
@@ -211,10 +197,24 @@ exports.buyTicket = async (req, res, next) => {
 
       const folderPath = path.resolve(__dirname, '..', 'invoices')
       const filePath = path.join(folderPath, `${foundTicket.eventId}.pdf`)
+      const qrFilePath = path.join(folderPath, `${foundTicket.eventId}.png`)
 
+      const qrCodeData = {
+        name: "Guven",
+        type: "Just Testing"
+      }
 
+      const stringQr = JSON.stringify(qrCodeData)
+
+      const qrCode = QrCode.toFile(qrFilePath, stringQr, (err, url) => {
+        if (err) {
+          console.log("Error occured while creating the QR Code!")
+          return
+        }
+      })
 
       doc.pipe(fs.createWriteStream(filePath))
+      doc.image(qrFilePath, 320, 280, { scale: 0.25 })
       doc.text('----------')
       doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${anotherPayment.totalQuantity += convertedQuantity} = ${anotherPayment.totalPrice += +totalPrice} EUR`)
       doc.text('Thank you for choosing Eventify!')
