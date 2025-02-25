@@ -179,18 +179,6 @@ exports.buyTicket = async (req, res, next) => {
           foundTicket.save({ transaction: t }),
           anotherPayment.save({ transaction: t })
         ]);
-
-        const doc = new PDFDocument()
-
-        const folderPath = path.resolve(__dirname, '..', 'invoices')
-        const filePath = path.join(folderPath, `${foundTicket.eventId}.pdf`)
-
-        doc.pipe(fs.createWriteStream(filePath))
-        doc.text('----------')
-        doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${anotherPayment.totalQuantity += convertedQuantity} = ${anotherPayment.totalPrice += +totalPrice} EUR`)
-        doc.text('Thank you for choosing Eventify!')
-        doc.text('----------')
-        doc.end()
       })
 
       const doc = new PDFDocument()
@@ -214,7 +202,7 @@ exports.buyTicket = async (req, res, next) => {
       })
 
       doc.pipe(fs.createWriteStream(filePath))
-      doc.image(qrFilePath, 320, 280, { scale: 0.25 })
+      doc.image(qrFilePath, { scale: 0.25 })
       doc.text('----------')
       doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${anotherPayment.totalQuantity += convertedQuantity} = ${anotherPayment.totalPrice += +totalPrice} EUR`)
       doc.text('Thank you for choosing Eventify!')
@@ -259,7 +247,7 @@ exports.buyTicket = async (req, res, next) => {
       }
 
       doc.pipe(fs.createWriteStream(filePath))
-      doc.image(qrFilePath, 320, 280, { scale: 0.25 })
+      doc.image(qrFilePath, { scale: 0.25 })
       doc.text('----------')
       doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${foundTicket.totalQuantity += convertedQuantity} = ${foundTicket.totalPrice += +totalPrice} EUR`)
       doc.text('Thank you for choosing Eventify!')
