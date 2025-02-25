@@ -13,6 +13,7 @@ const dayjs = require('dayjs')
 const { validationResult } = require('express-validator')
 const sequelize = require('../utils/database')
 const { todaysExactTimestamp } = require('../utils/todaysDate')
+const redisClient = require('../utils/redis')
 
 
 exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
