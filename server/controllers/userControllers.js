@@ -239,18 +239,18 @@ exports.buyTicket = async (req, res, next) => {
 
     const stringQr = JSON.stringify(qrCodeData)
 
-    const qrCode = QrCode.toFile(qrFilePath, stringQr, (err, url) => {
+    const qrCode = QrCode.toFileStream(qrFilePath, stringQr, { width: 200 }, (err, url) => {
       if (err) {
         console.log("Error occured while creating the QR Code!")
         return
       }
 
       doc.pipe(fs.createWriteStream(filePath))
-      doc.image(qrFilePath, { scale: 0.25, })
-      doc.text('----------')
+      doc.image(qrFilePath, { width: 200, height: 200 })
+      doc.text('----------------------------------------------------------------------')
       doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${boughtTicket.totalQuantity} = ${boughtTicket.totalPrice} EUR`)
       doc.text('Thank you for choosing Eventify!')
-      doc.text('----------')
+      doc.text('----------------------------------------------------------------------')
       doc.end()
     })
 
