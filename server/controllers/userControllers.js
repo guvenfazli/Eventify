@@ -123,10 +123,12 @@ exports.beInterested = async (req, res, next) => {
     const foundUser = await User.findByPk(userId, { include: Event })
     const foundEvent = await Event.findByPk(eventId)
     const alreadytInterested = foundUser.events.some((event) => event.id === eventId)
+
     if (alreadytInterested) {
       await UserEventInterested.destroy({ where: { userId, eventId } })
       foundEvent.interested -= 1
-      foundEvent.save()
+      await foundEvent.save()
+      await redisClient.hSet(`event:${eventId}`, 'isInterested', 'false')
       res.status(200).json({ message: "You are not interested anymore!" })
       return;
     }
@@ -139,7 +141,7 @@ exports.beInterested = async (req, res, next) => {
 
     foundEvent.interested += 1
     await foundEvent.save()
-
+    await redisClient.hSet(`event:${eventId}`, 'isInterested', 'false')
     res.status(200).json({ message: "You are now interested!" })
     return;
   } catch (err) {
