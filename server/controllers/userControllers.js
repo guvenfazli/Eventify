@@ -243,13 +243,31 @@ exports.buyTicket = async (req, res, next) => {
 
     const folderPath = path.resolve(__dirname, '..', 'invoices')
     const filePath = path.join(folderPath, `${boughtTicket.id}.pdf`)
+    const qrFilePath = path.join(folderPath, `${foundTicket.eventId}.png`)
 
-    doc.pipe(fs.createWriteStream(filePath))
-    doc.text('----------')
-    doc.text(`Your Ticket Invoice for ${boughtTicket.title} X ${boughtTicket.totalQuantity} = ${boughtTicket.totalPrice} EUR`)
-    doc.text('Thank you for choosing Eventify!')
-    doc.text('----------')
-    doc.end()
+    const qrCodeData = {
+      name: "Guven",
+      type: "Just Testing"
+    }
+
+    const stringQr = JSON.stringify(qrCodeData)
+
+    const qrCode = QrCode.toFile(qrFilePath, stringQr, (err, url) => {
+      if (err) {
+        console.log("Error occured while creating the QR Code!")
+        return
+      }
+
+      doc.pipe(fs.createWriteStream(filePath))
+      doc.image(qrFilePath, 320, 280, { scale: 0.25 })
+      doc.text('----------')
+      doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${foundTicket.totalQuantity += convertedQuantity} = ${foundTicket.totalPrice += +totalPrice} EUR`)
+      doc.text('Thank you for choosing Eventify!')
+      doc.text('----------')
+      doc.end()
+    })
+
+
 
     res.status(200).json({ message: 'Thank you for choosing Eventify!' })
     return;
