@@ -28,9 +28,6 @@ router.post('/buyTicket/:ticketId', [
     .withMessage('Please provide a correct/valid email!')
     .notEmpty()
     .withMessage('Email can not be empty!'),
-  body('phone')
-    .isEmpty()
-    .withMessage('Please provide a phone number!'),
   body('ticketQuantity')
     .notEmpty()
     .withMessage('Please at least buy one ticket!'),
@@ -40,3 +37,9 @@ router.post('/buyTicket/:ticketId', [
 ], controller.buyTicket)
 
 module.exports = router
+
+/* 
+  body('phone')
+    .isEmpty()
+    .withMessage('Please provide a phone number!'),
+*/

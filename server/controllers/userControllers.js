@@ -8,6 +8,7 @@ const fs = require('fs')
 const path = require('path')
 const PDFDocument = require('pdfkit')
 const { Op, Sequelize } = require('sequelize')
+const QrCode = require('qrcode')
 const dayjs = require('dayjs')
 const { validationResult } = require('express-validator')
 const sequelize = require('../utils/database')
@@ -23,6 +24,22 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
+
+    const qrCodeData = {
+      name: "Guven",
+      type: "Just Testing"
+    }
+
+    const stringQr = JSON.stringify(qrCodeData)
+
+    QrCode.toString(stringQr, { type: 'terminal' }, (err, url) => {
+      if (err) {
+        console.log("Error occured while creating the QR Code!")
+        return
+      }
+
+      console.log(url)
+    })
 
     res.status(200).json({ foundEvents })
     return;
@@ -151,7 +168,7 @@ exports.buyTicket = async (req, res, next) => {
       throwError(410, errors.array()[0].msg)
     }
 
-    const foundTicket = await Ticket.findByPk(ticketId)
+    const foundTicket = await Ticket.findByPk(ticketId, { include: { model: Event } })
 
     if (!foundTicket) {
       throwError(404, 'Ticket could not found!')
@@ -176,12 +193,26 @@ exports.buyTicket = async (req, res, next) => {
           foundTicket.save({ transaction: t }),
           anotherPayment.save({ transaction: t })
         ]);
+
+        const doc = new PDFDocument()
+
+        const folderPath = path.resolve(__dirname, '..', 'invoices')
+        const filePath = path.join(folderPath, `${foundTicket.eventId}.pdf`)
+
+        doc.pipe(fs.createWriteStream(filePath))
+        doc.text('----------')
+        doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${anotherPayment.totalQuantity += convertedQuantity} = ${anotherPayment.totalPrice += +totalPrice} EUR`)
+        doc.text('Thank you for choosing Eventify!')
+        doc.text('----------')
+        doc.end()
       })
 
       const doc = new PDFDocument()
 
       const folderPath = path.resolve(__dirname, '..', 'invoices')
       const filePath = path.join(folderPath, `${foundTicket.eventId}.pdf`)
+
+
 
       doc.pipe(fs.createWriteStream(filePath))
       doc.text('----------')
