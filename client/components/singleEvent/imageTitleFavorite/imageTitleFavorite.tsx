@@ -2,19 +2,22 @@
 import Image from "next/image";
 import { IoStar, IoStarOutline } from "react-icons/io5";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 interface ErrorType {
   message: string
 }
 
-
 interface ComponentProps {
   imageURL: string,
   title: string,
-  eventId: string
+  eventId: string,
+  interested: boolean
 }
-export default function ImageTitleFavorite({ imageURL, title, eventId }: ComponentProps) {
+
+export default function ImageTitleFavorite({ imageURL, title, eventId, interested }: ComponentProps) {
 
   const { toast } = useToast()
+  const [isInterested, setIsInterested] = useState<boolean>(interested)
 
   async function beInterested() {
     try {
@@ -36,6 +39,7 @@ export default function ImageTitleFavorite({ imageURL, title, eventId }: Compone
         description: resData.message,
         className: "bg-[#FFE047] text-black"
       })
+      setIsInterested(resData.isInterested)
 
     } catch (err: unknown) {
       const error = err as ErrorType
@@ -60,7 +64,8 @@ export default function ImageTitleFavorite({ imageURL, title, eventId }: Compone
 
       <div className="flex items-center justify-between w-full">
         <p className="font-extrabold text-[60px] font-opensans text-[#2D2C3C]">{title}</p>
-        <button onClick={beInterested}><IoStarOutline className="text-[45px] text-[#2D2C3C]" /></button>
+        {isInterested ? <button onClick={beInterested}><IoStar className="text-[45px] text-[#FFE047]" /></button> : <button onClick={beInterested}><IoStarOutline className="text-[45px] text-[#2D2C3C]" /></button>
+        }
       </div>
     </div>
   )

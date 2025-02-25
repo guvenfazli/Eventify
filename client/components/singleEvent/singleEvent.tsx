@@ -35,16 +35,17 @@ interface Event {
 }
 
 interface ComponentProps {
-  event: Event
+  event: Event,
+  interested: boolean
 }
 
-export default function SingleEvent({ event }: ComponentProps) {
+export default function SingleEvent({ event, interested }: ComponentProps) {
 
   return (
     <div className="flex justify-start items-start w-full p-12">
       <PageRotator />
       <div className="flex flex-col justify-start items-start w-full px-12 gap-12">
-        <ImageTitleFavorite imageURL={event.imageURL} title={event.title} eventId={event.id} />
+        <ImageTitleFavorite imageURL={event.imageURL} title={event.title} eventId={event.id} interested={interested} />
         <DateTimeBuyTickets ticket={event.ticket} eventType={event.eventType} startDate={event.startDate} endDate={event.endDate} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} />
         <LocationTicketInformation location={event.location} ticketPrice={event.ticketPrice} ticketQuantity={event.ticketQuantity} eventType={event.eventType} />
         <Category eventCategory={event.category} />

@@ -38,7 +38,8 @@ interface ErrorType {
 }
 
 interface responseData {
-  event: FetchedEvent
+  event: FetchedEvent,
+  isInterested: boolean
 }
 
 interface ComponentProps {
@@ -65,7 +66,7 @@ export default async function Page({ params }: ComponentProps) {
 
     return (
       <div>
-        <SingleEvent event={resData.event} />
+        <SingleEvent event={resData.event} interested={resData.isInterested} />
       </div>
     )
 

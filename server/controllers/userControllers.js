@@ -86,26 +86,24 @@ exports.fetchSingleEvent = async (req, res, next) => {
   const eventId = req.params.eventId
   try {
 
+    const isInterestedCache = await redisClient.hGet(`event:${eventId}`, 'isInterested')
+    if (!isInterestedCache) {
+      const isInterested = await UserEventInterested.findOne({ where: { userId: req.session.userInfo.userId, eventId: eventId } })
+      await redisClient.hSet(`event:${eventId}`, 'isInterested', isInterested ? 'true' : 'false')
+    }
 
 
     const foundEvent = await Event.findByPk(eventId, { include: [{ model: Ticket }, { model: User }] })
-    const isInterested = await UserEventInterested.findOne({ where: { userId: req.session.userInfo.userId, eventId: eventId } })
 
     if (!foundEvent) {
       throwError(404, "We could not find that event.")
     }
 
-    const isInterestedCache = await redisClient.hGet(`event:${eventId}`, 'isInterested')
-    if (!isInterestedCache) {
-      redisClient.hSet(`event:${eventId}`, 'isInterested', isInterested ? 'true' : 'false')
-    }
-
-    res.status(200).json({ event: foundEvent })
+    res.status(200).json({ event: foundEvent, isInterested: isInterestedCache === 'true' ? true : false })
 
   } catch (err) {
     next(err)
   }
-
 }
 
 exports.beInterested = async (req, res, next) => {
@@ -129,7 +127,7 @@ exports.beInterested = async (req, res, next) => {
       foundEvent.interested -= 1
       await foundEvent.save()
       await redisClient.hSet(`event:${eventId}`, 'isInterested', 'false')
-      res.status(200).json({ message: "You are not interested anymore!" })
+      res.status(200).json({ message: "You are not interested anymore!", isInterested: false })
       return;
     }
 
@@ -141,8 +139,8 @@ exports.beInterested = async (req, res, next) => {
 
     foundEvent.interested += 1
     await foundEvent.save()
-    await redisClient.hSet(`event:${eventId}`, 'isInterested', 'false')
-    res.status(200).json({ message: "You are now interested!" })
+    await redisClient.hSet(`event:${eventId}`, 'isInterested', 'true')
+    res.status(200).json({ message: "You are now interested!", isInterested: true })
     return;
   } catch (err) {
     next(err)
