@@ -213,7 +213,6 @@ exports.buyTicket = async (req, res, next) => {
       return;
     }
 
-
     const boughtTicket = await UserTicket.create({
       fullName,
       email,
@@ -247,18 +246,17 @@ exports.buyTicket = async (req, res, next) => {
       }
 
       doc.pipe(fs.createWriteStream(filePath))
-      doc.image(qrFilePath, { scale: 0.25 })
+      doc.image(qrFilePath, { scale: 0.25, })
       doc.text('----------')
-      doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${foundTicket.totalQuantity += convertedQuantity} = ${foundTicket.totalPrice += +totalPrice} EUR`)
+      doc.text(`Your Ticket Invoice for ${foundTicket.title} X ${boughtTicket.totalQuantity} = ${boughtTicket.totalPrice} EUR`)
       doc.text('Thank you for choosing Eventify!')
       doc.text('----------')
       doc.end()
     })
 
-
-
     res.status(200).json({ message: 'Thank you for choosing Eventify!' })
     return;
+
   } catch (err) {
     next(err)
   }
