@@ -175,8 +175,16 @@ exports.beInterested = async (req, res, next) => {
     }
 
     foundEvent.interested += 1
-    await foundEvent.save()
-    await redisClient.hSet(`event:${eventId}`, 'isInterested', 'true')
+    await Promise.all([
+      foundEvent.save(),
+      redisClient.hSet(`event:${eventId}`, 'isInterested', 'true')
+    ])
+
+    const interestedKeys = await redisClient.scan(0, { MATCH: 'interestedEvents:*', COUNT: 10 })
+    for (const key of interestedKeys.keys) {
+      await redisClient.del(key)
+    }
+
     res.status(200).json({ message: "You are now interested!", isInterested: true })
     return;
   } catch (err) {
@@ -362,7 +370,6 @@ exports.interestedEvents = async (req, res, next) => {
   const { filter, direction } = req.query
   const todaysTimestamp = todaysExactTimestamp()
 
-
   try {
     const foundUser = await User.findByPk(userId, {
       attributes: { exclude: ['description'] },
@@ -381,6 +388,14 @@ exports.interestedEvents = async (req, res, next) => {
       throwError(404, "You have no interested events at the moment!")
     }
 
+    const cachedEvents = await redisClient.get(`interestedEvents:${filter}:${direction}`)
+
+    if (cachedEvents) {
+      res.status(200).json({ interestedEvents: JSON.parse(cachedEvents) })
+      return;
+    }
+
+    await redisClient.set(`interestedEvents:${filter}:${direction}`, JSON.stringify(foundUser.events), { EX: 5 * 60 })
     res.status(200).json({ interestedEvents: foundUser.events })
   } catch (err) {
     next(err)
