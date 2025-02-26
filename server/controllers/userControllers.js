@@ -63,7 +63,12 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
       return;
     }
 
-    const upcomingList = await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
+    const [upcomingList, totalCount] = await Promise.all(
+      [
+        await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page }),
+        await Event.count({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
+      ]
+    )
 
     if (upcomingList.length === 0) {
       if (+start === 0) {
@@ -77,7 +82,9 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
     }
 
     await redisClient.set(`filterBy:${end + page}`, JSON.stringify(upcomingList), { EX: 5 * 60 })
-    res.status(200).json({ upcomingList })
+    const isMaxed = page >= totalCount ? true : false
+    
+    res.status(200).json({ upcomingList, isLimit: isMaxed })
     return;
   } catch (err) {
     next(err)
