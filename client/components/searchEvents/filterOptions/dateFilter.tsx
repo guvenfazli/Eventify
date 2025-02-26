@@ -73,11 +73,11 @@ export default function DateFilter({ setFilterSettings, filterSettings }: Compon
                 <DialogTitle className="text-[#2D2C3C] font-opensans">Choose Date</DialogTitle>
               </DialogHeader>
               <ChooseCustomDate filterSettings={filterSettings} setFilterSettings={setFilterSettings} />
-
-              <DialogClose>
-                <button className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">Choose</button>
-              </DialogClose>
-
+              <DialogFooter>
+                <DialogClose>
+                  <button className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">Choose</button>
+                </DialogClose>
+              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
