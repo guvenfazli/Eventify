@@ -19,8 +19,13 @@ export default function ChooseCustomDate({ filterSettings, setFilterSettings }: 
         updated[filter] = undefined
         return updated
       }
-      updated[filter] = dayjs(e.target.value).startOf('day').unix()
-      return updated
+      if (filter === 'endDate') {
+        updated[filter] = dayjs(e.target.value).endOf('day').unix()
+        return updated
+      } else {
+        updated[filter] = dayjs(e.target.value).startOf('day').unix()
+        return updated
+      }
     })
   }
 
