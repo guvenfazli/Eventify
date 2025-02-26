@@ -411,6 +411,9 @@ exports.searchEvents = async (req, res, next) => {
 
   const todaysTimestamp = filterObject.startDate ? filterObject.startDate : todaysExactTimestamp()
 
+  console.log(todaysTimestamp)
+  console.log(+filterObject.endDate)
+
   try {
 
     const whereObject = {
@@ -429,14 +432,16 @@ exports.searchEvents = async (req, res, next) => {
       whereObject.title = { [Op.substring]: filterObject.srch }
     }
 
-    if (filterObject.startDate) {
-      whereObject.startDate = { [Op.between]: [todaysTimestamp, filterObject.endDate] }
+    console.log(filterObject.startDate)
+    if (filterObject.endDate) {
+      whereObject.startDate = { [Op.between]: [todaysTimestamp, +filterObject.endDate] }
     }
 
     if (filterObject.category) {
       whereObject.category = { [Op.or]: filterObject.category }
     }
 
+    console.log(whereObject)
     const filteredEvents = await Event.findAll({
       where: whereObject, order: [['startDate', 'ASC']]
     })

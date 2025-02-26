@@ -25,7 +25,7 @@ export default function DateFilter({ setFilterSettings, filterSettings }: Compon
 
   function addFilter(filter: string, value: number) {
     const todaysDate = dayjs().startOf('day')
-    const calculatedDate = todaysDate.add(value, 'day').startOf('day').unix()
+    const calculatedDate = todaysDate.add(value, 'day').endOf('day').unix()
     setFilterSettings(prev => {
       const updated = { ...prev }
       if (updated["addedDays"] === value) {
@@ -44,17 +44,17 @@ export default function DateFilter({ setFilterSettings, filterSettings }: Compon
       <p className="text-[24px] font-semibold font-opensans text-[#2D2C3C]">Date</p>
       <div className="flex flex-col justify-start items-start gap-2">
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="1" value="1" name="endDate" checked={filterSettings.addedDays === 1} onClick={() => addFilter('endDate', 1)} />
+          <Checkbox id="1" value="1" name="endDate" checked={filterSettings.addedDays === 0} onClick={() => addFilter('endDate', 0)} />
           <label htmlFor="1" className="text-[20px] font-opensans text-[#2B293D]">Today</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="2" value="2" name="endDate" checked={filterSettings.addedDays === 2} onClick={() => addFilter('endDate', 2)} />
+          <Checkbox id="2" value="2" name="endDate" checked={filterSettings.addedDays === 1} onClick={() => addFilter('endDate', 1)} />
           <label htmlFor="2" className="text-[20px] font-opensans text-[#2B293D]">Tomorrow</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="8" value="8" name="endDate" checked={filterSettings.addedDays === 8} onClick={() => addFilter('endDate', 8)} />
+          <Checkbox id="8" value="8" name="endDate" checked={filterSettings.addedDays === 7} onClick={() => addFilter('endDate', 7)} />
           <label htmlFor="8" className="text-[20px] font-opensans text-[#2B293D]">This Week</label>
         </div>
 
