@@ -33,29 +33,33 @@ export default function DateFilter({ setFilterSettings, filterSettings }: Compon
         updated["addedDays"] = undefined
         return updated
       }
+      updated.startDate = undefined
+      updated.endDate = undefined
+
       updated[filter] = calculatedDate
       updated["addedDays"] = value
       return updated
     })
   }
 
+
   return (
     <div className="flex flex-col justify-start items-start w-full gap-5 border-b pb-5 border-b-[#6F6F6F]/30">
       <p className="text-[24px] font-semibold font-opensans text-[#2D2C3C]">Date</p>
       <div className="flex flex-col justify-start items-start gap-2">
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="1" value="1" name="endDate" checked={filterSettings.addedDays === 0} onClick={() => addFilter('endDate', 0)} />
-          <label htmlFor="1" className="text-[20px] font-opensans text-[#2B293D]">Today</label>
+          <Checkbox id="0" value="0" name="endDate" checked={filterSettings.addedDays === 0} onClick={() => addFilter('endDate', 0)} />
+          <label htmlFor="0" className="text-[20px] font-opensans text-[#2B293D]">Today</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="2" value="2" name="endDate" checked={filterSettings.addedDays === 1} onClick={() => addFilter('endDate', 1)} />
-          <label htmlFor="2" className="text-[20px] font-opensans text-[#2B293D]">Tomorrow</label>
+          <Checkbox id="1" value="1" name="endDate" checked={filterSettings.addedDays === 1} onClick={() => addFilter('endDate', 1)} />
+          <label htmlFor="1" className="text-[20px] font-opensans text-[#2B293D]">Tomorrow</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
-          <Checkbox id="8" value="8" name="endDate" checked={filterSettings.addedDays === 7} onClick={() => addFilter('endDate', 7)} />
-          <label htmlFor="8" className="text-[20px] font-opensans text-[#2B293D]">This Week</label>
+          <Checkbox id="7" value="7" name="endDate" checked={filterSettings.addedDays === 7} onClick={() => addFilter('endDate', 7)} />
+          <label htmlFor="7" className="text-[20px] font-opensans text-[#2B293D]">This Week</label>
         </div>
 
         <div className="flex justify-start items-center gap-3">
@@ -74,6 +78,15 @@ export default function DateFilter({ setFilterSettings, filterSettings }: Compon
             </DialogContent>
           </Dialog>
         </div>
+
+        {(filterSettings.startDate && filterSettings.endDate) &&
+          <div className="flex justify-start items-center gap-3">
+            <p>{dayjs.unix(filterSettings.startDate as number).format("DD/MM/YY")}</p>
+            <p>-</p>
+            <p>{dayjs.unix(filterSettings.endDate as number).format("DD/MM/YY")}</p>
+          </div>
+        }
+
       </div>
     </div>
   )
