@@ -21,7 +21,16 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
   const page = req.query.page
 
   try {
+
+    const cachedEvents = await redisClient.get('trendingEvents')
+
+    if (cachedEvents) {
+      res.status(200).json({ foundEvents: cachedEvents })
+    }
+
+
     const foundEvents = await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] })
+
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
