@@ -33,7 +33,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
     const [foundEvents, totalCount] = await Promise.all(
       [
-        await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] }),
+        await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']], attributes: { exclude: ['description'] } }),
         await Event.count({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] })
       ]
     )
@@ -68,7 +68,7 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
 
     const [upcomingList, totalCount] = await Promise.all(
       [
-        await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page }),
+        await Event.findAll({ attributes: { exclude: ['description'] }, where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page }),
         await Event.count({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
       ]
     )
@@ -106,7 +106,7 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
       return;
     }
 
-    const freeList = await Event.findAll({ where: { eventType: "free", startDate: { [Op.gt]: todaysTimestamp } }, limit: +page, order: [['interested', 'DESC']] })
+    const freeList = await Event.findAll({ attributes: { exclude: ['description'] }, where: { eventType: "free", startDate: { [Op.gt]: todaysTimestamp } }, limit: +page, order: [['interested', 'DESC']] })
 
     if (freeList.length === 0) {
       throwError(404, "There is no free event at the moment, sorry!")
