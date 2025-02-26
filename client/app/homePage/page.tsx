@@ -29,14 +29,13 @@ export default async function Page() {
       trendingRes.json()
     ])
 
-
     return (
       <div className="flex flex-col items-start justify-start">
         <GreetSection countryList={countryList} />
         <div className="flex flex-col justify-start items-start px-32 w-full">
           <ExploreCategories />
           <div className="flex flex-col justify-start items-start gap-32 w-full">
-            <TrendingEvents trendingList={trendingList.foundEvents} />
+            <TrendingEvents trendingList={trendingList.foundEvents} isLimit={trendingList.isLimit} />
             <PopularEvents />
             <OnlineEvents />
           </div>

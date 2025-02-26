@@ -20,14 +20,16 @@ interface event {
 }
 
 interface ComponentProps {
-  trendingList: event[]
+  trendingList: event[],
+  isLimit: boolean
 
 }
 
+export default function TrendingEvents({ trendingList, isLimit }: ComponentProps) {
 
-export default function TrendingEvents({ trendingList }: ComponentProps) {
-
+  console.log(isLimit)
   const [eventList, setEventList] = useState<event[]>(trendingList)
+  const [isMaxedEvents, setIsMaxedEvents] = useState<boolean>(isLimit)
   const [page, setPage] = useState<number>(6)
 
   useEffect(() => {
@@ -46,6 +48,7 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
 
         const resData = await response.json()
         setEventList(resData.foundEvents)
+        setIsMaxedEvents(resData.isLimit)
 
       } catch (err: unknown) {
         const error = err as { message: string }
@@ -68,8 +71,8 @@ export default function TrendingEvents({ trendingList }: ComponentProps) {
       <div className="flex flex-col justify-start gap-5 items-start w-full">
         <EventsSection eventList={eventList} />
         <div className="flex w-full justify-center items-center">
-          <button onClick={() => setPage(prev => prev += 6)}
-            className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">
+          <button disabled={isMaxedEvents} onClick={() => setPage(prev => prev += 6)}
+            className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out disabled:pointer-events-none disabled:text-[#2B293D]/50 disabled:border-[#2B293D]/30 ">
             See More
           </button>
         </div>

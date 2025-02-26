@@ -30,13 +30,23 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     }
 
 
-    const foundEvents = await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] })
+    const [foundEvents, totalCount] = await Promise.all(
+      [
+        await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] }),
+        await Event.count({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] })
+      ]
+    )
+
+    console.log(page)
+    console.log(totalCount)
 
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
     await redisClient.set(`trendingEvents:${page}`, JSON.stringify(foundEvents), { EX: 5 * 60 })
-    res.status(200).json({ foundEvents })
+    const isMaxed = page >= totalCount ? true : false
+    console.log(isMaxed)
+    res.status(200).json({ foundEvents, isLimit: isMaxed })
     return;
   } catch (err) {
     next(err)
@@ -97,7 +107,7 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
       throwError(404, "There is no free event at the moment, sorry!")
     }
 
-    await redisClient.get(`freeEvents:${page}`, JSON.stringify(upcomingList), { EX: 5 * 60 })
+    await redisClient.set(`freeEvents:${page}`, JSON.stringify(freeList), { EX: 5 * 60 })
     res.status(200).json({ freeList })
     return;
   } catch (err) {
@@ -114,7 +124,6 @@ exports.fetchSingleEvent = async (req, res, next) => {
       const isInterested = await UserEventInterested.findOne({ where: { userId: req.session.userInfo.userId, eventId: eventId } })
       await redisClient.hSet(`event:${eventId}`, 'isInterested', isInterested ? 'true' : 'false')
     }
-
 
     const foundEvent = await Event.findByPk(eventId, { include: [{ model: Ticket }, { model: User }] })
 
