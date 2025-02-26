@@ -25,7 +25,8 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     const cachedEvents = await redisClient.get('trendingEvents')
 
     if (cachedEvents) {
-      res.status(200).json({ foundEvents: cachedEvents })
+      res.status(200).json({ foundEvents: JSON.parse(cachedEvents) })
+      return;
     }
 
 
@@ -34,9 +35,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
-
-
-
+    await redisClient.set('trendingEvents', JSON.stringify(foundEvents), { EX: 5 * 60 })
     res.status(200).json({ foundEvents })
     return;
   } catch (err) {
