@@ -313,7 +313,8 @@ exports.fetchSimilarEvents = async (req, res, next) => {
         [Op.not]: [{ id }],
         startDate: { [Op.gt]: todaysTimestamp }
       },
-      limit: 12
+      limit: 12,
+      attributes: { exclude: ['description'] }
     })
 
     if (similarEvents.length === 0) {
@@ -363,7 +364,16 @@ exports.interestedEvents = async (req, res, next) => {
 
 
   try {
-    const foundUser = await User.findByPk(userId, { include: [{ model: Event, where: { startDate: { [Op.gt]: todaysTimestamp } } }], order: [[{ model: Event }, filter, direction]] })
+    const foundUser = await User.findByPk(userId, {
+      attributes: { exclude: ['description'] },
+      include: [
+        {
+          model: Event, where: { startDate: { [Op.gt]: todaysTimestamp } }
+        }],
+      order: [
+        [{ model: Event }, filter, direction]
+      ]
+    })
 
     if (!foundUser) {
       throwError(404, "Could not find the user!")
