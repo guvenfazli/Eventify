@@ -27,7 +27,6 @@ interface ComponentProps {
 
 export default function TrendingEvents({ trendingList, isLimit }: ComponentProps) {
 
-  console.log(isLimit)
   const [eventList, setEventList] = useState<event[]>(trendingList)
   const [isMaxedEvents, setIsMaxedEvents] = useState<boolean>(isLimit)
   const [page, setPage] = useState<number>(6)

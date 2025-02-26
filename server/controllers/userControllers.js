@@ -37,15 +37,11 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
       ]
     )
 
-    console.log(page)
-    console.log(totalCount)
-
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
     await redisClient.set(`trendingEvents:${page}`, JSON.stringify(foundEvents), { EX: 5 * 60 })
     const isMaxed = page >= totalCount ? true : false
-    console.log(isMaxed)
     res.status(200).json({ foundEvents, isLimit: isMaxed })
     return;
   } catch (err) {
