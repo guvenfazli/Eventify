@@ -80,7 +80,7 @@ export default function PopularEvents() {
         <p className="text-[40px] font-bold font-monster text-[#2D2C3C]">Upcoming Events</p>
         <div className="flex justify-start space-x-10 items-center text-[#6F6F6F]">
           <button onClick={() => setDays({ start: 0, end: 0 })}
-            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${(days.start === 0 && days.end === 1) && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
+            className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${(days.start === 0 && days.end === 0) && 'bg-[#FFE047] text-[#2D2C3C]'}`}>
             Today
           </button>
           <button onClick={() => setDays({ start: 1, end: 0 })}

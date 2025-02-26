@@ -25,7 +25,8 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     const cachedEvents = await redisClient.get(`trendingEvents:${page}`)
 
     if (cachedEvents) {
-      res.status(200).json({ foundEvents: JSON.parse(cachedEvents) })
+      const parsedCahce = JSON.parse(cachedEvents)
+      res.status(200).json({ foundEvents: parsedCahce.foundEvents, isLimit: parsedCahce.isLimit })
       return;
     }
 
@@ -40,8 +41,9 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
-    await redisClient.set(`trendingEvents:${page}`, JSON.stringify(foundEvents), { EX: 5 * 60 })
     const isMaxed = page >= totalCount ? true : false
+    await redisClient.set(`trendingEvents:${page}`, JSON.stringify({ foundEvents, isLimit: isMaxed }), { EX: 5 * 60 })
+
     res.status(200).json({ foundEvents, isLimit: isMaxed })
     return;
   } catch (err) {
@@ -83,7 +85,7 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
 
     await redisClient.set(`filterBy:${end + page}`, JSON.stringify(upcomingList), { EX: 5 * 60 })
     const isMaxed = page >= totalCount ? true : false
-    
+
     res.status(200).json({ upcomingList, isLimit: isMaxed })
     return;
   } catch (err) {
