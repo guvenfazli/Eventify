@@ -22,7 +22,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
 
   try {
 
-    const cachedEvents = await redisClient.get('trendingEvents')
+    const cachedEvents = await redisClient.get(`trendingEvents:${page}`)
 
     if (cachedEvents) {
       res.status(200).json({ foundEvents: JSON.parse(cachedEvents) })
@@ -35,7 +35,7 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
     if (foundEvents.length <= 0) {
       throwError(404, "No events found!")
     }
-    await redisClient.set('trendingEvents', JSON.stringify(foundEvents), { EX: 5 * 60 })
+    await redisClient.set(`trendingEvents:${page}`, JSON.stringify(foundEvents), { EX: 5 * 60 })
     res.status(200).json({ foundEvents })
     return;
   } catch (err) {
@@ -50,6 +50,13 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
 
   try {
 
+    const cachedFilteredEvents = await redisClient.get(`filterBy:${end + page}`)
+
+    if (cachedFilteredEvents) {
+      res.status(200).json({ upcomingList: JSON.parse(cachedFilteredEvents) })
+      return;
+    }
+
     const upcomingList = await Event.findAll({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
 
     if (upcomingList.length === 0) {
@@ -63,6 +70,7 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
       }
     }
 
+    await redisClient.set(`filterBy:${end + page}`, JSON.stringify(upcomingList), { EX: 5 * 60 })
     res.status(200).json({ upcomingList })
     return;
   } catch (err) {
@@ -74,8 +82,14 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
   const { page } = req.query
   const todaysTimestamp = todaysExactTimestamp()
 
-
   try {
+
+    const cachedFilteredEvents = await redisClient.get(`freeEvents:${page}`)
+
+    if (cachedFilteredEvents) {
+      res.status(200).json({ freeList: JSON.parse(cachedFilteredEvents) })
+      return;
+    }
 
     const freeList = await Event.findAll({ where: { eventType: "free", startDate: { [Op.gt]: todaysTimestamp } }, limit: +page, order: [['interested', 'DESC']] })
 
@@ -83,6 +97,7 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
       throwError(404, "There is no free event at the moment, sorry!")
     }
 
+    await redisClient.get(`freeEvents:${page}`, JSON.stringify(upcomingList), { EX: 5 * 60 })
     res.status(200).json({ freeList })
     return;
   } catch (err) {
