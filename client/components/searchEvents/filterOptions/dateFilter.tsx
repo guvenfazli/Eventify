@@ -10,6 +10,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import ChooseCustomDate from "./chooseCustomDate"
 import dayjs from "dayjs"
+import { DialogClose } from "@radix-ui/react-dialog"
 
 interface FilterSettings {
   [key: string]: string | string[] | number | number[] | undefined,
@@ -72,9 +73,11 @@ export default function DateFilter({ setFilterSettings, filterSettings }: Compon
                 <DialogTitle className="text-[#2D2C3C] font-opensans">Choose Date</DialogTitle>
               </DialogHeader>
               <ChooseCustomDate filterSettings={filterSettings} setFilterSettings={setFilterSettings} />
-              <DialogFooter>
+
+              <DialogClose>
                 <button className="bg-[#2B293D] font-opensans text-white font-semibold rounded-lg py-2 px-6 hover:bg-[#2B293D]/80 duration-100 ">Choose</button>
-              </DialogFooter>
+              </DialogClose>
+
             </DialogContent>
           </Dialog>
         </div>
