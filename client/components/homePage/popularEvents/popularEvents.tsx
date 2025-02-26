@@ -35,7 +35,7 @@ export default function PopularEvents() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [days, setDays] = useState<{ start: number, end: number }>({
     start: 0,
-    end: 1
+    end: 0
   })
   const [page, setPage] = useState<number>(6)
 

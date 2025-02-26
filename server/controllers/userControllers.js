@@ -61,7 +61,8 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
     const cachedFilteredEvents = await redisClient.get(`filterBy:${end + page}`)
 
     if (cachedFilteredEvents) {
-      res.status(200).json({ upcomingList: JSON.parse(cachedFilteredEvents) })
+      const parsedCache = JSON.parse(cachedFilteredEvents)
+      res.status(200).json({ upcomingList: parsedCache.upcomingList, isLimit: parsedCache.isLimit })
       return;
     }
 
@@ -83,9 +84,8 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
       }
     }
 
-    await redisClient.set(`filterBy:${end + page}`, JSON.stringify(upcomingList), { EX: 5 * 60 })
     const isMaxed = page >= totalCount ? true : false
-
+    await redisClient.set(`filterBy:${end + page}`, JSON.stringify({ upcomingList, isLimit: isMaxed }), { EX: 5 * 60 })
     res.status(200).json({ upcomingList, isLimit: isMaxed })
     return;
   } catch (err) {
