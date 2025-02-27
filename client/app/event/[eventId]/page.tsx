@@ -64,6 +64,8 @@ export default async function Page({ params }: ComponentProps) {
 
     const resData: responseData = await response.json()
 
+    console.log(resData)
+
     return (
       <div>
         <SingleEvent event={resData.event} interested={resData.isInterested} />

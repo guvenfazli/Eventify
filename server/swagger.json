@@ -260,6 +260,51 @@
           }
         }
       }
+    },
+    "/getEvent/{eventId}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Fetches the chosen event.",
+        "description": "Fetches the chosen event with its ticket.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "in": "path",
+            "name": "eventId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The event id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "$ref": "#/components/schemas/SingleEvent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -351,6 +396,62 @@
           "imageURL": {
             "type": "string",
             "example": "events/1654861321"
+          }
+        }
+      },
+      "SingleEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "0930ab1f-0877-42fb-a105-b594b4075b99"
+          },
+          "title": {
+            "type": "string",
+            "example": "Tour Venice"
+          },
+          "category": {
+            "type": "string",
+            "example": "Tech"
+          },
+          "interested": {
+            "type": "integer",
+            "example": 5
+          },
+          "startDate": {
+            "type": "integer",
+            "example": 565431235495
+          },
+          "endDate": {
+            "type": "integer",
+            "example": 565431235495
+          },
+          "location": {
+            "type": "string",
+            "example": "Germany"
+          },
+          "description": {
+            "type": "string",
+            "example": "Join this amazing event!"
+          },
+          "eventType": {
+            "type": "string",
+            "example": "free"
+          },
+          "ticketQuantity": {
+            "type": "integer",
+            "example": 7000
+          },
+          "ticketPrice": {
+            "type": "integer",
+            "example": 60
+          },
+          "imageURL": {
+            "type": "string",
+            "example": "events/1654861321"
+          },
+          "ticket": {
+            "$ref": "#/components/schemas/Ticket"
           }
         }
       },
