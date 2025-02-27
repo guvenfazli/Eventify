@@ -21,20 +21,24 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
   const page = req.query.page
 
   try {
-
     const cachedEvents = await redisClient.get(`trendingEvents:${page}`)
-
     if (cachedEvents) {
+      console.log("Cache hit!")
       const parsedCahce = JSON.parse(cachedEvents)
-      res.status(200).json({ foundEvents: parsedCahce.foundEvents, isLimit: parsedCahce.isLimit })
+      res.status(200).json({ foundEvents: parsedCahce.foundEvents, countryList: parsedCahce.countryList, isLimit: parsedCahce.isLimit })
       return;
     }
 
+    const countryListAPI = await fetch('https://restcountries.com/v3.1/region/europe')
+    if (!countryListAPI.ok) {
+      throwError(404, 'Something happened and we could not fetch the countries!')
+    }
 
-    const [foundEvents, totalCount] = await Promise.all(
+    const [foundEvents, totalCount, countryList] = await Promise.all(
       [
-        await Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']], attributes: { exclude: ['description'] } }),
-        await Event.count({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] })
+        Event.findAll({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']], attributes: { exclude: ['description'] } }),
+        Event.count({ where: { startDate: { [Op.gt]: todaysDate } }, limit: page, order: [['interested', 'DESC']] }),
+        countryListAPI.json()
       ]
     )
 
@@ -42,9 +46,9 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
       throwError(404, "No events found!")
     }
     const isMaxed = page >= totalCount ? true : false
-    await redisClient.set(`trendingEvents:${page}`, JSON.stringify({ foundEvents, isLimit: isMaxed }), { EX: 5 * 60 })
 
-    res.status(200).json({ foundEvents, isLimit: isMaxed })
+    await redisClient.set(`trendingEvents:${page}`, JSON.stringify({ foundEvents, countryList, isLimit: isMaxed }), { EX: 5 * 60 })
+    res.status(200).json({ foundEvents, countryList, isLimit: isMaxed })
     return;
   } catch (err) {
     next(err)
@@ -68,7 +72,9 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
 
     const [upcomingList, totalCount] = await Promise.all(
       [
-        await Event.findAll({ attributes: { exclude: ['description'] }, where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page }),
+        await Event.findAll({
+          attributes: { exclude: ['description'] }, where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page
+        }),
         await Event.count({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
       ]
     )

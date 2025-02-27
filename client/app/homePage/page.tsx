@@ -10,28 +10,21 @@ export default async function Page() {
   const cookie = cookies()
 
   try {
-    const response = await fetch('https://restcountries.com/v3.1/region/europe')
     const trendingAroundTheWorld = await fetch('http://localhost:8080/trendingWorldEvents?page=6', {
       headers: { Cookie: (await cookie).toString() }
-
-
     })
 
-    if (!response.ok || !trendingAroundTheWorld.ok) {
-      const resData = await response.json()
+    if (!trendingAroundTheWorld.ok) {
+      const resData = await trendingAroundTheWorld.json()
       const error = new Error(resData)
       throw error
     }
 
-    const [countryRes, trendingRes] = await Promise.all([response, trendingAroundTheWorld])
-    const [countryList, trendingList] = await Promise.all([
-      countryRes.json(),
-      trendingRes.json()
-    ])
+    const trendingList = await trendingAroundTheWorld.json()
 
     return (
       <div className="flex flex-col items-start justify-start">
-        <GreetSection countryList={countryList} />
+        <GreetSection countryList={trendingList.countryList} />
         <div className="flex flex-col justify-start items-start px-32 w-full">
           <ExploreCategories />
           <div className="flex flex-col justify-start items-start gap-32 w-full">
