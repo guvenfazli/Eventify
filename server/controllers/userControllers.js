@@ -189,6 +189,10 @@ exports.beInterested = async (req, res, next) => {
       foundEvent.interested -= 1
       await foundEvent.save()
       await redisClient.hSet(`event:${eventId}`, 'isInterested', 'false')
+      const interestedKeys = await redisClient.scan(0, { MATCH: 'interestedEvents:*', COUNT: 10 })
+      for (const key of interestedKeys.keys) {
+        await redisClient.del(key)
+      }
       res.status(200).json({ message: "You are not interested anymore!", isInterested: false })
       return;
     }
