@@ -305,6 +305,67 @@
           }
         }
       }
+    },
+    "/similarEvents": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Fetches similar events.",
+        "description": "Fetches similar events with the same categories, location-category, as chosen Event.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "in": "query",
+            "name": "eventId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The event id."
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The event id."
+          },
+          {
+            "in": "query",
+            "name": "location",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The event id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
