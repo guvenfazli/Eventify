@@ -149,6 +149,126 @@
             "example": "2025-02-12 03:28:07"
           }
         }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "0930ab1f-0877-42fb-a105-b594b4075b99"
+          },
+          "title": {
+            "type": "string",
+            "example": "Tour Venice"
+          },
+          "category": {
+            "type": "string",
+            "example": "Tech"
+          },
+          "interested": {
+            "type": "integer",
+            "example": 5
+          },
+          "startDate": {
+            "type": "integer",
+            "example": 565431235495
+          },
+          "endDate": {
+            "type": "integer",
+            "example": 565431235495
+          },
+          "location": {
+            "type": "string",
+            "example": "Germany"
+          },
+          "description": {
+            "type": "string",
+            "example": "Join this amazing event!"
+          },
+          "eventType": {
+            "type": "string",
+            "example": "free"
+          },
+          "ticketQuantity": {
+            "type": "integer",
+            "example": 7000
+          },
+          "ticketPrice": {
+            "type": "integer",
+            "example": 60
+          },
+          "imageURL": {
+            "type": "string",
+            "example": "events/1654861321"
+          }
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "104cfe22-2200-4f88-aac4-5a498afaae67"
+          },
+          "title": {
+            "type": "string",
+            "example": "Tour Venice"
+          },
+          "ticketQuantity": {
+            "type": "integer",
+            "example": 8000
+          },
+          "ticketPrice": {
+            "type": "integer",
+            "example": 60
+          }
+        }
+      },
+      "UserEventInterested": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "23af4a13-5a68-47f8-97e7-efa1aea1f55d"
+          },
+          "userId": {
+            "type": "string",
+            "example": "23af4a13-5a68-47f8-97e7-efa1aea1f55d"
+          },
+          "eventId": {
+            "type": "string",
+            "example": "0930ab1f-0877-42fb-a105-b594b4075b99"
+          }
+        }
+      },
+      "UserTicket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "0930ab1f-0877-42fb-a105-b594b4075b99"
+          },
+          "fullName": {
+            "type": "string",
+            "example": "Tour Venice"
+          },
+          "email": {
+            "type": "string",
+            "example": "test@test.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "123456789"
+          },
+          "totalPrice": {
+            "type": "integer",
+            "example": 260
+          },
+          "totalQuantity": {
+            "type": "integer",
+            "example": 4
+          }
+        }
       }
     }
   }
