@@ -60,6 +60,9 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
   const todaysTimestamp = dayjs().add(+start, 'd').startOf('day')
   const calculatedDate = dayjs(todaysTimestamp.add(+end, 'd')).endOf('day').unix()
 
+  console.log(todaysTimestamp)
+  console.log(calculatedDate)
+
   try {
 
     const cachedFilteredEvents = await redisClient.get(`filterBy:${end + page}`)
@@ -94,7 +97,7 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
     }
 
     const isMaxed = page >= totalCount ? true : false
-    await redisClient.set(`filterBy:${end + page}`, JSON.stringify({ upcomingList, isLimit: isMaxed }), { EX: 5 * 60 })
+    await redisClient.set(`filterBy:${start + end + page}`, JSON.stringify({ upcomingList, isLimit: isMaxed }), { EX: 5 * 60 })
     res.status(200).json({ upcomingList, isLimit: isMaxed })
     return;
   } catch (err) {
@@ -115,7 +118,15 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
       return;
     }
 
-    const freeList = await Event.findAll({ attributes: { exclude: ['description'] }, where: { eventType: "free", startDate: { [Op.gt]: todaysTimestamp } }, limit: +page, order: [['interested', 'DESC']] })
+    const freeList = await Event.findAll({
+      attributes: { exclude: ['description'] },
+      where: {
+        eventType: "free",
+        startDate: { [Op.gt]: todaysTimestamp }
+      },
+      limit: +page,
+      order: [['interested', 'DESC']]
+    })
 
     if (freeList.length === 0) {
       throwError(404, "There is no free event at the moment, sorry!")
