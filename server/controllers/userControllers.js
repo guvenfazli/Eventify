@@ -23,7 +23,6 @@ exports.fetchTrendingAroundTheWorldEvents = async (req, res, next) => {
   try {
     const cachedEvents = await redisClient.get(`trendingEvents:${page}`)
     if (cachedEvents) {
-      console.log("Cache hit!")
       const parsedCahce = JSON.parse(cachedEvents)
       res.status(200).json({ foundEvents: parsedCahce.foundEvents, countryList: parsedCahce.countryList, isLimit: parsedCahce.isLimit })
       return;
@@ -59,9 +58,6 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
   const { page, start, end } = req.query
   const todaysTimestamp = dayjs().add(+start, 'd').startOf('day')
   const calculatedDate = dayjs(todaysTimestamp.add(+end, 'd')).endOf('day').unix()
-
-  console.log(todaysTimestamp)
-  console.log(calculatedDate)
 
   try {
 
