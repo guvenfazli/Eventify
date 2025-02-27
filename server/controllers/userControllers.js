@@ -73,7 +73,10 @@ exports.fetchUpcomingEvents = async (req, res, next) => {
     const [upcomingList, totalCount] = await Promise.all(
       [
         await Event.findAll({
-          attributes: { exclude: ['description'] }, where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page
+          attributes: { exclude: ['description'] },
+          where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } },
+          limit: +page,
+          order: [['startDate', 'ASC']]
         }),
         await Event.count({ where: { startDate: { [Op.between]: [dayjs(todaysTimestamp).unix(), calculatedDate] } }, limit: +page })
       ]
