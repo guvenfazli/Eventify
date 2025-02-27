@@ -13,6 +13,7 @@ export default function Page() {
   const searchParams = useSearchParams()
   const srch: string | null = searchParams.get('srch')
   const location: string | null = searchParams.get('location')
+  const category: string | null = searchParams.get('category')
 
   const [filterSettings, setFilterSettings] = useState<FilterSettings>({
     srch: srch ? srch : undefined,
@@ -21,7 +22,7 @@ export default function Page() {
     startDate: undefined,
     endDate: undefined,
     addedDays: undefined,
-    category: undefined
+    category: category ? category : undefined
   })
 
   return (

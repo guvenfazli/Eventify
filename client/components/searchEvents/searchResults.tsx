@@ -41,6 +41,7 @@ export default function SearchResults({ setFilterSettings, filterSettings }: Com
   const searchParams = useSearchParams()
   const srch = searchParams.get('srch')
   const location = searchParams.get('location')
+  const category = searchParams.get('category')
   const [eventList, setEventList] = useState<event[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean | string>(false)
@@ -72,7 +73,7 @@ export default function SearchResults({ setFilterSettings, filterSettings }: Com
       }
     }
 
-    if (srch && location) {
+    if (srch || location || category) {
       searchFilteredEvents()
     }
 

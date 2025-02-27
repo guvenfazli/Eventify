@@ -169,6 +169,9 @@ exports.fetchSingleEvent = async (req, res, next) => {
 }
 
 exports.beInterested = async (req, res, next) => {
+
+  // Deleting the cache after hitting 'interested' because, the order is important in the page 'interested events'. That keeps us up to date.
+  // It only deletes the cache for interested events page, it keeps the rest of it. 
   const userId = req.session.userInfo.userId
   const eventId = req.params.eventId
 
@@ -185,10 +188,14 @@ exports.beInterested = async (req, res, next) => {
     const alreadytInterested = foundUser.events.some((event) => event.id === eventId)
 
     if (alreadytInterested) {
-      await UserEventInterested.destroy({ where: { userId, eventId } })
+
+      await Promise.all([
+        UserEventInterested.destroy({ where: { userId, eventId } }),
+        foundEvent.save(),
+        redisClient.hSet(`event:${eventId}`, 'isInterested', 'false'),
+      ])
+
       foundEvent.interested -= 1
-      await foundEvent.save()
-      await redisClient.hSet(`event:${eventId}`, 'isInterested', 'false')
       const interestedKeys = await redisClient.scan(0, { MATCH: 'interestedEvents:*', COUNT: 10 })
       for (const key of interestedKeys.keys) {
         await redisClient.del(key)
