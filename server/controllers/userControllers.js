@@ -417,7 +417,7 @@ exports.interestedEvents = async (req, res, next) => {
       attributes: { exclude: ['description'] },
       include: [
         {
-          model: Event, where: { startDate: { [Op.gt]: todaysTimestamp } }
+          model: Event, through: { attributes: ['id', 'eventId'] }, where: { startDate: { [Op.gt]: todaysTimestamp } }, attributes: { exclude: ['description', 'ticketQuantity', 'createdAt', 'updatedAt', 'category',] }
         }],
       order: [
         [{ model: Event }, filter, direction]
