@@ -366,6 +366,43 @@
           }
         }
       }
+    },
+    "/myTickets": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Fetches users tickets.",
+        "description": "Fetches the tickets that the user bought.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "$ref": "#/components/schemas/BoughtTicket"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -534,6 +571,26 @@
           "ticketPrice": {
             "type": "integer",
             "example": 60
+          }
+        }
+      },
+      "BoughtTicket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "104cfe22-2200-4f88-aac4-5a498afaae67"
+          },
+          "title": {
+            "type": "string",
+            "example": "Tour Venice"
+          },
+          "eventId": {
+            "type": "string",
+            "example": "1b3f3a65-6075-48c0-9515-5e08f26f6df7"
+          },
+          "userTicket": {
+            "$ref": "#/components/schemas/UserTicket"
           }
         }
       },
