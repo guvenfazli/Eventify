@@ -154,6 +154,59 @@
           }
         }
       }
+    },
+    "/upcomingEvents": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Fetches events.",
+        "description": "Fetches upcoming events based on the timespan.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "How many items will be return"
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "How many days should be added on today."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
