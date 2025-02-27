@@ -361,7 +361,13 @@ exports.fetchMyTickets = async (req, res, next) => {
   const userId = req.session.userInfo.userId
 
   try {
-    const foundUser = await User.findByPk(userId, { include: Ticket })
+    const foundUser = await User.findByPk(userId,
+      {
+        include: [
+          { model: Ticket, attributes: ['title', 'id', 'eventId'], through: { attributes: ['id', 'fullName', 'email', 'totalPrice', 'userId', 'ticketId'] } },
+        ]
+      })
+
 
     if (foundUser.tickets.length === 0) {
       throwError(404, 'You do not have any tickets!')
