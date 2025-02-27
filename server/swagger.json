@@ -403,6 +403,160 @@
           }
         }
       }
+    },
+    "/interestedEvents": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Fetches Events.",
+        "description": "Fetches users interested events.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter Type",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "interest"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Ascending or Descending",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "ASC"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/searchEvents": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Fetches Events.",
+        "description": "Fetches the events according to users filters or keywords.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "name": "srch",
+            "in": "query",
+            "description": "Filter Type",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "Camping"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "description": "Location of the Event",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "Germany"
+            }
+          },
+          {
+            "name": "eventType",
+            "in": "query",
+            "description": "Paid or Free",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "free"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Starting date timestamp",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "properties": 1741147200
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date timestamp",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "properties": 1741640400
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Category of the event.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "art"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -465,11 +619,11 @@
           },
           "startDate": {
             "type": "integer",
-            "example": 565431235495
+            "example": 1741147200
           },
           "endDate": {
             "type": "integer",
-            "example": 565431235495
+            "example": 1741640400
           },
           "location": {
             "type": "string",
@@ -518,11 +672,11 @@
           },
           "startDate": {
             "type": "integer",
-            "example": 565431235495
+            "example": 1741147200
           },
           "endDate": {
             "type": "integer",
-            "example": 565431235495
+            "example": 1741640400
           },
           "location": {
             "type": "string",
