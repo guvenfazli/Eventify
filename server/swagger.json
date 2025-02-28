@@ -110,6 +110,54 @@
         }
       }
     },
+    "/beInterested/{eventId}": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Adds an Event to Interested List.",
+        "description": "Adds the chosen event to the logged users interested events list.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "in": "path",
+            "name": "eventId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Chosen events ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success message from Backend.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You are now interested with this event!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/trendingWorldEvents": {
       "get": {
         "tags": [
