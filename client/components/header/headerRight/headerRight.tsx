@@ -75,7 +75,7 @@ export default function HeaderRight() {
 
   return (
     <nav className="flex justify-around items-center text-[20px] gap-5 text-white">
-      <Link href={'/createEvent'} className="font-medium">Create Event</Link>
+      {authInformation.isAdmin && <Link href={'/createEvent'} className="font-medium">Create Event</Link>}
       <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger>

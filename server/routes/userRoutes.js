@@ -21,8 +21,8 @@ router.post('/buyTicket/:ticketId', [
   body('fullName')
     .notEmpty()
     .withMessage('Please provide a valid name!')
-    .isLength({ min: 2 })
-    .withMessage('Fullname must be minimum 2 characters!'),
+    .isLength({ min: 3 })
+    .withMessage('Full Name must be minimum 3 characters!'),
   body('email')
     .isEmail()
     .withMessage('Please provide a correct/valid email!')

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/adminControllers')
+const adminCheck = require('../utils/adminCheck')
 const { body, } = require('express-validator')
 
 
@@ -27,7 +28,7 @@ router.post('/createEvent', [
   body('eventType')
     .notEmpty()
     .withMessage('Event Type can not be empty!'),
-], controller.createEvent)
+], adminCheck.adminCheck, controller.createEvent)
 
 
 module.exports = router

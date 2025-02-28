@@ -46,6 +46,7 @@ export default function PaymentForm({ ticketQ, ticketPrice, ticketId }: Componen
       setIsBuying(false)
     } catch (err: unknown) {
       const error = err as ErrorType
+      setIsBuying(false)
       toast({
         title: "Error!",
         description: error.message,

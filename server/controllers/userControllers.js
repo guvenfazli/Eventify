@@ -243,13 +243,13 @@ exports.buyTicket = async (req, res, next) => {
 
     if (!foundTicket) {
       throwError(404, 'Ticket could not found!')
-    } else if (convertedQuantity === 0) {
+    } else if (convertedQuantity === 0) { // Checks the general quantity
       throwError(410, 'Please at least choose one ticket!')
-    } else if (foundTicket.ticketQuantity === 0) {
+    } else if (foundTicket.ticketQuantity === 0) { // Checks if Event is sold out
       throwError(410, 'Tickets are sold out already!')
-    } else if (convertedQuantity > foundTicket.ticketQuantity) {
+    } else if (convertedQuantity > foundTicket.ticketQuantity) { // Checks the quantity wanted to be bought.
       throwError(410, 'There is not that much ticket left!')
-    } else if (foundTicket.startDate < todaysTimestamp) {
+    } else if (foundTicket.startDate < todaysTimestamp) { // Checks if the date is already passed or not
       throwError(410, 'Event start date already passed!')
     }
 

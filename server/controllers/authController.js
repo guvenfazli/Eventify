@@ -1,6 +1,8 @@
 const { throwError } = require('../utils/throwError') // (statusCode, errorMsg)
 const bcrypt = require('bcryptjs')
 const { validationResult } = require('express-validator')
+const redisClient = require('../utils/redis')
+
 /* Models */
 const User = require('../models/User')
 
@@ -71,9 +73,10 @@ exports.loginAccount = async (req, res, next) => {
 }
 
 exports.logOut = async (req, res, next) => {
-  await req.session.destroy(() => {
+  await req.session.destroy(async () => {
     res.clearCookie('connect.sid')
     res.json({ message: 'Logged out!' })
+    redisClient.sendCommand(["FLUSHDB"])
     return;
   })
 }
