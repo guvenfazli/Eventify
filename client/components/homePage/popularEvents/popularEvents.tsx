@@ -97,7 +97,7 @@ export default function PopularEvents() {
         <div className="flex w-full justify-center items-center">
           <button disabled={isMaxedEvents || isLoading}
             className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out disabled:pointer-events-none disabled:text-[#2B293D]/50 disabled:border-[#2B293D]/30">
-            See More
+            {isLoading ? 'Loading...' : 'See More'}
           </button>
         </div>
       </div>
