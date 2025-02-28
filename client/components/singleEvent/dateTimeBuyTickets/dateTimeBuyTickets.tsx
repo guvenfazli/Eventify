@@ -59,12 +59,14 @@ export default function DateTimeBuyTickets({ startDate, endDate, ticketPrice, ti
         <div className="flex items-center justify-start gap-3">
           <CiCalendarDate className="text-[30px] font-semibold" />
           <p className="font-semibold text-[24px]">{formattedDates.startDate}</p>
-          {endDate !== 0 && <p className="font-semibold text-[24px]">- {formattedDates.endDate}</p>}
+          {endDate !== 0 && <p className="font-semibold text-[24px]">-</p>}
+          {endDate !== 0 && <p className="font-semibold text-[24px]">{formattedDates.endDate}</p>}
         </div>
 
         <div className="flex items-center justify-start gap-3">
           <CiClock1 className="text-[30px]" />
           <p className="font-semibold text-[24px]">{formattedDates.startTime}</p>
+          {endDate !== undefined && <p className="font-semibold text-[24px]">:</p>}
           {endDate !== undefined && <p className="font-semibold text-[24px]">{formattedDates.endTime}</p>}
         </div>
       </div>
