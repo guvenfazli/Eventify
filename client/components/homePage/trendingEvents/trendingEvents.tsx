@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import EventsSection from "../popularEvents/eventsSection/eventsSection"
+import EventsSection from "../upcomingEvents/eventsSection/eventsSection"
 
 interface event {
   id: string,

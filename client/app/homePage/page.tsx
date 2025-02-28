@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import GreetSection from "@/components/homePage/greetSection/greetSection"
 import ExploreCategories from "@/components/homePage/exploreCategories/exploreCategories"
-import PopularEvents from "@/components/homePage/popularEvents/popularEvents"
+import PopularEvents from "@/components/homePage/upcomingEvents/popularEvents"
 import OnlineEvents from "@/components/homePage/onlineEvents/onlineEvents"
 import TrendingEvents from "@/components/homePage/trendingEvents/trendingEvents"
 import { redirect } from "next/navigation"

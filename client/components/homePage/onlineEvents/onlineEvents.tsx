@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import EventsSection from "../popularEvents/eventsSection/eventsSection"
+import EventsSection from "../upcomingEvents/eventsSection/eventsSection"
 import ClientErrorComp from "@/components/clientErrorComp/clientErrorComp"
 import Loading from "@/app/createEvent/loading"
 
