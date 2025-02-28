@@ -110,26 +110,43 @@ exports.fetchBestFreeEvents = async (req, res, next) => {
     const cachedFilteredEvents = await redisClient.get(`freeEvents:${page}`)
 
     if (cachedFilteredEvents) {
-      res.status(200).json({ freeList: JSON.parse(cachedFilteredEvents) })
+      const responseObject = JSON.parse(cachedFilteredEvents)
+      res.status(200).json({ freeList: responseObject.freeList, freeCount: responseObject.freeCount })
       return;
     }
 
-    const freeList = await Event.findAll({
-      attributes: { exclude: ['description'] },
-      where: {
-        eventType: "free",
-        startDate: { [Op.gt]: todaysTimestamp }
-      },
-      limit: +page,
-      order: [['interested', 'DESC']]
-    })
+    const [freeList, freeCount] = await Promise.all(
+      [
+        Event.findAll({
+          attributes: { exclude: ['description'] },
+          where: {
+            eventType: "free",
+            startDate: { [Op.gt]: todaysTimestamp }
+          },
+          limit: +page,
+          order: [['interested', 'DESC']]
+        }),
+
+        Event.count({
+          attributes: { exclude: ['description'] },
+          where: {
+            eventType: "free",
+            startDate: { [Op.gt]: todaysTimestamp }
+          },
+          limit: +page,
+          order: [['interested', 'DESC']]
+        })
+      ])
+
+
 
     if (freeList.length === 0) {
       throwError(404, "There is no free event at the moment, sorry!")
     }
 
-    await redisClient.set(`freeEvents:${page}`, JSON.stringify(freeList), { EX: 5 * 60 })
-    res.status(200).json({ freeList })
+    const isMaxed = page >= freeCount ? true : false
+    await redisClient.set(`freeEvents:${page}`, JSON.stringify({ freeList: freeList, freeCount: isMaxed }), { EX: 5 * 60 })
+    res.status(200).json({ freeList, freeCount })
     return;
   } catch (err) {
     next(err)

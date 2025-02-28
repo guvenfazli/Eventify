@@ -29,6 +29,7 @@ export default function OnlineEvents() {
 
   const [freeEventList, setFreeEventList] = useState<event[]>([])
   const [isError, setIsError] = useState<boolean | string>(false)
+  const [isMaxedEvents, setIsMaxedEvents] = useState<boolean>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [page, setPage] = useState<number>(6)
 
@@ -52,6 +53,7 @@ export default function OnlineEvents() {
 
         setIsLoading(false)
         setFreeEventList(resData.freeList)
+        setIsMaxedEvents(resData.freeCount)
       } catch (err: unknown) {
         const error = err as ErrorType
         setIsLoading(false)
@@ -76,8 +78,8 @@ export default function OnlineEvents() {
         {isLoading && <Loading />}
         <EventsSection eventList={freeEventList} />
         <div className="flex w-full justify-center items-center">
-          <button disabled={isLoading}
-            className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out">
+          <button disabled={isMaxedEvents || isLoading}
+            className="w-1/3 py-3 rounded-md text-[#2B293D] border-2 border-[#2B293D] font-opensans font-semibold text-[24px] hover:bg-[#2B293D] hover:text-white duration-150 ease-in-out disabled:pointer-events-none disabled:text-[#2B293D]/50 disabled:border-[#2B293D]/30 ">
             See More
           </button>
         </div>
