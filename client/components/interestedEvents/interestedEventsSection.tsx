@@ -97,11 +97,14 @@ export default function InterestedEventsSection() {
           <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'ticketPrice' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('ticketPrice', 'ASC')}>Price</button>
         </div>
 
-        <div className="grid grid-cols-3 gap-y-5 w-full">
-          {isLoading && <Loading />}
-          {isError && <ClientErrorComp errorMessage={isError} />}
-          {interestedEventsList.map((event: event) => <EventCard key={event.id} event={event} />)}
-        </div>
+        {isLoading && <Loading />}
+        {isError && <ClientErrorComp errorMessage={isError} />}
+        {(!isLoading && !isError) &&
+          <div className="grid grid-cols-3 gap-y-5 w-full">
+            {interestedEventsList.map((event: event) => <EventCard key={event.id} event={event} />)}
+          </div>
+        }
+
       </div>
     </AuthCheck>
   )

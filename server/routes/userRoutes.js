@@ -23,6 +23,9 @@ router.post('/buyTicket/:ticketId', [
     .withMessage('Please provide a valid name!')
     .isLength({ min: 3 })
     .withMessage('Full Name must be minimum 3 characters!'),
+  body('phone')
+    .isEmpty()
+    .withMessage('Please provide a phone number!'),
   body('email')
     .isEmail()
     .withMessage('Please provide a correct/valid email!')
@@ -39,7 +42,5 @@ router.post('/buyTicket/:ticketId', [
 module.exports = router
 
 /* 
-  body('phone')
-    .isEmpty()
-    .withMessage('Please provide a phone number!'),
+
 */
