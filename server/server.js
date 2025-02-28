@@ -105,7 +105,7 @@ app.use('/', userRouter)
 app.use((error, req, res, next) => {
   const message = error.message
   const statusCode = error.statusCode || 500
-  res.status(statusCode).json({ message })
+  res.status(statusCode).json({ message, statusCode })
 })
 
 sequelize.sync().then((res) => {

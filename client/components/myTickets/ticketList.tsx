@@ -3,13 +3,14 @@ import { useState, useEffect } from "react"
 import ClientErrorComp from "../clientErrorComp/clientErrorComp"
 import Loading from "@/app/homePage/loading"
 import Ticket from "./ticket"
+import { authCheck } from "@/utils/authCheck"
 interface ErrorType {
   message: string
 }
 
 
 export default function TicketList() {
-
+  authCheck()
   const [ticketList, setTicketList] = useState([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean | string>(false)

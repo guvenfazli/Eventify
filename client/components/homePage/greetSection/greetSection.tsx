@@ -3,9 +3,10 @@
 import SearchSection from "./searchSection"
 import { useDispatch } from "react-redux"
 import { restCountriesAction } from "@/store/slices/restCountriesSlice"
+import { authCheck } from "@/utils/authCheck"
 
 export default function GreetSection({ countryList }: any) {
-
+  authCheck()
   const dispatch = useDispatch()
 
   dispatch(restCountriesAction.getCountries(countryList))

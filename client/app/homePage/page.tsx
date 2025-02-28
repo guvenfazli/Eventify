@@ -4,9 +4,8 @@ import ExploreCategories from "@/components/homePage/exploreCategories/exploreCa
 import PopularEvents from "@/components/homePage/popularEvents/popularEvents"
 import OnlineEvents from "@/components/homePage/onlineEvents/onlineEvents"
 import TrendingEvents from "@/components/homePage/trendingEvents/trendingEvents"
-
+import { redirect } from "next/navigation"
 export default async function Page() {
-
   const cookie = cookies()
 
   try {
@@ -16,7 +15,7 @@ export default async function Page() {
 
     if (!trendingAroundTheWorld.ok) {
       const resData = await trendingAroundTheWorld.json()
-      const error = new Error(resData)
+      const error = new Error(resData.message)
       throw error
     }
 
@@ -36,12 +35,8 @@ export default async function Page() {
       </div>
     )
 
-  } catch (err) {
-    <div className="flex flex-col items-start justify-start">
-      <GreetSection />
-      <div className="flex flex-col justify-start items-start px-32 w-full">
-        <p>Could not fetch any countries.</p>
-      </div>
-    </div>
+  } catch (err: unknown) {
+    const error = err as { message: string, options: number }
+    redirect('/')
   }
 }

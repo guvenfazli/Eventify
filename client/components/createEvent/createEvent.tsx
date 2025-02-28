@@ -3,9 +3,12 @@ import { useState } from "react"
 import CreateEventHeader from "./createEventHeader"
 import StepTracker from "./stepTracker"
 import MultiStepForm from "./multiStepForm"
+import { authCheck } from "@/utils/authCheck"
+
+
 export default function CreateEvent() {
 
-
+  authCheck()
   const [step, setStep] = useState<number>(0)
 
 

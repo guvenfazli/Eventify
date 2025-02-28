@@ -4,7 +4,7 @@ interface ErrorType {
 
 export default function Ticket({ ticket }: any) {
 
-  console.log(ticket)
+
   async function getInvoice() {
     try {
       const response = await fetch(`http://localhost:8080/getInvoice/${ticket.eventId + ' ' + ticket.userTicket.userId}`, {
