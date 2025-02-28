@@ -434,14 +434,15 @@ exports.interestedEvents = async (req, res, next) => {
           attributes: {
             exclude: ['description', 'ticketQuantity', 'createdAt', 'updatedAt']
           }
-        }],
+        }
+      ],
       order: [
         [{ model: Event }, filter, direction]
       ]
     })
 
     if (!foundUser) {
-      throwError(404, "Could not find the user!")
+      throwError(404, "You have no interested events at the moment!")
     } else if (foundUser.events.length === 0) {
       throwError(404, "You have no interested events at the moment!")
     }
