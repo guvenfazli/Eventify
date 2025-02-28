@@ -4,7 +4,6 @@ import { IoTicket } from "react-icons/io5";
 export default function EventTicketInformation() {
 
   const multiStepValues = useSelector((state: any) => state.rootReducer.multiFormSlice)
-  console.log(multiStepValues)
   return (
     <div className="flex flex-col items-start justify-start text-[#2D2C3C] font-opensans">
       <p className="text-[36px] font-bold">Ticket Information</p>
