@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import EventCard from "../homePage/eventCard/eventCard"
 import Loading from "@/app/createEvent/loading"
 import ClientErrorComp from "../clientErrorComp/clientErrorComp"
+import { AuthCheck } from "@/utils/authCheck"
 
 interface event {
   id: string,
@@ -27,7 +28,6 @@ interface ErrorType {
 }
 
 export default function InterestedEventsSection() {
-
   const [filterType, setFilterType] = useState<{ filter: string, direction: string }>({ filter: 'title', direction: 'ASC' })
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean | string>(false)
@@ -81,26 +81,28 @@ export default function InterestedEventsSection() {
           return updatedFilter
         }
       }
-      
+
       const newFilter = { filter, direction }
       return newFilter
     })
   }
 
   return (
-    <div className="flex flex-col w-full justify-start items-start gap-5">
-      <div className="flex justify-start items-center gap-5">
-        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'title' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('title', 'ASC')}>Title</button>
-        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'startDate' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('startDate', 'ASC')}>Soon</button>
-        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'interested' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('interested', 'DESC')}>Interested</button>
-        <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'ticketPrice' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('ticketPrice', 'ASC')}>Price</button>
-      </div>
+    <AuthCheck>
+      <div className="flex flex-col w-full justify-start items-start gap-5">
+        <div className="flex justify-start items-center gap-5">
+          <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'title' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('title', 'ASC')}>Title</button>
+          <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'startDate' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('startDate', 'ASC')}>Soon</button>
+          <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'interested' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('interested', 'DESC')}>Interested</button>
+          <button className={`text-[20px] font-semibold font-opensans border border-[#6F6F6F] px-5 rounded-full hover:bg-[#FFE047] hover:text-[#2D2C3C] hover:border-[#2D2C3C] duration-150 ease-out ${filterType.filter === 'ticketPrice' && 'bg-[#FFE047] text-[#2D2C3C]'}`} onClick={() => filterInterestedEvents('ticketPrice', 'ASC')}>Price</button>
+        </div>
 
-      <div className="grid grid-cols-3 gap-y-5 w-full">
-        {isLoading && <Loading />}
-        {isError && <ClientErrorComp errorMessage={isError} />}
-        {interestedEventsList.map((event: event) => <EventCard key={event.id} event={event} />)}
+        <div className="grid grid-cols-3 gap-y-5 w-full">
+          {isLoading && <Loading />}
+          {isError && <ClientErrorComp errorMessage={isError} />}
+          {interestedEventsList.map((event: event) => <EventCard key={event.id} event={event} />)}
+        </div>
       </div>
-    </div>
+    </AuthCheck>
   )
 }

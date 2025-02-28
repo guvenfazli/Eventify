@@ -3,8 +3,10 @@ import AppSummary from "@/components/authenticationPage/appSummary";
 import LoginSection from "@/components/authenticationPage/login/loginSection";
 import RegisterSection from "@/components/authenticationPage/register/registerSection";
 import { useSearchParams } from "next/navigation";
-export default function AuthPage() {
+import { alreadyLoggedIn } from "@/utils/authCheck";
 
+export default function AuthPage() {
+  alreadyLoggedIn()
   const searchParams = useSearchParams()
   const authMode = searchParams.get("auth")
 

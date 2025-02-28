@@ -1,7 +1,6 @@
 "use client"
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
 interface AuthenticationObject {
   rootReducer: {
     userInfo: {
@@ -14,18 +13,19 @@ interface AuthenticationObject {
   }
 }
 
-export function authCheck() {
+
+
+export function AuthCheck({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const { toast } = useToast()
   const authInformation = useSelector((state: AuthenticationObject) => state.rootReducer.userInfo.userInfo)
   if (!authInformation) {
     router.push('/')
-    toast({
-      title: "Error!",
-      description: "Please log in first!",
-      className: "bg-red-700 text-white"
-    })
   }
+  return (
+    <>
+      {children}
+    </>
+  )
 }
 
 export function alreadyLoggedIn() {

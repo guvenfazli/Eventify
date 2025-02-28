@@ -3,14 +3,13 @@ import { useState, useEffect } from "react"
 import ClientErrorComp from "../clientErrorComp/clientErrorComp"
 import Loading from "@/app/homePage/loading"
 import Ticket from "./ticket"
-import { authCheck } from "@/utils/authCheck"
+import { AuthCheck } from "@/utils/authCheck"
 interface ErrorType {
   message: string
 }
 
 
 export default function TicketList() {
-  authCheck()
   const [ticketList, setTicketList] = useState([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean | string>(false)
@@ -46,16 +45,18 @@ export default function TicketList() {
 
 
   return (
-    <div className="flex w-full justify-start items-start">
-      {isError && <ClientErrorComp errorMessage={isError} />}
-      {isLoading && <Loading />}
+    <AuthCheck>
+      <div className="flex w-full justify-start items-start">
+        {isError && <ClientErrorComp errorMessage={isError} />}
+        {isLoading && <Loading />}
 
-      {(!isError && !isLoading) &&
-        <div className="grid grid-cols-3 gap-y-5 gap-5 px-20 w-full">
-          {ticketList.map((ticket: any) => <Ticket key={ticket.id} ticket={ticket} />)}
-        </div>
-      }
+        {(!isError && !isLoading) &&
+          <div className="grid grid-cols-3 gap-y-5 gap-5 px-20 w-full">
+            {ticketList.map((ticket: any) => <Ticket key={ticket.id} ticket={ticket} />)}
+          </div>
+        }
 
-    </div>
+      </div>
+    </AuthCheck>
   )
 }

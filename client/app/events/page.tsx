@@ -3,13 +3,12 @@ import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import TopSection from "@/components/searchEvents/searchBarAndCountries/topSection"
 import SearchResults from "@/components/searchEvents/searchResults"
-
+import { AuthCheck } from "@/utils/authCheck"
 interface FilterSettings {
   [key: string]: string | string[] | number | number[] | undefined,
 }
 
 export default function Page() {
-
   const searchParams = useSearchParams()
   const srch: string | null = searchParams.get('srch')
   const location: string | null = searchParams.get('location')
@@ -26,9 +25,11 @@ export default function Page() {
   })
 
   return (
-    <div className="flex flex-col items-start justify-start">
-      <TopSection setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
-      <SearchResults setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
-    </div>
+    <AuthCheck>
+      <div className="flex flex-col items-start justify-start">
+        <TopSection setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
+        <SearchResults setFilterSettings={setFilterSettings} filterSettings={filterSettings} />
+      </div>
+    </AuthCheck>
   )
 }
