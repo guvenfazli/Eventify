@@ -158,6 +158,53 @@
         }
       }
     },
+    "/buyTicket/{ticketId}": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Buys Ticket",
+        "description": "Buys the chosen events ticket with unique ticket ID.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          },
+          {
+            "in": "path",
+            "name": "ticketId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The chosen events ticket ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success message from Backend.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Thank you for choosing Eventify!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/trendingWorldEvents": {
       "get": {
         "tags": [
