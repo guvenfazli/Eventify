@@ -239,6 +239,97 @@
         }
       }
     },
+    "/admin/createEvent": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Creates an Event.",
+        "description": "Creates an Event and writes it into the DataBase.",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "properties": "userSessionCookie=session_cookie"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Tour Venice"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "Travel"
+                  },
+                  "startDate": {
+                    "type": "integer",
+                    "example": 1742436000
+                  },
+                  "endDate": {
+                    "type": "integer",
+                    "example": 1742850000
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Italy"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Come and join to this amazing tour!"
+                  },
+                  "eventType": {
+                    "type": "string",
+                    "example": "paid"
+                  },
+                  "ticketQuantity": {
+                    "type": "integer",
+                    "example": 500
+                  },
+                  "ticketPrice": {
+                    "type": "integer",
+                    "example": 60
+                  },
+                  "eventImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You successfully created the event!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/trendingWorldEvents": {
       "get": {
         "tags": [
