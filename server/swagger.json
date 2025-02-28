@@ -245,7 +245,7 @@
           "Events"
         ],
         "summary": "Creates an Event.",
-        "description": "Creates an Event and writes it into the DataBase.",
+        "description": "Creates an Event and writes it into the DataBase. (Only Admins)",
         "parameters": [
           {
             "name": "Cookie",
