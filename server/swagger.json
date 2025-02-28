@@ -201,6 +201,11 @@
                     "example": "john@doe.com",
                     "format": "email"
                   },
+                  "phone": {
+                    "type": "string",
+                    "example": "+123456789",
+                    "format": "Phone Number"
+                  },
                   "ticketQuantity": {
                     "type": "integer",
                     "example": 5
