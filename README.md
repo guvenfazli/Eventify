@@ -76,3 +76,74 @@
 - User Profiles & Dashboard to manage purchased tickets & interests.
 - More Advanced Filtering & Search Features.
 
+# Screenshots
+
+## Authentication Page
+
+### Login
+<img src="client/assets/loginPage.png">
+
+### Register
+<img src="client/assets/createAccount.png">
+
+### Homepage
+<img src="client/assets/homePage1.png">
+
+<img src="client/assets/categoriesTrendings.png">
+
+<img src="client/assets/upComingDiscoverBestFree.png">
+
+### Event Page
+
+<img src="client/assets/singleEventPage.png">
+
+<img src="client/assets/similarEvents.png">
+
+<img src="client/assets/buyingTicketDialog.png">
+
+<img src="client/assets/ticketBuyingForm.png">
+
+### Search / Filter Events
+
+<img src="client/assets/multipleChoiceFiltering.png">
+
+<img src="client/assets/searchByLocation.png">
+
+<img src="client/assets/searchSection.png">
+
+### Event Creation
+
+<img src="client/assets/multiStepForm1.png">
+
+<img src="client/assets/multiStepForm2.png">
+
+<img src="client/assets/paidEvent.png">
+
+<img src="client/assets/multiStepForm2.png">
+
+<img src="client/assets/freeEvent.png">
+
+<img src="client/assets/eventCreationPreview.png">
+
+### Interested Events
+
+<img src="client/assets/interestedPage.png">
+
+### My Tickets Page
+
+<img src="client/assets/boughtTickets.png">
+
+<img src="client/assets/invoicePage.png">
+
+### Notifications
+
+<img src="client/assets/errorToastFeedback.png">
+
+<img src="client/assets/eventCreationNotification.png">
+
+<img src="client/assets/errorToastFeedback.png">
+
+<img src="client/assets/interestedNotification.png">
+
+<img src="client/assets/logOut%20Notification.png">
+
