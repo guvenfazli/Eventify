@@ -39,7 +39,7 @@
 
 ### Authentication & Authorization
 - **Session-based authentication**: Stored securely in the database.
-- Users can explore events, while admins can create and manage them..
+- Users can explore events, while admins can create and manage them.
 
 ### Event Management
 - Admins can create events using a multi-step form (Redux Persist ensures data persistence).
@@ -53,6 +53,8 @@
 - Number of Interested Users
 - Price
 - Event Category
+  
+### Cache
 - Redis caching optimizes performance and reduces database queries.
 - Interested Events: Users can mark events as "interested," stored efficiently using a write-through caching strategy.
 
