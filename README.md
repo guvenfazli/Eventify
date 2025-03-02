@@ -93,7 +93,7 @@
 
 <img src="client/assets/upComingDiscoverBestFree.png">
 
-### Event Page
+## Event Page
 
 <img src="client/assets/singleEventPage.png">
 
@@ -103,7 +103,7 @@
 
 <img src="client/assets/ticketBuyingForm.png">
 
-### Search / Filter Events
+## Search / Filter Events
 
 <img src="client/assets/multipleChoiceFiltering.png">
 
@@ -111,7 +111,7 @@
 
 <img src="client/assets/searchSection.png">
 
-### Event Creation
+## Event Creation
 
 <img src="client/assets/multiStepForm1.png">
 
@@ -125,17 +125,17 @@
 
 <img src="client/assets/eventCreationPreview.png">
 
-### Interested Events
+## Interested Events
 
 <img src="client/assets/interestedPage.png">
 
-### My Tickets Page
+## My Tickets Page
 
 <img src="client/assets/boughtTickets.png">
 
 <img src="client/assets/invoicePage.png">
 
-### Notifications
+## Notifications
 
 <img src="client/assets/errorToastFeedback.png">
 
